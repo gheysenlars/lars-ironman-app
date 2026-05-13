@@ -1,0 +1,850 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Lars · Ironman HQ</title>
+<link href="https://fonts.googleapis.com/css2?family=DM+Mono:ital,wght@0,400;0,500;0,600;1,400&display=swap" rel="stylesheet"/>
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+:root{--bg:#0a0c12;--bg2:#10131c;--bg3:#07080f;--border:#1e2433;--border2:#2e3348;--text:#d0d6e8;--muted:#6b7490;--dim:#4a5168;--dark:#2e3348;--gold:#e8a83a;--green:#3ae87a;--blue:#3ab3e8;--red:#e83a3a;--purple:#9b8fef;--yellow:#e8c53a}
+body{background:var(--bg);color:var(--text);font-family:'DM Mono',monospace;max-width:480px;margin:0 auto;min-height:100vh;display:flex;flex-direction:column}
+button{cursor:pointer;font-family:'DM Mono',monospace}
+input,textarea{font-family:'DM Mono',monospace}
+.screen{display:none;flex:1;overflow-y:auto;padding-bottom:80px}
+.screen.active{display:block}
+.pad{padding:20px 16px}
+
+/* Nav */
+nav{position:fixed;bottom:0;left:50%;transform:translateX(-50%);width:100%;max-width:480px;display:flex;background:var(--bg3);border-top:1px solid var(--border);z-index:100}
+nav button{flex:1;padding:12px 4px 10px;border:none;background:transparent;color:var(--dark);border-top:2px solid transparent;font-size:10px;letter-spacing:.06em;text-transform:uppercase;display:flex;flex-direction:column;align-items:center;gap:5px;transition:color .15s}
+nav button.active{color:var(--gold);border-top-color:var(--gold)}
+nav button span{font-size:17px}
+
+/* Banner */
+#banner{background:var(--bg3);border-bottom:1px solid var(--border);padding:8px 16px;display:flex;align-items:center;justify-content:space-between}
+.dot{width:6px;height:6px;border-radius:50%;background:var(--green);display:inline-block;margin-right:6px}
+.dot.off{background:var(--red)}
+.banner-left{display:flex;align-items:center;font-size:11px}
+.banner-right{display:flex;gap:8px}
+.banner-right button{font-size:11px;color:var(--dim);background:none;border:none;padding:2px 6px}
+
+/* Cards */
+.card{background:var(--bg2);border:1px solid var(--border);border-radius:12px;padding:14px 16px;margin-bottom:12px}
+.card.accent-green{border-left:3px solid var(--green)}
+.card.accent-gold{border-left:3px solid var(--gold)}
+.card.accent-blue{border-left:3px solid var(--blue)}
+.card.accent-red{border-left:3px solid var(--red)}
+.lbl{font-size:10px;color:var(--dim);letter-spacing:.08em;text-transform:uppercase;margin-bottom:6px;display:block}
+.tag{font-size:10px;font-weight:600;padding:2px 8px;border-radius:8px;display:inline-block}
+
+/* Grid */
+.grid2{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:12px}
+.metric{background:var(--bg2);border:1px solid var(--border);border-radius:10px;padding:12px 14px}
+.metric .lbl{margin-bottom:4px}
+.metric .val{font-size:21px;font-weight:700}
+
+/* Zones */
+.zones{display:grid;grid-template-columns:repeat(5,1fr);gap:5px}
+.zone-cell{background:#0a0c12;border-radius:8px;padding:8px 4px;text-align:center;border:1px solid var(--border)}
+.zone-cell .zl{font-size:10px;font-weight:600;margin-bottom:2px}
+.zone-cell .zr{font-size:9px;color:var(--text)}
+.zone-cell .zn{font-size:9px;color:var(--dim);margin-top:2px}
+
+/* Week plan */
+.day-row{background:var(--bg2);border:1px solid var(--border);border-left:3px solid var(--border);border-radius:10px;padding:12px 14px;margin-bottom:8px;cursor:pointer;transition:all .15s}
+.day-row.today{border-left-color:var(--gold)}
+.day-row .day-detail{display:none;margin-top:10px;padding-top:10px;border-top:1px solid var(--border);font-size:12px;color:var(--text);line-height:1.6}
+.day-row.open .day-detail{display:block}
+
+/* Form inputs */
+.inp-wrap{margin-bottom:12px}
+.inp-wrap label{display:block;font-size:10px;color:var(--dim);letter-spacing:.08em;text-transform:uppercase;margin-bottom:5px}
+.inp-wrap input,.inp-wrap textarea{width:100%;padding:10px 12px;background:#0a0c12;border:1px solid var(--border);border-radius:8px;color:var(--text);font-size:14px;outline:none}
+.inp-wrap textarea{resize:vertical;line-height:1.6;font-size:13px}
+
+/* Buttons */
+.btn-primary{width:100%;padding:14px;background:var(--gold);color:#000;border:none;border-radius:10px;font-weight:800;font-size:14px;letter-spacing:.06em;transition:background .3s}
+.btn-primary.saved{background:var(--green)}
+.btn-sm{padding:7px 14px;border-radius:20px;border:1px solid var(--border);background:var(--bg2);color:var(--dim);font-size:12px;transition:all .15s}
+.btn-sm.active{border-color:var(--gold);background:#e8a83a10;color:var(--gold);font-weight:600}
+
+/* Recovery card */
+.rec-big{font-size:34px;font-weight:800;line-height:1;margin-bottom:12px}
+.rec-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin-bottom:10px}
+.rec-cell{background:#0a0c12;border-radius:8px;padding:8px 6px;text-align:center}
+.rec-cell .rl{font-size:9px;color:var(--dim);text-transform:uppercase;letter-spacing:.06em;margin-bottom:3px}
+.rec-cell .rv{font-size:15px;font-weight:700}
+
+/* Session history */
+.sesh-card{background:var(--bg2);border:1px solid var(--border);border-radius:12px;padding:12px 14px;margin-bottom:10px}
+.sesh-tags{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:6px}
+.sesh-meta{display:flex;gap:12px;flex-wrap:wrap;margin-top:8px}
+.sesh-meta span{font-size:12px;color:var(--text)}
+.sesh-meta span em{color:var(--dark);font-style:normal}
+
+/* Feel stars */
+.stars{display:flex;gap:6px;margin-bottom:14px}
+.stars button{flex:1;padding:8px 0;border-radius:8px;border:1px solid var(--border);background:var(--bg2);color:var(--dark);font-size:16px;transition:all .15s}
+.stars button.on{border-color:var(--gold);background:#e8a83a18;color:var(--gold)}
+
+/* Daily log tabs */
+.log-tabs{display:flex;gap:6px;margin-bottom:16px}
+.log-tabs button{flex:1;padding:10px 0;border-radius:8px;border:1px solid var(--border);background:var(--bg2);color:var(--dim);font-size:12px;transition:all .15s}
+.log-tabs button.active{border-color:var(--gold);background:#e8a83a18;color:var(--gold);font-weight:600}
+
+/* Alert box */
+.alert{padding:8px 12px;border-radius:8px;font-size:12px;line-height:1.5;margin-top:8px}
+.alert.yellow{background:#e8c53a12;border:1px solid #e8c53a30;color:var(--yellow)}
+.alert.green{background:#3ae87a12;border:1px solid #3ae87a30;color:var(--green)}
+.alert.red{background:#e83a3a12;border:1px solid #e83a3a30;color:var(--red)}
+
+/* Chat */
+.chat-cats{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:12px}
+.chat-cats button{padding:5px 12px;border-radius:16px;border:1px solid var(--border);background:var(--bg2);color:var(--dim);font-size:11px;transition:all .15s}
+.note-card{background:var(--bg2);border:1px solid var(--border);border-left:3px solid var(--border2);border-radius:12px;padding:10px 14px;margin-bottom:10px}
+.note-reply{margin-top:8px;padding-top:8px;border-top:1px solid var(--border);font-size:12px;color:var(--muted);line-height:1.5}
+
+/* Setup */
+.setup-step{background:var(--bg2);border:1px solid var(--border);border-left:3px solid var(--border);border-radius:12px;padding:14px;margin-bottom:10px;cursor:pointer}
+.setup-step.done{border-left-color:var(--green)}
+.setup-step.active{border-left-color:var(--gold)}
+.step-num{width:26px;height:26px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:700;flex-shrink:0;background:var(--border);color:var(--dim)}
+.step-num.done{background:var(--green);color:#000}
+.step-num.active{background:var(--gold);color:#000}
+</style>
+</head>
+<body>
+
+<div id="banner">
+  <div class="banner-left">
+    <span class="dot off" id="whoopDot"></span>
+    <span id="whoopStatus">WHOOP DISCONNECTED</span>
+    <span id="whoopAge" style="font-size:10px;color:var(--dark);margin-left:8px"></span>
+  </div>
+  <div class="banner-right">
+    <button onclick="syncWhoop()" id="syncBtn">↻ sync</button>
+    <button onclick="showSetup()">settings</button>
+  </div>
+</div>
+
+<!-- SETUP SCREEN -->
+<div id="setupScreen" style="display:none;position:fixed;top:0;left:0;right:0;bottom:0;background:var(--bg);z-index:200;overflow-y:auto;max-width:480px;margin:0 auto">
+  <div class="pad">
+    <div style="font-size:10px;color:var(--dark);letter-spacing:.1em;text-transform:uppercase;margin-bottom:6px">One-time setup</div>
+    <h1 style="font-size:24px;font-weight:800;letter-spacing:-1px;margin-bottom:6px">Connect Whoop</h1>
+    <p style="font-size:13px;color:var(--muted);line-height:1.6;margin-bottom:20px">Enter your Railway backend URL to connect Whoop automatically.</p>
+    <div class="inp-wrap">
+      <label>Railway backend URL</label>
+      <input type="url" id="backendUrlInput" placeholder="https://lars-ironman-backend-production.up.railway.app"/>
+    </div>
+    <button class="btn-primary" onclick="saveBackendUrl()" style="margin-bottom:12px">CONNECT & LAUNCH →</button>
+    <button onclick="hideSetup()" style="width:100%;padding:10px;background:none;border:1px solid var(--border);border-radius:8px;color:var(--muted);font-size:13px">Cancel</button>
+    <div class="alert yellow" style="margin-top:16px">
+      Make sure you visited <strong>https://your-railway-url/auth/whoop</strong> first to connect your Whoop account.
+    </div>
+  </div>
+</div>
+
+<!-- NAV -->
+<nav>
+  <button class="active" onclick="showTab('dashboard',this)"><span>⬡</span>Base</button>
+  <button onclick="showTab('training',this)"><span>◉</span>Plan</button>
+  <button onclick="showTab('log',this)"><span>+</span>Log</button>
+  <button onclick="showTab('daily',this)"><span>◑</span>Daily</button>
+  <button onclick="showTab('chat',this)"><span>◈</span>Notes</button>
+</nav>
+
+<!-- DASHBOARD -->
+<div id="dashboard" class="screen active pad">
+  <div style="margin-bottom:20px">
+    <div style="font-size:10px;color:var(--dark);letter-spacing:.1em;text-transform:uppercase" id="todayDate"></div>
+    <h1 style="font-size:30px;font-weight:800;margin:6px 0 2px;letter-spacing:-1px">Lars.</h1>
+    <div style="font-size:12px;color:var(--dim)">27 · 71kg · RHR 53→48 · Max HR 197 · HRR 144</div>
+  </div>
+
+  <!-- Recovery from Whoop -->
+  <div id="recCard" class="card" style="display:none">
+    <span class="lbl">Recovery · live from Whoop</span>
+    <div class="rec-big" id="recBig"></div>
+    <div class="rec-grid">
+      <div class="rec-cell"><div class="rl">HRV</div><div class="rv" id="dHRV" style="color:var(--purple)">—</div></div>
+      <div class="rec-cell"><div class="rl">RHR</div><div class="rv" id="dRHR" style="color:var(--blue)">—</div></div>
+      <div class="rec-cell"><div class="rl">Strain</div><div class="rv" id="dStrain" style="color:var(--gold)">—</div></div>
+      <div class="rec-cell"><div class="rl">SpO2</div><div class="rv" id="dSpo2" style="color:var(--green)">—</div></div>
+    </div>
+    <div id="sleepLine" style="font-size:11px;color:var(--dim);border-top:1px solid var(--border);padding-top:8px"></div>
+    <div id="consistencyAlert" class="alert yellow" style="display:none;margin-top:8px"></div>
+  </div>
+
+  <!-- Today's plan -->
+  <div id="todayPlanCard" class="card accent-gold">
+    <span class="lbl">Today's session</span>
+    <div id="todayType" style="font-size:16px;font-weight:700;color:var(--gold);margin-bottom:4px"></div>
+    <div id="todayDetail" style="font-size:12px;color:var(--muted);line-height:1.6;margin-bottom:8px"></div>
+    <span id="todayZone" class="tag"></span>
+  </div>
+
+  <!-- Stats grid -->
+  <div class="grid2">
+    <div class="metric"><span class="lbl">Sessions logged</span><div class="val" id="dSessions" style="color:var(--gold)">0</div></div>
+    <div class="metric"><span class="lbl">This week</span><div class="val" id="dWeek" style="color:var(--green)">0</div></div>
+    <div class="metric"><span class="lbl">AirBike baseline</span><div class="val" style="color:var(--gold)">122<span style="font-size:11px;color:var(--dim);margin-left:3px">w</span></div><div style="font-size:11px;color:var(--dim);margin-top:3px">FTP test pending</div></div>
+    <div class="metric"><span class="lbl">Training day</span><div class="val" id="dDay" style="color:var(--blue)">1</div></div>
+  </div>
+
+  <!-- Zones -->
+  <div class="card">
+    <span class="lbl">Calibrated zones · RHR 53 · Max 197</span>
+    <div class="zones">
+      <div class="zone-cell"><div class="zl" style="color:#3ab3e8">Z1</div><div class="zr">110–131</div><div class="zn">Recovery</div></div>
+      <div class="zone-cell"><div class="zl" style="color:#3ae87a">Z2</div><div class="zr">132–150</div><div class="zn">Aerobic</div></div>
+      <div class="zone-cell"><div class="zl" style="color:#e8c53a">Z3</div><div class="zr">151–165</div><div class="zn">Tempo</div></div>
+      <div class="zone-cell"><div class="zl" style="color:#e8783a">Z4</div><div class="zr">166–181</div><div class="zn">Threshold</div></div>
+      <div class="zone-cell"><div class="zl" style="color:#e83a3a">Z5</div><div class="zr">182–197</div><div class="zn">Max</div></div>
+    </div>
+  </div>
+
+  <div id="recentSessions"></div>
+</div>
+
+<!-- TRAINING -->
+<div id="training" class="screen pad">
+  <h2 style="font-size:20px;font-weight:700;margin-bottom:4px">Week 1 plan</h2>
+  <p style="font-size:12px;color:var(--dim);margin-bottom:12px">Assessment week · adapts weekly based on your data · tap for detail</p>
+  <div id="recAdvice" class="card" style="display:none;margin-bottom:14px"></div>
+  <div id="weekPlan"></div>
+  <div class="card" style="margin-top:4px">
+    <span class="lbl">HR zones · set in Whoop ✓</span>
+    <div id="zoneList"></div>
+  </div>
+</div>
+
+<!-- LOG SESSION -->
+<div id="log" class="screen pad">
+  <h2 style="font-size:20px;font-weight:700;margin-bottom:4px">Log session</h2>
+  <p style="font-size:12px;color:var(--dim);margin-bottom:14px">Whoop data auto-syncs · add Concept2 watts manually</p>
+
+  <div id="whoopImportCard" class="card" style="display:none;margin-bottom:12px;border-color:#3ae87a30">
+    <div style="display:flex;justify-content:space-between;align-items:center">
+      <div>
+        <div style="font-size:12px;color:var(--green);font-weight:600;margin-bottom:2px">Whoop data ready</div>
+        <div id="whoopImportMeta" style="font-size:11px;color:var(--dim)"></div>
+      </div>
+      <button class="btn-sm" onclick="prefillWhoop()" style="color:var(--green);border-color:#3ae87a30">Import ↓</button>
+    </div>
+  </div>
+
+  <div style="margin-bottom:14px">
+    <span class="lbl">Discipline</span>
+    <div style="display:flex;gap:6px;flex-wrap:wrap" id="discBtns">
+      <button class="btn-sm active" onclick="setDisc(this,'AirBike')">AirBike</button>
+      <button class="btn-sm" onclick="setDisc(this,'Run')">Run</button>
+      <button class="btn-sm" onclick="setDisc(this,'Swim')">Swim</button>
+      <button class="btn-sm" onclick="setDisc(this,'Brick')">Brick</button>
+      <button class="btn-sm" onclick="setDisc(this,'Recovery')">Recovery</button>
+    </div>
+  </div>
+
+  <div class="inp-wrap"><label>Date</label><input type="date" id="lDate"/></div>
+  <div class="grid2" style="gap:10px">
+    <div class="inp-wrap"><label>Duration (min)</label><input type="number" id="lDuration" placeholder="e.g. 60"/></div>
+    <div class="inp-wrap"><label>Distance</label><input type="text" id="lDistance" placeholder="e.g. 5km"/></div>
+    <div class="inp-wrap">
+      <label>Avg HR (bpm)</label>
+      <input type="number" id="lAvgHR" placeholder="from Whoop" oninput="showZoneHint()"/>
+      <div id="zoneHint" style="font-size:11px;margin-top:4px;display:none"></div>
+    </div>
+    <div class="inp-wrap"><label>Max HR (bpm)</label><input type="number" id="lMaxHR" placeholder="from Whoop"/></div>
+    <div class="inp-wrap"><label>Avg watts (Concept2)</label><input type="number" id="lWatts" placeholder="AirBike only"/></div>
+    <div class="inp-wrap"><label>Whoop strain</label><input type="number" id="lStrain" placeholder="auto-filled"/></div>
+    <div class="inp-wrap"><label>Whoop recovery %</label><input type="number" id="lRecovery" placeholder="auto-filled"/></div>
+  </div>
+
+  <div style="margin-bottom:14px">
+    <span class="lbl">How did it feel? <span id="feelEmoji">😐</span></span>
+    <div class="stars" id="feelStars">
+      <button onclick="setFeel(1)">★</button>
+      <button onclick="setFeel(2)">★</button>
+      <button class="on" onclick="setFeel(3)">★</button>
+      <button onclick="setFeel(4)">★</button>
+      <button onclick="setFeel(5)">★</button>
+    </div>
+  </div>
+
+  <div class="inp-wrap"><label>Notes · splits · how it felt</label><textarea id="lNotes" rows="3" placeholder="Optional..."></textarea></div>
+  <button class="btn-primary" id="saveBtn" onclick="saveSession()">SAVE SESSION</button>
+
+  <div style="margin-top:24px" id="sessionHistory"></div>
+</div>
+
+<!-- DAILY LOG -->
+<div id="daily" class="screen pad">
+  <h2 style="font-size:20px;font-weight:700;margin-bottom:4px">Daily log</h2>
+  <p style="font-size:12px;color:var(--dim);margin-bottom:12px">Morning · pre-sleep · every day · Whoop auto-fills</p>
+  <div id="whoopAutoFill" class="card" style="display:none;border-color:#3ae87a30;margin-bottom:14px"></div>
+  <div class="log-tabs">
+    <button class="active" onclick="setLogTab('morning',this)">◑ Morning</button>
+    <button onclick="setLogTab('presleep',this)">◐ Pre-sleep</button>
+  </div>
+
+  <div id="morningTab">
+    <div class="card">
+      <span class="lbl">Recovery · auto-filled from Whoop</span>
+      <div id="recDisplay" style="font-size:26px;font-weight:800;margin-bottom:10px;display:none"></div>
+      <div class="grid2" style="gap:10px">
+        <div class="inp-wrap"><label>Recovery %</label><input type="number" id="dRecovery" placeholder="0–100"/></div>
+        <div class="inp-wrap"><label>HRV (ms)</label><input type="number" id="dHrv" placeholder="e.g. 116"/></div>
+        <div class="inp-wrap"><label>RHR (bpm)</label><input type="number" id="dRhr" placeholder="e.g. 48"/></div>
+        <div class="inp-wrap"><label>SpO2 %</label><input type="number" id="dSpo2i" placeholder="e.g. 96"/></div>
+      </div>
+    </div>
+    <div class="card">
+      <span class="lbl">Sleep · from Whoop</span>
+      <div class="grid2" style="gap:10px">
+        <div class="inp-wrap"><label>Sleep performance %</label><input type="number" id="dSleepPerf" placeholder="e.g. 78"/></div>
+        <div class="inp-wrap"><label>Efficiency %</label><input type="number" id="dSleepEff" placeholder="e.g. 92"/></div>
+        <div class="inp-wrap"><label>Consistency %</label><input type="number" id="dSleepCons" placeholder="e.g. 43"/></div>
+        <div class="inp-wrap"><label>Resp rate</label><input type="number" id="dRespRate" placeholder="e.g. 15.8" step="0.1"/></div>
+      </div>
+      <div id="consistAlert" class="alert yellow" style="display:none"></div>
+    </div>
+    <div class="inp-wrap"><label>Morning note</label><textarea id="dMorningNote" rows="2" placeholder="Energy, soreness, motivation..."></textarea></div>
+  </div>
+
+  <div id="presleepTab" style="display:none">
+    <div class="card">
+      <span class="lbl">Total day strain · pre-sleep</span>
+      <div id="strainDisplay" style="font-size:26px;font-weight:800;margin-bottom:10px;display:none"></div>
+      <div class="grid2" style="gap:10px">
+        <div class="inp-wrap"><label>Total strain (0–21)</label><input type="number" id="dTotalStrain" placeholder="e.g. 12.7" step="0.1" oninput="updateStrainDisplay()"/></div>
+        <div class="inp-wrap"><label>Target bedtime</label><input type="text" id="dBedtime" placeholder="e.g. 22:30"/></div>
+      </div>
+    </div>
+    <div style="margin-bottom:14px">
+      <span class="lbl">Evening mood <span id="moodEmoji">😐</span></span>
+      <div class="stars" id="moodStars">
+        <button onclick="setMood(1)">★</button>
+        <button onclick="setMood(2)">★</button>
+        <button class="on" onclick="setMood(3)">★</button>
+        <button onclick="setMood(4)">★</button>
+        <button onclick="setMood(5)">★</button>
+      </div>
+    </div>
+    <div class="inp-wrap"><label>Pre-sleep note</label><textarea id="dPresleepNote" rows="2" placeholder="Session quality · nutrition · stress..."></textarea></div>
+  </div>
+
+  <button class="btn-primary" id="saveDailyBtn" onclick="saveDaily()">SAVE TODAY'S LOG</button>
+  <div style="margin-top:20px" id="dailyHistory"></div>
+</div>
+
+<!-- CHAT NOTES -->
+<div id="chat" class="screen pad">
+  <h2 style="font-size:20px;font-weight:700;margin-bottom:4px">Notes & chat</h2>
+  <p style="font-size:12px;color:var(--dim);margin-bottom:16px">Log anything · feature ideas · questions · all saved permanently</p>
+  <div class="card">
+    <div class="chat-cats" id="chatCats">
+      <button class="active" onclick="setCat(this,'note')" style="color:var(--text);border-color:var(--text)20">📝 Note</button>
+      <button onclick="setCat(this,'feature')" style="">⚡ Feature</button>
+      <button onclick="setCat(this,'question')">? Question</button>
+      <button onclick="setCat(this,'feeling')">♡ Feeling</button>
+    </div>
+    <textarea id="chatInput" rows="3" placeholder="Log a note, feature idea, question or feeling..." style="width:100%;padding:10px 12px;background:#0a0c12;border:1px solid var(--border);border-radius:8px;color:var(--text);font-size:13px;outline:none;resize:none;line-height:1.6;margin-bottom:10px"></textarea>
+    <button class="btn-primary" id="sendBtn" onclick="sendNote()" style="padding:11px;font-size:13px;letter-spacing:.04em">SEND · ⌘↵</button>
+  </div>
+  <div id="notesList"></div>
+</div>
+
+<script>
+// ── Data ──────────────────────────────────────────────────────────────────────
+const LARS = {
+  startDate: "2026-05-13",
+  zones: [
+    {id:1,label:"Z1",name:"Recovery",  min:110,max:131,color:"#3ab3e8"},
+    {id:2,label:"Z2",name:"Aerobic",   min:132,max:150,color:"#3ae87a"},
+    {id:3,label:"Z3",name:"Tempo",     min:151,max:165,color:"#e8c53a"},
+    {id:4,label:"Z4",name:"Threshold", min:166,max:181,color:"#e8783a"},
+    {id:5,label:"Z5",name:"Max",       min:182,max:197,color:"#e83a3a"},
+  ]
+};
+
+const WEEK = [
+  {day:"Mon",type:"Run",      color:"#3ae87a",zone:"Z2 <150bpm",detail:"30–45 min easy run · stay under 150 bpm · conversational pace the whole time"},
+  {day:"Tue",type:"Swim",     color:"#3ab3e8",zone:"Z2 <150bpm",detail:"Pool · 400m time trial + technique drills · breathe every 3 strokes"},
+  {day:"Wed",type:"AirBike",  color:"#e8a83a",zone:"Z2–Z4",     detail:"60 min base done ✓ · next AirBike session: 8-min FTP test"},
+  {day:"Thu",type:"Rest",     color:"#4a5168",zone:"Z0",        detail:"20 min foam rolling only · hips, calves, shoulders · no cardio"},
+  {day:"Fri",type:"Swim",     color:"#3ab3e8",zone:"Z2 <150bpm",detail:"Easy 20–30 min · breathing rhythm + stroke count per length"},
+  {day:"Sat",type:"Run",      color:"#3ae87a",zone:"Z2 <150bpm",detail:"60 min long run · true Z2 means under 150 bpm · enjoy it"},
+  {day:"Sun",type:"Recovery", color:"#9b8fef",zone:"—",         detail:"Full rest · post all week data and we debrief + plan week 2"},
+];
+
+const DISC_COLORS = {
+  Run:{"#3ae87a":1},Swim:{"#3ab3e8":1},AirBike:{"#e8a83a":1},Brick:{"#e83a3a":1},Recovery:{"#9b8fef":1}
+};
+function discColor(d){return d==="Run"?"#3ae87a":d==="Swim"?"#3ab3e8":d==="AirBike"?"#e8a83a":d==="Brick"?"#e83a3a":"#9b8fef"}
+
+// ── State ─────────────────────────────────────────────────────────────────────
+let state = {
+  sessions:   JSON.parse(localStorage.getItem("im_sessions_v6")||"[]"),
+  dailyLogs:  JSON.parse(localStorage.getItem("im_daily_v6")||"[]"),
+  chatNotes:  JSON.parse(localStorage.getItem("im_notes_v6")||"[]"),
+  backendUrl: localStorage.getItem("im_backend_url")||"",
+  whoopData:  null,
+  disc: "AirBike",
+  feel: 3,
+  mood: 3,
+  cat: "note",
+  logTab: "morning",
+};
+
+function saveState(key, val){
+  const map={sessions:"im_sessions_v6",dailyLogs:"im_daily_v6",chatNotes:"im_notes_v6"};
+  if(map[key]) localStorage.setItem(map[key], JSON.stringify(val));
+}
+
+// ── Helpers ───────────────────────────────────────────────────────────────────
+const todayStr = () => new Date().toISOString().split("T")[0];
+const fmtDate  = iso => new Date(iso).toLocaleDateString("en-GB",{day:"numeric",month:"short"});
+const fmtTime  = iso => new Date(iso).toLocaleTimeString("en-GB",{hour:"2-digit",minute:"2-digit"});
+const dayNum   = iso => Math.floor((Date.now()-new Date(iso))/86400000)+1;
+const getZone  = hr  => LARS.zones.find(z=>hr>=z.min&&hr<=z.max);
+const recColor = r   => r>=67?"#3ae87a":r>=34?"#e8c53a":"#e83a3a";
+const recLabel = r   => r>=67?"Green · go hard":r>=34?"Yellow · train smart":"Red · protect recovery";
+
+// ── Init ──────────────────────────────────────────────────────────────────────
+window.onload = () => {
+  document.getElementById("lDate").value = todayStr();
+  renderDashboard();
+  renderTraining();
+  renderSessionHistory();
+  renderDailyHistory();
+  renderNotes();
+  buildZoneList();
+
+  if(state.backendUrl){
+    syncWhoop();
+    setInterval(syncWhoop, 5*60*1000); // auto-sync every 5 min
+  } else {
+    showSetup();
+  }
+};
+
+// ── Whoop Sync ────────────────────────────────────────────────────────────────
+async function syncWhoop(){
+  if(!state.backendUrl) return;
+  document.getElementById("syncBtn").textContent = "syncing...";
+  try {
+    const res  = await fetch(`${state.backendUrl}/today`);
+    const data = await res.json();
+    if(!data.error){
+      state.whoopData = data;
+      updateBanner(true, data.fetchedAt);
+      updateDashboardWhoop(data);
+      prefillDailyFromWhoop(data);
+      updateWhoopImportCard(data);
+    }
+  } catch(e){
+    console.error("Whoop sync failed:",e);
+    updateBanner(false);
+  }
+  document.getElementById("syncBtn").textContent = "↻ sync";
+}
+
+function updateBanner(connected, fetchedAt){
+  const dot    = document.getElementById("whoopDot");
+  const status = document.getElementById("whoopStatus");
+  const age    = document.getElementById("whoopAge");
+  dot.className = connected ? "dot" : "dot off";
+  status.textContent = connected ? "WHOOP LIVE" : "WHOOP DISCONNECTED";
+  status.style.color = connected ? "var(--green)" : "var(--red)";
+  if(fetchedAt && connected){
+    const m = Math.round((Date.now()-new Date(fetchedAt))/60000);
+    age.textContent = m<1?"just synced":`${m}m ago`;
+  }
+}
+
+function updateDashboardWhoop(d){
+  const rec = d.recovery;
+  if(rec===null) return;
+  const rc = recColor(rec);
+  document.getElementById("recCard").style.display = "block";
+  document.getElementById("recBig").innerHTML = `<span style="color:${rc}">${rec}%</span> <span style="font-size:13px;color:var(--dim);font-weight:400">${recLabel(rec)}</span>`;
+  document.getElementById("dHRV").textContent    = d.hrv    ? d.hrv+"ms"  : "—";
+  document.getElementById("dRHR").textContent    = d.rhr    ? d.rhr+"bpm" : "—";
+  document.getElementById("dStrain").textContent = d.strain || "—";
+  document.getElementById("dSpo2").textContent   = d.spo2   ? d.spo2+"%" : "—";
+  if(d.sleepPerf){
+    document.getElementById("sleepLine").textContent =
+      `Sleep ${d.sleepPerf}% · efficiency ${d.sleepEff||"—"}% · consistency ${d.sleepConsistency||"—"}% · ${d.respRate||"—"} breaths/min`;
+  }
+  if(d.sleepConsistency && d.sleepConsistency < 50){
+    const el = document.getElementById("consistencyAlert");
+    el.style.display = "block";
+    el.textContent = `⚠ Sleep consistency ${d.sleepConsistency}% — keep wake time within 30 min daily to protect HRV`;
+  }
+  // Training advice
+  const adv = document.getElementById("recAdvice");
+  adv.style.display = "block";
+  adv.style.background = rec>=67?"#3ae87a08":rec>=34?"#e8c53a08":"#e83a3a08";
+  adv.style.borderColor = rec>=67?"#3ae87a30":rec>=34?"#e8c53a30":"#e83a3a30";
+  adv.innerHTML = `<div style="font-size:12px;font-weight:600;color:${rc};margin-bottom:4px">${rec}% recovery · ${recLabel(rec)}</div><div style="font-size:12px;color:var(--muted);line-height:1.5">${rec>=67?"Whoop confirms you're primed. Hit today's session at full planned intensity.":rec>=34?"Keep Z2, avoid Z4–Z5 today. Volume is fine, max effort is not.":"20 min mobility only. Hard training now delays recovery."}</div>`;
+}
+
+function prefillDailyFromWhoop(d){
+  if(d.recovery!==null){ document.getElementById("dRecovery").value = d.recovery; updateRecDisplay(); }
+  if(d.hrv)             document.getElementById("dHrv").value        = d.hrv;
+  if(d.rhr)             document.getElementById("dRhr").value        = d.rhr;
+  if(d.spo2)            document.getElementById("dSpo2i").value      = d.spo2;
+  if(d.sleepPerf)       document.getElementById("dSleepPerf").value  = d.sleepPerf;
+  if(d.sleepEff)        document.getElementById("dSleepEff").value   = d.sleepEff;
+  if(d.sleepConsistency)document.getElementById("dSleepCons").value  = d.sleepConsistency;
+  if(d.respRate)        document.getElementById("dRespRate").value   = d.respRate;
+  if(d.strain)          document.getElementById("dTotalStrain").value = d.strain;
+
+  const autoFill = document.getElementById("whoopAutoFill");
+  autoFill.style.display = "block";
+  autoFill.innerHTML = `<div style="font-size:11px;color:var(--green);font-weight:600;margin-bottom:4px">✓ Auto-filled from Whoop · ${fmtTime(d.fetchedAt)}</div><div style="display:flex;gap:12px;flex-wrap:wrap">${[["Rec",d.recovery+"%"],["HRV",d.hrv+"ms"],["RHR",d.rhr+"bpm"],["Sleep",d.sleepPerf+"%"],["Strain",d.strain]].filter(([,v])=>v&&!v.startsWith("null")).map(([k,v])=>`<span style="font-size:12px;color:var(--text)"><span style="color:var(--dark)">${k} </span>${v}</span>`).join("")}</div>`;
+
+  checkSleepConsistency();
+}
+
+function updateWhoopImportCard(d){
+  const card = document.getElementById("whoopImportCard");
+  card.style.display = "block";
+  document.getElementById("whoopImportMeta").textContent =
+    `Recovery ${d.recovery||"—"}% · Strain ${d.strain||"—"} · ${Math.round((Date.now()-new Date(d.fetchedAt))/60000)}m ago`;
+}
+
+function prefillWhoop(){
+  const d = state.whoopData;
+  if(!d) return;
+  if(d.recovery) document.getElementById("lRecovery").value = d.recovery;
+  if(d.strain)   document.getElementById("lStrain").value   = d.strain;
+}
+
+// ── Dashboard ─────────────────────────────────────────────────────────────────
+function renderDashboard(){
+  // Date
+  document.getElementById("todayDate").textContent =
+    new Date().toLocaleDateString("en-GB",{weekday:"long",day:"numeric",month:"long"}) + " · Week 1";
+
+  // Today's plan
+  const idx = new Date().getDay()===0?6:new Date().getDay()-1;
+  const w   = WEEK[idx];
+  document.getElementById("todayType").textContent   = w.type;
+  document.getElementById("todayType").style.color   = w.color;
+  document.getElementById("todayDetail").textContent = w.detail;
+  const zt = document.getElementById("todayZone");
+  zt.textContent = w.zone;
+  zt.style.background = w.color+"20";
+  zt.style.color      = w.color;
+
+  // Stats
+  document.getElementById("dSessions").textContent =
+    state.sessions.length;
+  document.getElementById("dWeek").textContent =
+    state.sessions.filter(s=>(Date.now()-new Date(s.date))/86400000<=7).length;
+  document.getElementById("dDay").textContent =
+    dayNum(LARS.startDate);
+
+  // Recent sessions
+  const el = document.getElementById("recentSessions");
+  el.innerHTML = state.sessions.slice(0,2).map(s=>sessionCardHTML(s)).join("");
+}
+
+// ── Training ──────────────────────────────────────────────────────────────────
+function renderTraining(){
+  const idx = new Date().getDay()===0?6:new Date().getDay()-1;
+  document.getElementById("weekPlan").innerHTML = WEEK.map((w,i)=>`
+    <div class="day-row${i===idx?" today":""}" onclick="toggleDay(this)" style="border-left-color:${i===idx?w.color:"var(--border)"}">
+      <div style="display:flex;align-items:center;gap:10px">
+        <span style="font-size:11px;color:var(--dim);min-width:28px">${w.day}</span>
+        <div style="flex:1">
+          <span style="font-size:13px;font-weight:600;color:${w.color}">${w.type}</span>
+          ${i===idx?`<span style="font-size:9px;background:${w.color};color:#000;border-radius:4px;padding:1px 6px;margin-left:8px;font-weight:700">TODAY</span>`:""}
+        </div>
+        <span style="font-size:10px;color:var(--dim)">${w.zone}</span>
+      </div>
+      <div class="day-detail">${w.detail}</div>
+    </div>
+  `).join("");
+}
+
+function toggleDay(el){ el.classList.toggle("open"); }
+
+function buildZoneList(){
+  const descs = ["warm-up / cool-down","main engine zone","Ironman race pace","FTP intervals","sprint only"];
+  document.getElementById("zoneList").innerHTML = LARS.zones.map((z,i)=>`
+    <div style="display:flex;gap:10px;padding:8px 0;border-bottom:${i<4?"1px solid var(--border)":"none"};align-items:center">
+      <div style="width:8px;height:8px;border-radius:50%;background:${z.color};flex-shrink:0"></div>
+      <span style="font-size:12px;color:${z.color};min-width:22px">${z.label}</span>
+      <span style="font-size:12px;min-width:72px">${z.min}–${z.max} bpm</span>
+      <span style="font-size:11px;color:var(--dim);flex:1">${descs[i]}</span>
+    </div>
+  `).join("");
+}
+
+// ── Log Session ───────────────────────────────────────────────────────────────
+function setDisc(btn, disc){
+  state.disc = disc;
+  document.querySelectorAll("#discBtns .btn-sm").forEach(b=>b.classList.remove("active"));
+  btn.classList.add("active");
+}
+
+function setFeel(n){
+  state.feel = n;
+  const emojis=["😵","😓","😐","💪","🔥"];
+  document.getElementById("feelEmoji").textContent = emojis[n-1];
+  document.querySelectorAll("#feelStars button").forEach((b,i)=>{
+    b.classList.toggle("on",i<n);
+  });
+}
+
+function showZoneHint(){
+  const hr  = parseInt(document.getElementById("lAvgHR").value);
+  const hint= document.getElementById("zoneHint");
+  if(!hr){ hint.style.display="none"; return; }
+  const z = getZone(hr);
+  if(z){ hint.style.display="block"; hint.style.color=z.color; hint.textContent=`→ ${z.label} · ${z.name}`; }
+  else  { hint.style.display="none"; }
+}
+
+function saveSession(){
+  const s = {
+    id:          Date.now().toString(),
+    date:        document.getElementById("lDate").value || todayStr(),
+    discipline:  state.disc,
+    duration:    parseInt(document.getElementById("lDuration").value)||null,
+    distance:    document.getElementById("lDistance").value||null,
+    avgHR:       parseInt(document.getElementById("lAvgHR").value)||null,
+    maxHR:       parseInt(document.getElementById("lMaxHR").value)||null,
+    avgWatts:    parseInt(document.getElementById("lWatts").value)||null,
+    whoopStrain: parseFloat(document.getElementById("lStrain").value)||null,
+    whoopRecovery:parseInt(document.getElementById("lRecovery").value)||null,
+    notes:       document.getElementById("lNotes").value||null,
+    feel:        state.feel,
+  };
+  state.sessions.unshift(s);
+  saveState("sessions", state.sessions);
+
+  // Reset form
+  ["lDuration","lDistance","lAvgHR","lMaxHR","lWatts","lStrain","lRecovery","lNotes"].forEach(id=>document.getElementById(id).value="");
+  document.getElementById("zoneHint").style.display="none";
+
+  const btn = document.getElementById("saveBtn");
+  btn.textContent="✓  SAVED"; btn.classList.add("saved");
+  setTimeout(()=>{ btn.textContent="SAVE SESSION"; btn.classList.remove("saved"); },2500);
+
+  renderSessionHistory();
+  renderDashboard();
+}
+
+function sessionCardHTML(s){
+  const dc = discColor(s.discipline);
+  const zone = s.avgHR ? getZone(s.avgHR) : null;
+  return `<div class="sesh-card" style="border-left:3px solid ${dc}">
+    <div class="sesh-tags">
+      <span class="tag" style="background:${dc}20;color:${dc}">${s.discipline}</span>
+      ${zone?`<span class="tag" style="background:${zone.color}20;color:${zone.color}">${zone.label} · ${zone.name}</span>`:""}
+      ${s.whoopRecovery?`<span class="tag" style="background:${recColor(s.whoopRecovery)}20;color:${recColor(s.whoopRecovery)}">${s.whoopRecovery}% rec</span>`:""}
+    </div>
+    <div style="font-size:12px;color:var(--dim);margin-bottom:6px">${fmtDate(s.date)}</div>
+    <div class="sesh-meta">
+      ${s.duration?`<span><em>dur </em>${s.duration}min</span>`:""}
+      ${s.avgHR?`<span><em>avg </em>${s.avgHR}bpm</span>`:""}
+      ${s.maxHR?`<span><em>max </em>${s.maxHR}bpm</span>`:""}
+      ${s.avgWatts?`<span style="color:var(--gold)">${s.avgWatts}w</span>`:""}
+      ${s.distance?`<span>${s.distance}</span>`:""}
+      ${s.whoopStrain?`<span><em>strain </em>${s.whoopStrain}</span>`:""}
+      ${s.feel?`<span>${"★".repeat(s.feel)}${"☆".repeat(5-s.feel)}</span>`:""}
+    </div>
+    ${s.notes?`<p style="font-size:12px;color:var(--dim);margin-top:8px;line-height:1.5;font-style:italic">${s.notes}</p>`:""}
+  </div>`;
+}
+
+function renderSessionHistory(){
+  const el = document.getElementById("sessionHistory");
+  if(!state.sessions.length){ el.innerHTML=""; return; }
+  el.innerHTML = `<span class="lbl">Session history</span>` + state.sessions.map(s=>sessionCardHTML(s)).join("");
+}
+
+// ── Daily Log ─────────────────────────────────────────────────────────────────
+function setLogTab(tab, btn){
+  state.logTab = tab;
+  document.getElementById("morningTab").style.display  = tab==="morning"?"block":"none";
+  document.getElementById("presleepTab").style.display = tab==="presleep"?"block":"none";
+  document.querySelectorAll(".log-tabs button").forEach(b=>b.classList.remove("active"));
+  btn.classList.add("active");
+}
+
+function updateRecDisplay(){
+  const v = parseInt(document.getElementById("dRecovery").value);
+  const el = document.getElementById("recDisplay");
+  if(v){ el.style.display="block"; el.style.color=recColor(v); el.textContent=v+"%"; }
+  else  { el.style.display="none"; }
+}
+
+function updateStrainDisplay(){
+  const v = parseFloat(document.getElementById("dTotalStrain").value);
+  const el = document.getElementById("strainDisplay");
+  if(v){ el.style.display="block"; el.style.color=v>=18?"#e83a3a":v>=14?"#e8a83a":"#3ae87a"; el.textContent=v; }
+  else  { el.style.display="none"; }
+}
+
+function checkSleepConsistency(){
+  const v = parseInt(document.getElementById("dSleepCons").value);
+  const el = document.getElementById("consistAlert");
+  if(v && v<50){ el.style.display="block"; el.textContent=`Sleep consistency ${v}% flagged — keep wake time within 30 min daily`; }
+  else          { el.style.display="none"; }
+}
+
+function setMood(n){
+  state.mood=n;
+  const emojis=["😴","😔","😐","😊","🔥"];
+  document.getElementById("moodEmoji").textContent=emojis[n-1];
+  document.querySelectorAll("#moodStars button").forEach((b,i)=>b.classList.toggle("on",i<n));
+}
+
+function saveDaily(){
+  const ts = todayStr();
+  const entry = {
+    id:ts, date:ts,
+    recovery:    parseInt(document.getElementById("dRecovery").value)||null,
+    hrv:         parseInt(document.getElementById("dHrv").value)||null,
+    rhr:         parseInt(document.getElementById("dRhr").value)||null,
+    spo2:        parseFloat(document.getElementById("dSpo2i").value)||null,
+    sleepPerf:   parseInt(document.getElementById("dSleepPerf").value)||null,
+    sleepEff:    parseInt(document.getElementById("dSleepEff").value)||null,
+    sleepCons:   parseInt(document.getElementById("dSleepCons").value)||null,
+    respRate:    parseFloat(document.getElementById("dRespRate").value)||null,
+    morningNote: document.getElementById("dMorningNote").value||null,
+    totalStrain: parseFloat(document.getElementById("dTotalStrain").value)||null,
+    bedtime:     document.getElementById("dBedtime").value||null,
+    mood:        state.mood,
+    presleepNote:document.getElementById("dPresleepNote").value||null,
+  };
+  state.dailyLogs = [entry, ...state.dailyLogs.filter(l=>l.date!==ts)].sort((a,b)=>b.date.localeCompare(a.date));
+  saveState("dailyLogs", state.dailyLogs);
+
+  const btn = document.getElementById("saveDailyBtn");
+  btn.textContent="✓  SAVED"; btn.classList.add("saved");
+  setTimeout(()=>{ btn.textContent="SAVE TODAY'S LOG"; btn.classList.remove("saved"); },2000);
+  renderDailyHistory();
+}
+
+function renderDailyHistory(){
+  const el = document.getElementById("dailyHistory");
+  if(!state.dailyLogs.length){ el.innerHTML=""; return; }
+  el.innerHTML = `<span class="lbl">History</span>` + state.dailyLogs.slice(0,7).map(l=>`
+    <div class="card" style="padding:10px 14px">
+      <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:6px">
+        <span style="font-size:12px;font-weight:600">${fmtDate(l.date)}</span>
+        <div style="display:flex;gap:6px">
+          ${l.recovery?`<span class="tag" style="background:${recColor(l.recovery)}20;color:${recColor(l.recovery)}">${l.recovery}%</span>`:""}
+          ${l.totalStrain?`<span class="tag" style="background:#9b8fef20;color:#9b8fef">strain ${l.totalStrain}</span>`:""}
+        </div>
+      </div>
+      <div style="display:flex;gap:12px;flex-wrap:wrap">
+        ${l.hrv?`<span style="font-size:11px"><span style="color:var(--dark)">HRV </span>${l.hrv}ms</span>`:""}
+        ${l.rhr?`<span style="font-size:11px"><span style="color:var(--dark)">RHR </span>${l.rhr}bpm</span>`:""}
+        ${l.sleepPerf?`<span style="font-size:11px"><span style="color:var(--dark)">sleep </span>${l.sleepPerf}%</span>`:""}
+        ${l.sleepCons?`<span style="font-size:11px;color:${l.sleepCons<50?"var(--yellow)":"var(--text)"}"><span style="color:var(--dark)">consist. </span>${l.sleepCons}%</span>`:""}
+      </div>
+      ${l.morningNote||l.presleepNote?`<p style="font-size:11px;color:var(--dim);margin-top:6px;line-height:1.5;font-style:italic">${l.morningNote||l.presleepNote}</p>`:""}
+    </div>
+  `).join("");
+}
+
+// ── Chat Notes ────────────────────────────────────────────────────────────────
+const CAT_COLORS = {note:"var(--text)",feature:"var(--gold)",question:"var(--blue)",feeling:"var(--purple)"};
+const CAT_LABELS = {note:"📝 Note",feature:"⚡ Feature",question:"? Question",feeling:"♡ Feeling"};
+
+function setCat(btn, cat){
+  state.cat = cat;
+  document.querySelectorAll(".chat-cats button").forEach(b=>{ b.classList.remove("active"); b.style.color="var(--dim)"; b.style.borderColor="var(--border)"; });
+  btn.classList.add("active");
+  btn.style.color = CAT_COLORS[cat];
+  btn.style.borderColor = CAT_COLORS[cat]+"40";
+}
+
+async function sendNote(){
+  const input = document.getElementById("chatInput");
+  const text  = input.value.trim();
+  if(!text) return;
+
+  const msg = { id:Date.now().toString(), text, category:state.cat, timestamp:new Date().toISOString(), reply:null };
+  state.chatNotes.unshift(msg);
+  saveState("chatNotes", state.chatNotes);
+  input.value="";
+  renderNotes();
+
+  const btn = document.getElementById("sendBtn");
+  btn.textContent="thinking..."; btn.style.background="var(--border)"; btn.style.color="var(--dim)";
+
+  const d = state.whoopData;
+  const SYSTEM = `You are Lars's Ironman triathlon coach. Lars: 27yo, 71kg, Bruges Belgium. RHR 48, Max HR 197, HRV ${d?.hrv||116}ms, Recovery ${d?.recovery||66}%, Strain ${d?.strain||12.7}. Zones Z1 110–131, Z2 132–150, Z3 151–165, Z4 166–181, Z5 182–197. Week 1 baseline. AirBike 122w avg baseline. Half marathon comfortable. Football until 18, gym 3yrs. Respond under 100 words, direct and specific. If feature request, confirm you'll build it.`;
+
+  try {
+    const res  = await fetch("https://api.anthropic.com/v1/messages",{
+      method:"POST",
+      headers:{"Content-Type":"application/json"},
+      body:JSON.stringify({model:"claude-sonnet-4-20250514",max_tokens:1000,system:SYSTEM,messages:[{role:"user",content:`[${state.cat.toUpperCase()}] ${text}`}]})
+    });
+    const data = await res.json();
+    const reply= data.content?.[0]?.text||"Logged.";
+    state.chatNotes = state.chatNotes.map(m=>m.id===msg.id?{...m,reply}:m);
+    saveState("chatNotes", state.chatNotes);
+    renderNotes();
+  } catch {
+    state.chatNotes = state.chatNotes.map(m=>m.id===msg.id?{...m,reply:"Logged — I'll pick this up in our next chat."}:m);
+    saveState("chatNotes", state.chatNotes);
+    renderNotes();
+  }
+
+  btn.textContent="SEND · ⌘↵"; btn.style.background="var(--gold)"; btn.style.color="#000";
+}
+
+document.addEventListener("keydown",e=>{ if(e.key==="Enter"&&(e.metaKey||e.ctrlKey)&&document.activeElement.id==="chatInput") sendNote(); });
+
+function renderNotes(){
+  const el = document.getElementById("notesList");
+  if(!state.chatNotes.length){ el.innerHTML=`<div style="text-align:center;color:var(--dark);font-size:13px;padding:20px 0">Nothing logged yet</div>`; return; }
+  el.innerHTML = state.chatNotes.map(n=>`
+    <div class="note-card" style="border-left-color:${CAT_COLORS[n.category]||"var(--border2)"}">
+      <div style="display:flex;justify-content:space-between;margin-bottom:6px">
+        <span class="tag" style="background:${CAT_COLORS[n.category]||"var(--dim)"}20;color:${CAT_COLORS[n.category]||"var(--dim)"}">${CAT_LABELS[n.category]||n.category}</span>
+        <span style="font-size:10px;color:var(--dark)">${fmtDate(n.timestamp)}</span>
+      </div>
+      <p style="font-size:13px;line-height:1.6;margin:0">${n.text}</p>
+      ${n.reply?`<div class="note-reply"><span style="color:var(--gold)">COACH › </span>${n.reply}</div>`:""}
+    </div>
+  `).join("");
+}
+
+// ── Nav ───────────────────────────────────────────────────────────────────────
+function showTab(id, btn){
+  document.querySelectorAll(".screen").forEach(s=>s.classList.remove("active"));
+  document.getElementById(id).classList.add("active");
+  document.querySelectorAll("nav button").forEach(b=>b.classList.remove("active"));
+  btn.classList.add("active");
+}
+
+// ── Setup ─────────────────────────────────────────────────────────────────────
+function showSetup(){
+  document.getElementById("setupScreen").style.display="block";
+  if(state.backendUrl) document.getElementById("backendUrlInput").value=state.backendUrl;
+}
+function hideSetup(){ document.getElementById("setupScreen").style.display="none"; }
+
+function saveBackendUrl(){
+  const url = document.getElementById("backendUrlInput").value.trim().replace(/\/$/,"");
+  if(!url) return;
+  state.backendUrl = url;
+  localStorage.setItem("im_backend_url", url);
+  hideSetup();
+  syncWhoop();
+  setInterval(syncWhoop, 5*60*1000);
+}
+</script>
+</body>
+</html>
