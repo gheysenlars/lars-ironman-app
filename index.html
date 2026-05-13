@@ -730,17 +730,24 @@ async function syncToday(){
     const url=S.backendUrl.replace(/^http:/,"https:");
     if(url!==S.backendUrl){ S.backendUrl=url; localStorage.setItem(K.backend,url); }
     const r=await fetch(`${url}/today`);
+    const ct=r.headers.get("content-type")||"";
+    if(!r.ok||!ct.includes("json")){
+      setBanner(false);
+      document.getElementById("wage").textContent="· backend herstart...";
+      // Retry once after 8 seconds
+      setTimeout(syncToday, 8000);
+      return;
+    }
     const d=await r.json();
     if(!d.error){
       S.whoop=d;
       setBanner(true,d.fetchedAt);
       applyWhoopToUI(d);
       autoImport(d.workouts||[]);
-    }else{ setBanner(false); showToast("Whoop fout: "+d.error); }
+    }
   }catch(e){
     setBanner(false);
-    showToast(e.message||"Fetch mislukt");
-    console.error("syncToday:",e);
+    document.getElementById("wage").textContent="· " + (e.message?.slice(0,30)||"fout");
   }
 }
 
