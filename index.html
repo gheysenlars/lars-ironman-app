@@ -352,10 +352,103 @@ nav button.on{color:var(--accent);border-top-color:var(--accent)}
   </div>
 </div>
 
+<!-- ═══════════ WORKOUT ═══════════ -->
+<div class="scr" id="s-workout">
+  <div class="pad">
+    <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:24px">
+      <h2 style="font-size:26px;font-weight:800;letter-spacing:-.5px">Workout</h2>
+      <div style="display:flex;gap:0;background:var(--bg3);border:1px solid var(--border);border-radius:12px;overflow:hidden">
+        <button id="preBtn" onclick="setWorkoutTab('pre')" style="padding:9px 18px;border:none;background:var(--accent);color:#fff;font-size:13px;font-weight:700">Pre</button>
+        <button id="postBtn" onclick="setWorkoutTab('post')" style="padding:9px 18px;border:none;background:transparent;color:var(--muted);font-size:13px;font-weight:600">Post</button>
+      </div>
+    </div>
+
+    <!-- PRE-WORKOUT -->
+    <div id="preWorkout">
+      <div class="card" id="preHeader" style="border-left:3px solid var(--blue)">
+        <span class="lbl" style="color:var(--blue)">Pre-workout briefing</span>
+        <div id="preContent"><div class="dots"><span></span><span></span><span></span></div></div>
+      </div>
+      <div class="card" id="preTodayCard">
+        <span class="lbl">Vandaag's sessie</span>
+        <div id="preTodayContent"></div>
+      </div>
+      <div class="g2">
+        <div class="card" style="margin-bottom:0">
+          <span class="lbl">Timing</span>
+          <div id="preTiming" style="font-size:13px;color:var(--text);line-height:1.8"></div>
+        </div>
+        <div class="card" style="margin-bottom:0">
+          <span class="lbl">Voeding</span>
+          <div id="preNutrition" style="font-size:13px;color:var(--text);line-height:1.8"></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- POST-WORKOUT (hidden by default) -->
+    <div id="postWorkout" style="display:none">
+      <div class="card" style="border-left:3px solid var(--accent)">
+        <span class="lbl" style="color:var(--accent)">Post-workout check-in</span>
+        <p style="font-size:13px;color:var(--muted);margin-bottom:16px">Hoe was de training? Dit helpt de coach jouw plan te verfijnen.</p>
+
+        <div style="margin-bottom:18px">
+          <div style="font-size:11px;font-weight:700;color:var(--muted);letter-spacing:.06em;text-transform:uppercase;margin-bottom:10px">RPE — hoe zwaar was het? <span id="rpeVal" style="color:var(--accent)">6</span>/10</div>
+          <input type="range" id="rpeSlider" min="1" max="10" value="6" oninput="document.getElementById('rpeVal').textContent=this.value" style="width:100%;accent-color:var(--accent);height:4px"/>
+          <div style="display:flex;justify-content:space-between;font-size:10px;color:var(--dim);margin-top:4px"><span>Heel makkelijk</span><span>Maximaal</span></div>
+        </div>
+
+        <div style="margin-bottom:18px">
+          <div style="font-size:11px;font-weight:700;color:var(--muted);letter-spacing:.06em;text-transform:uppercase;margin-bottom:10px">Energieniveau <span id="energyVal" style="color:var(--green)">7</span>/10</div>
+          <input type="range" id="energySlider" min="1" max="10" value="7" oninput="document.getElementById('energyVal').textContent=this.value" style="width:100%;accent-color:var(--green);height:4px"/>
+        </div>
+
+        <div class="g2" style="margin-bottom:18px">
+          <div>
+            <div style="font-size:11px;font-weight:700;color:var(--muted);letter-spacing:.06em;text-transform:uppercase;margin-bottom:8px">Benen</div>
+            <div style="display:flex;gap:6px" id="legsGroup">
+              <button class="db on" onclick="selectGroup('legs','goed',this)">Goed</button>
+              <button class="db" onclick="selectGroup('legs','matig',this)">Matig</button>
+              <button class="db" onclick="selectGroup('legs','zwaar',this)">Zwaar</button>
+            </div>
+          </div>
+          <div>
+            <div style="font-size:11px;font-weight:700;color:var(--muted);letter-spacing:.06em;text-transform:uppercase;margin-bottom:8px">Adem</div>
+            <div style="display:flex;gap:6px" id="breathGroup">
+              <button class="db on" onclick="selectGroup('breath','goed',this)">Goed</button>
+              <button class="db" onclick="selectGroup('breath','matig',this)">Matig</button>
+              <button class="db" onclick="selectGroup('breath','zwaar',this)">Zwaar</button>
+            </div>
+          </div>
+        </div>
+
+        <div style="margin-bottom:14px">
+          <div style="font-size:11px;font-weight:700;color:var(--muted);letter-spacing:.06em;text-transform:uppercase;margin-bottom:7px">Wat ging goed?</div>
+          <textarea id="postWentWell" placeholder="Ritme, tempo, techniek, mentaal..." style="width:100%;padding:12px 14px;background:var(--bg3);border:1px solid var(--border);border-radius:12px;font-size:13px;outline:none;resize:none;line-height:1.65;min-height:72px;color:var(--text)"></textarea>
+        </div>
+
+        <div style="margin-bottom:18px">
+          <div style="font-size:11px;font-weight:700;color:var(--muted);letter-spacing:.06em;text-transform:uppercase;margin-bottom:7px">Wat was moeilijk?</div>
+          <textarea id="postWasHard" placeholder="Conditie, motivatie, weer, pijn..." style="width:100%;padding:12px 14px;background:var(--bg3);border:1px solid var(--border);border-radius:12px;font-size:13px;outline:none;resize:none;line-height:1.65;min-height:72px;color:var(--text)"></textarea>
+        </div>
+
+        <div style="margin-bottom:20px">
+          <div style="font-size:11px;font-weight:700;color:var(--muted);letter-spacing:.06em;text-transform:uppercase;margin-bottom:7px">Extra notities</div>
+          <textarea id="postNotes" placeholder="Splits, wattage, gevoel, voeding..." style="width:100%;padding:12px 14px;background:var(--bg3);border:1px solid var(--border);border-radius:12px;font-size:13px;outline:none;resize:none;line-height:1.65;min-height:60px;color:var(--text)"></textarea>
+        </div>
+
+        <button onclick="savePostWorkout()" style="width:100%;padding:16px;background:var(--accent);color:#fff;border:none;border-radius:14px;font-weight:800;font-size:15px">SAVE POST-WORKOUT</button>
+      </div>
+
+      <div id="postHistory"></div>
+    </div>
+  </div>
+</div>
+
 <!-- NAV -->
 <nav>
   <button class="on" onclick="goTo('today',this)"><span class="ni">◐</span>Vandaag</button>
   <button onclick="goTo('plan',this)"><span class="ni">▦</span>Plan</button>
+  <button onclick="goTo('workout',this)"><span class="ni">⚡</span>Workout</button>
   <button onclick="goTo('history',this)"><span class="ni">☰</span>Sessies</button>
   <button onclick="goTo('stats',this)"><span class="ni">◉</span>Stats</button>
 </nav>
@@ -399,119 +492,213 @@ const PHASES = [
 
 // Session template helper: {disc, type, dur, zone, hrCap, warmup, main, cooldown, goal, adaptMed, adaptLow}
 const PLAN_WEEKS = [
-  // ── Week 1: Oriëntatie ────────────────────────────────────────────────────
-  {label:"Week 1 · Oriëntatie",focus:"Baselines vaststellen · leer je Z2 kennen · geen prestatiedruk",
+  // ── Week 1: Baselines + 1uur sessies ─────────────────────────────────────
+  {label:"Week 1 · Baselines",focus:"Baselines vaststellen op 1-uur sessies · leer je Z2 kennen · geen prestatiedruk",
    days:[
-    {i:0,disc:"Run",     type:"Z2 Base",    dur:"35 min",  zone:"Z2 <150bpm",   hrCap:150,
-     warmup:"10 min wandelen / licht joggen",
-     main:"20 min rustige Z2-loop · ritme waarbij je volledige zinnen kunt spreken",
-     cooldown:"5 min wandelen",
-     goal:"Eerste Z2-looptempo vaststellen als baseline",
-     adaptMed:"Zelfde sessie, max HR 145bpm",
-     adaptLow:"20 min wandeling — geen jogging vandaag"},
-    {i:1,disc:"Swim",    type:"Techniek",   dur:"45 min",  zone:"Z1–Z2",        hrCap:148,
-     warmup:"200m rustig — bilateraal ademen",
-     main:"4×100m catch drill (pull buoy) + 4×100m bilateraal ademen · 30s rust tussen",
-     cooldown:"100m rustig op de rug of drijven",
-     goal:"Eerste watergevoel — high-elbow catch inprenten",
-     adaptMed:"2×100m drills in plaats van 4×100m",
-     adaptLow:"Enkel warm-up: 400m heel rustig, geen drills"},
-    {i:2,disc:"AirBike", type:"Z2 Base",    dur:"50 min",  zone:"Z2 <150bpm",   hrCap:150,
-     warmup:"10 min lichtjes uitrijden",
-     main:"35 min stabiele Z2 · target 115–125w · neus ademen",
+    {i:0,disc:"Run",     type:"Z2 Base",    dur:"60 min",  zone:"Z2 <150bpm",   hrCap:150,
+     warmup:"10 min inlopen — rustige drift naar 132bpm",
+     main:"45 min Z2-loop aan conversatiepace · als HR >152 → 1 min wandelen en hervatten · noteer gemiddeld pace",
+     cooldown:"5 min wandelen + heupen stretchen",
+     goal:"Z2-loopbaseline vaststellen — pace bij <150bpm is je startpunt",
+     adaptMed:"45 min totaal, max 145bpm",
+     adaptLow:"30 min wandeling — geen jogging vandaag"},
+    {i:1,disc:"Swim",    type:"Techniek",   dur:"55 min",  zone:"Z1–Z2",        hrCap:148,
+     warmup:"400m rustig — bilateraal ademen, voel het water",
+     main:"4×100m high-elbow catch drill (pull buoy) + 4×100m bilateraal ademen + 2×200m pull · 30s rust tussen sets",
+     cooldown:"200m rustig op de rug",
+     goal:"Water feel + catch baseline — 2000m totaal",
+     adaptMed:"3×100m drills + 1×200m pull",
+     adaptLow:"600m heel rustig, geen drills"},
+    {i:2,disc:"AirBike", type:"Z2 Base",    dur:"65 min",  zone:"Z2 <150bpm",   hrCap:150,
+     warmup:"10 min lichtjes uitrijden — build naar 120w",
+     main:"50 min stabiele Z2 · target 120–130w · neuzen ademen · als HR >152 → verlaag wattage",
      cooldown:"5 min uitrijden",
-     goal:"AirBike aerobe baseline vaststellen",
-     adaptMed:"30 min in Z2, geen harder",
-     adaptLow:"20 min heel rustig uitrijden — recovery ride"},
-    {i:3,disc:"Recovery",type:"Rust",       dur:"20 min",  zone:"—",             hrCap:null,
-     warmup:"",main:"Foam rolling: heupen, kuiten, thorax · 20 min",cooldown:"",
-     goal:"Actief herstel — spierweefsel mobiliseren",
-     adaptMed:"Zelfde",adaptLow:"Volledige rust, geen mobiliteit"},
-    {i:4,disc:"Run",     type:"Z2 Base",    dur:"35 min",  zone:"Z2 <150bpm",   hrCap:150,
-     warmup:"5 min wandelen",
-     main:"25–30 min Z2 loop · check of pace vergelijkbaar is met maandag bij zelfde HR",
-     cooldown:"5 min wandelen",
-     goal:"Maandag valideren — HR-drift of stabiliteit?",
-     adaptMed:"20 min Z1–Z2, geen harder",
-     adaptLow:"Vandaag niet lopen — morgen zwemmen"},
-    {i:5,disc:"Swim",    type:"Techniek",   dur:"50 min",  zone:"Z1–Z2",        hrCap:148,
-     warmup:"300m rustig",
-     main:"4×150m pull buoy + 200m kick drill (plankje) · noteer slagen per lengte",
-     cooldown:"100m rustig",
-     goal:"Volume + techniek — nog geen conditie, wel consistentie",
-     adaptMed:"Zelfde, iets korter cool-down",
-     adaptLow:"300m warm-up enkel — stop dan"},
+     goal:"AirBike aerobe baseline — noteer gem. wattage bij <150bpm",
+     adaptMed:"40 min Z2, iets lager wattage",
+     adaptLow:"30 min heel rustig uitrijden — 100w max"},
+    {i:3,disc:"Recovery",type:"Actief herstel",dur:"25 min",zone:"—",            hrCap:null,
+     warmup:"",main:"Foam rolling: IT-band, heupen, kuiten, thorax · 15 min\nMobiliteit: heup flexors, schouders, enkels · 10 min",cooldown:"",
+     goal:"Weefsel mobiliseren — voorkomen van stijfheid",
+     adaptMed:"Volledig rust",adaptLow:"Volledig rust"},
+    {i:4,disc:"Run",     type:"Z2 Base",    dur:"55 min",  zone:"Z2 <150bpm",   hrCap:150,
+     warmup:"8 min inlopen",
+     main:"40 min Z2 · vergelijk pace met maandag bij zelfde HR · is het al stabiel?",
+     cooldown:"7 min uitlopen",
+     goal:"Maandag valideren — HR-drift of consistentie meten",
+     adaptMed:"40 min max, Z1–Z2",
+     adaptLow:"30 min wandeling"},
+    {i:5,disc:"Run",     type:"Long run",   dur:"80 min",  zone:"Z2 <150bpm",   hrCap:150,
+     warmup:"10 min inlopen",
+     main:"60 min continu Z2 · wandel 1 min per 15 min als HR >152 · neem water mee · noteer hoe je je voelt km per km",
+     cooldown:"10 min uitlopen + rekken",
+     goal:"Eerste echte long run — glycogeenefficiëntie + aeroob uithoudingsvermogen",
+     adaptMed:"60 min totaal",
+     adaptLow:"40 min wandeling"},
     {i:6,disc:"Recovery",type:"Volledig rust",dur:"—",     zone:"—",             hrCap:null,
-     warmup:"",main:"Geen sport · wandeling optioneel · data reviewen",cooldown:"",
+     warmup:"",main:"Geen sport · optioneel 20 min wandeling · week 1 data reviewen",cooldown:"",
      goal:"Adaptatie gebeurt tijdens rust",
      adaptMed:"Zelfde",adaptLow:"Zelfde"},
   ]},
-  // ── Week 2: Volume ────────────────────────────────────────────────────────
-  {label:"Week 2 · Volume opbouwen",focus:"Alle sessies 10–15 min langer · zelfde intensiteit · Z2 discipline",
+  // ── Week 2: Volume + eerste kwaliteit ────────────────────────────────────
+  {label:"Week 2 · Volume + kwaliteit",focus:"Sessies +10 min langer · eerste Z3-intervallen op AirBike · Z2 discipline bewaken",
    days:[
-    {i:0,disc:"Run",     type:"Z2 Base",    dur:"45 min",  zone:"Z2 <150bpm",   hrCap:150,
+    {i:0,disc:"Run",     type:"Z2 Base",    dur:"65 min",  zone:"Z2 <150bpm",   hrCap:150,
      warmup:"10 min inlopen",
-     main:"30 min Z2 continu · als HR >152 → wandel tot het daalt",
+     main:"50 min Z2 continu · als HR >152 → wandel 1 min · noteer pace vs. week 1",
      cooldown:"5 min uitlopen",
-     goal:"Z2-loop met 10 min meer dan week 1",
-     adaptMed:"35 min totaal, max 145bpm",
-     adaptLow:"25 min rustige wandeling"},
-    {i:1,disc:"AirBike", type:"Z2 Base",    dur:"60 min",  zone:"Z2 <150bpm",   hrCap:150,
-     warmup:"10 min licht",
-     main:"45 min aan 120–130w · neus ademen · langer aerobe venster",
-     cooldown:"5 min uitrijden",
-     goal:"Langere aerobe window — mitochondriën aanmaken",
-     adaptMed:"40 min totaal, iets lager tempo",
-     adaptLow:"30 min zeer rustig uitrijden"},
-    {i:2,disc:"Swim",    type:"Techniek",   dur:"50 min",  zone:"Z1–Z2",        hrCap:148,
-     warmup:"200m rustig",
-     main:"6×100m afwisselend: 100m catch drill · 100m pull buoy · 45s rust",
+     goal:"Z2-loop 5 min langer dan week 1 — efficiënter worden",
+     adaptMed:"50 min totaal, max 145bpm",
+     adaptLow:"35 min wandeling"},
+    {i:1,disc:"AirBike", type:"Z3 Intervallen",dur:"70 min",zone:"Z2 + Z3",     hrCap:165,
+     warmup:"15 min uitrijden Z2 · build naar 130bpm",
+     main:"3×8 min Z3 (151–165bpm) · 4 min Z1 herstel ertussen · target 135–145w tijdens interval",
+     cooldown:"15 min uitrijden Z1",
+     goal:"Eerste Z3-intervallen — tempo voelen zonder uitputting",
+     adaptMed:"2×8 min Z3 of 3×6 min — houd HR onder 160",
+     adaptLow:"50 min puur Z2, geen intervallen"},
+    {i:2,disc:"Swim",    type:"Z2 Endurance",dur:"60 min", zone:"Z2 <148bpm",   hrCap:148,
+     warmup:"400m rustig",
+     main:"2000m continu rustig · adem elke 3 slagen · slagen per lengte tellen · ritme en efficiëntie",
      cooldown:"200m rustig",
-     goal:"Slagtechniek ingraven bij lichte vermoeidheid",
-     adaptMed:"4×100m ipv 6×100m",
-     adaptLow:"400m rustig enkel"},
-    {i:3,disc:"Strength",type:"Kracht",     dur:"40 min",  zone:"—",             hrCap:null,
+     goal:"Comfortabel zwemmen op 2000m — drempel voor open water",
+     adaptMed:"1500m continu",
+     adaptLow:"800m rustig, geen push"},
+    {i:3,disc:"Strength",type:"Functionele kracht",dur:"45 min",zone:"—",        hrCap:null,
      warmup:"5 min mobiliteit",
-     main:"Hip hinge 3×10 · glute bridge 3×15 · plank 3×30s · shoulder mobility 3×10 · geen zwaar gewicht",
-     cooldown:"5 min stretching",
-     goal:"Blessurepreventie · loopeconomie · schoudercontrole zwemmen",
-     adaptMed:"Zelfde maar trager",
-     adaptLow:"Enkel mobiliteit, 20 min"},
-    {i:4,disc:"Run",     type:"Z2 Base",    dur:"40 min",  zone:"Z2 <150bpm",   hrCap:150,
-     warmup:"5 min wandelen",
-     main:"30 min Z2 · vergelijk pace met maandag bij zelfde HR · noteer",
-     cooldown:"5 min",
-     goal:"HR-drift vergelijken — word je efficiënter?",
-     adaptMed:"25 min max",
-     adaptLow:"Rustdag vandaag"},
-    {i:5,disc:"Run",     type:"Long run",   dur:"70 min",  zone:"Z2 <150bpm",   hrCap:150,
+     main:"Hip hinge 3×12 · glute bridge single leg 3×10 · Copenhagen plank 3×20s · cable row 3×12 · shoulder press 3×10 · geen zwaar gewicht",
+     cooldown:"5 min stretching heupen + schouders",
+     goal:"Loopeconomie, blessurepreventie, zwemkracht",
+     adaptMed:"Enkel bodyweight — geen weerstand",
+     adaptLow:"20 min mobiliteit enkel"},
+    {i:4,disc:"Run",     type:"Tempo build", dur:"60 min", zone:"Z2–Z3",         hrCap:163,
+     warmup:"15 min Z1 inlopen",
+     main:"30 min Z2 met de laatste 10 min opbouwen naar Z3-rand (151–160bpm) · tempo voelen maar nooit gaspen",
+     cooldown:"15 min Z1 uitlopen",
+     goal:"Eerste tempowaarneming — progressief leren schakelen",
+     adaptMed:"45 min puur Z2, geen tempo",
+     adaptLow:"40 min Z1–Z2 maximum"},
+    {i:5,disc:"Run",     type:"Long run",    dur:"90 min", zone:"Z2 <150bpm",   hrCap:150,
      warmup:"10 min inlopen",
-     main:"55 min continu Z2 · wandel als HR >152 · geen muziek of mindere afleiding · let op hoe je je voelt",
-     cooldown:"5 min uitlopen",
-     goal:"Eerste echte long run — glycogeenefficiëntie trainen",
-     adaptMed:"50 min totaal",
-     adaptLow:"30 min wandeling"},
+     main:"70 min continu Z2 · gel innemen op 50 min · noteer hoe HR evolueert in de laatste 20 min · wandel 1 min per 20 min preventief",
+     cooldown:"10 min uitlopen",
+     goal:"Vetverbranding + fueling ritueel leren · 90 min is Ironman-relevant",
+     adaptMed:"70 min totaal",
+     adaptLow:"45 min wandeling"},
     {i:6,disc:"Recovery",type:"Volledig rust",dur:"—",     zone:"—",             hrCap:null,
-     warmup:"",main:"Volledig rust of 20 min wandeling · weekdata reviewen",cooldown:"",
-     goal:"Weekbelasting laten landen",
+     warmup:"",main:"Volledig rust · optioneel 20 min wandeling · weekdata reviewen",cooldown:"",
+     goal:"Week 2 belasting laten landen",
      adaptMed:"Zelfde",adaptLow:"Zelfde"},
   ]},
-  // ── Week 3: Eerste intervalles ────────────────────────────────────────────
-  {label:"Week 3 · Eerste kwaliteit",focus:"Eerste Z4-intervallen op AirBike · Z2 basis intact houden",
+  // ── Week 3: Z4 intervallen + lange sessies ────────────────────────────────
+  {label:"Week 3 · Z4 + volume",focus:"Z4-intervallen op AirBike · tempo in de loop · 2000m+ zwemmen",
    days:[
-    {i:0,disc:"Run",     type:"Z2 Base",    dur:"45 min",  zone:"Z2 <150bpm",   hrCap:150,
-     warmup:"10 min",
-     main:"30 min Z2 · verse benen na rustdag · noteer pace",
+    {i:0,disc:"Run",     type:"Z2 Base",    dur:"65 min",  zone:"Z2 <150bpm",   hrCap:150,
+     warmup:"10 min inlopen",
+     main:"50 min Z2 · verse benen na rustdag · vergelijk pace met week 1 — ben je sneller?",
+     cooldown:"5 min uitlopen",
+     goal:"Wekelijkse Z2 anker + progressiemeting",
+     adaptMed:"50 min max",
+     adaptLow:"30 min wandelen"},
+    {i:1,disc:"AirBike", type:"Z4 Intervallen",dur:"70 min",zone:"Z2 + Z4",     hrCap:181,
+     warmup:"15 min opwarmen Z2 · 2×30s prikken op 90%+ · 2 min rust",
+     main:"4×8 min Z4 (166–178bpm) · 3 min Z1 herstel ertussen · target 145–155w · controleer hartslag elke minuut",
+     cooldown:"15 min uitrijden Z1–Z2",
+     goal:"FTP opbouwen — harde arbeid in een veilige structuur",
+     adaptMed:"3×6 min Z3 ipv Z4 — geen Z4 vandaag",
+     adaptLow:"50 min puur Z2, geen intervallen"},
+    {i:2,disc:"Swim",    type:"Kwaliteitssessie",dur:"65 min",zone:"Z2–Z3",      hrCap:158,
+     warmup:"400m rustig",
+     main:"2×750m aan comfortabel tempo (Z2) · 2 min rust · dan 4×100m met lichte versnelling (Z3) · 30s rust",
+     cooldown:"200m uitkuieren",
+     goal:"Zwemvolume + eerste snelheidswerk in het water",
+     adaptMed:"2×500m Z2 enkel",
+     adaptLow:"800m rustig, geen push"},
+    {i:3,disc:"Recovery",type:"Actief herstel",dur:"25 min",zone:"—",            hrCap:null,
+     warmup:"",main:"Foam rolling na zware dag · heupen, kuiten, lats · 15 min\nMobiliteit: thorax rotatie, heup flexors · 10 min",cooldown:"",
+     goal:"Herstel na Z4 — spierweefsel losmaken",
+     adaptMed:"Volledig rust",adaptLow:"Volledig rust"},
+    {i:4,disc:"Run",     type:"Tempoloop",    dur:"65 min", zone:"Z2–Z3",         hrCap:163,
+     warmup:"15 min Z1 inlopen",
+     main:"3×10 min Z3 (151–163bpm) · 3 min Z1 herstel ertussen · noteer pace per interval",
+     cooldown:"12 min Z1 uitlopen",
+     goal:"Looptempo op Z3 leren controleren — race relevante intensiteit",
+     adaptMed:"2×10 min Z2–Z3 rand · geen volle Z3",
+     adaptLow:"50 min puur Z2"},
+    {i:5,disc:"Run",     type:"Long run",    dur:"95 min", zone:"Z2 <150bpm",   hrCap:150,
+     warmup:"10 min inlopen",
+     main:"75 min Z2 · 2 gels (km 40 en km 65) · wandel 1 min elke 25 min · focus op gelijkmatig tempo",
+     cooldown:"10 min uitlopen + full body rekken",
+     goal:"Aerobe basis uitbreiden — glycogeenverbranding over 95 min",
+     adaptMed:"70 min totaal",
+     adaptLow:"45 min wandeling"},
+    {i:6,disc:"Recovery",type:"Volledig rust",dur:"—",     zone:"—",             hrCap:null,
+     warmup:"",main:"Volledig rust · week 3 data reviewen · klaar voor testweek",cooldown:"",
+     goal:"Zware week laten landen",
+     adaptMed:"Zelfde",adaptLow:"Zelfde"},
+  ]},
+  // ── Week 4: Test + herstel ────────────────────────────────────────────────
+  {label:"Week 4 · FTP-test + herstel",focus:"AirBike FTP-test · volume -30% · eerste baseline meting",
+   days:[
+    {i:0,disc:"Run",     type:"Z1 herstel",  dur:"45 min", zone:"Z1 <145bpm",   hrCap:145,
+     warmup:"5 min wandelen",
+     main:"35 min heel rustig · HR onder 145 de hele tijd · vermoeidheid uitspoelen voor de test",
+     cooldown:"5 min wandelen",
+     goal:"Benen flushen voor FTP-test morgen",
+     adaptMed:"30 min max, wandelen als nodig",
+     adaptLow:"20 min wandeling"},
+    {i:1,disc:"AirBike", type:"FTP Test",    dur:"45 min", zone:"Max effort",   hrCap:197,
+     warmup:"20 min opwarmen — eindig met 2×30s prikken op 90%+, 2 min rust na",
+     main:"20 min FTP-test · geef alles · noteer EXACT het gemiddeld wattage — dit is je nieuwe baseline voor alle trainingen",
+     cooldown:"10 min uitrijden Z1",
+     goal:"AirBike FTP-baseline — kritisch getal voor trainingsintensiteiten",
+     adaptMed:"Test uitstellen als recovery <50% — doe enkel 30 min Z1 vandaag",
+     adaptLow:"Test NIET doen — enkel 30 min Z1 uitrijden"},
+    {i:2,disc:"Swim",    type:"Techniek",    dur:"50 min", zone:"Z1",            hrCap:140,
+     warmup:"200m rustig",
+     main:"4×100m catch drill · 4×100m rustige pull · 45s rust per set · neem de tijd · geen druk",
+     cooldown:"200m rustig",
+     goal:"Herstel + techniek behouden — geen conditiedruk",
+     adaptMed:"Zelfde",
+     adaptLow:"300m rustig enkel — stop als moe"},
+    {i:3,disc:"Recovery",type:"Volledig rust",dur:"—",     zone:"—",             hrCap:null,
+     warmup:"",main:"Volledige rust — herstelweek, laat het landen",cooldown:"",
+     goal:"FTP-test en week laten integreren",
+     adaptMed:"Zelfde",adaptLow:"Zelfde"},
+    {i:4,disc:"Run",     type:"Z1–Z2 herstel",dur:"40 min",zone:"Z1–Z2 <148bpm",hrCap:148,
+     warmup:"5 min wandelen",
+     main:"30 min heel rustig · onder 148bpm de hele tijd · geniet ervan",
      cooldown:"5 min",
-     goal:"Wekelijkse Z2 anker",
-     adaptMed:"35 min max",
-     adaptLow:"20 min wandelen"},
-    {i:1,disc:"AirBike", type:"Intervallen", dur:"55 min", zone:"Z2 + Z4",      hrCap:175,
-     warmup:"15 min Z2 opwarmen",
-     main:"2×8 min Z4 (155–170bpm) · 5 min Z1 herstel ertussen · voel hoe Z4 aanvoelt zonder te exploderen",
-     cooldown:"12 min uitrijden Z1",
-     goal:"Eerste kennismaking met intensiteit — Z4 voelen zonder over te gaan",
-     adaptMed:"2×5 min Z3 ipv Z4 · geen Z4 vandaag",
+     goal:"Benen spoelen voor zaterdag long run",
+     adaptMed:"25 min wandeling",
+     adaptLow:"Rustdag"},
+    {i:5,disc:"Run",     type:"Long run",    dur:"75 min", zone:"Z2 <150bpm",   hrCap:150,
+     warmup:"10 min inlopen",
+     main:"55 min Z2 · kortere long run (herstelweek) · vergelijk PACE vs. week 1 bij dezelfde HR — ben je sneller?",
+     cooldown:"10 min uitlopen",
+     goal:"Progressiemeting vs. week 1 — 4 weken vooruitgang zichtbaar maken",
+     adaptMed:"55 min totaal",
+     adaptLow:"40 min wandeling"},
+    {i:6,disc:"Recovery",type:"Volledig rust",dur:"—",     zone:"—",             hrCap:null,
+     warmup:"",main:"Volledig rust · 4-weekse data reviewen · FTP genoteerd · klaar voor opbouw",cooldown:"",
+     goal:"4-wekenblok laten landen",
+     adaptMed:"Zelfde",adaptLow:"Zelfde"},
+  ]},
+  // ── Week 5–8: stub (progressief) ─────────────────────────────────────────
+  ...Array.from({length:4},(_,wi)=>({
+    label:`Week ${5+wi} · Progressie`,
+    focus:"Volume verhogen · Z2 dominantie consolideren · AirBike intervallen uitbreiden",
+    days:Array.from({length:7},(_,i)=>({i,
+      disc:["Run","AirBike","Swim","Recovery","Run","Run","Recovery"][i],
+      type:["Z2 Base","Intervallen","Z2 Swim","Actief herstel","Z2 Base","Long run","Rust"][i],
+      dur:[`${65+wi*5}min`,`${70+wi*5}min`,`${60+wi*5}min`,"25min",`${60+wi*5}min`,`${95+wi*10}min`,"—"][i],
+      zone:["Z2 <150bpm","Z2+Z4","Z2","—","Z2 <150bpm","Z2 <150bpm","—"][i],
+      hrCap:[150,181,148,null,150,150,null][i],
+      warmup:"",
+      main:`${["Z2 loop","AirBike: "+(4+wi)+"×8min Z4 · "+3+"min Z1 herstel","Zwemmen Z2 continu","Foam rolling · mobiliteit","Z2 loop","Long run Z2","Volledig rust"][i]}`,
+      cooldown:"",
+      goal:["Aerobe basis","FTP opbouwen","Zwemvolume","Herstel","Consistentie","Vetverbranding","Recuperatie"][i],
+      adaptMed:"Intensiteit verlagen naar Z2",adaptLow:"Volledig rust of wandeling"}))
+  })),
      adaptLow:"40 min puur Z2, geen intervallen"},
     {i:2,disc:"Swim",    type:"Z2 Endurance",dur:"50 min", zone:"Z2 <148bpm",   hrCap:148,
      warmup:"300m rustig",
@@ -689,9 +876,10 @@ function goTo(id,btn){
   document.getElementById("s-"+id).classList.add("on");
   document.querySelectorAll("nav button").forEach(b=>b.classList.remove("on"));
   btn.classList.add("on");
-  if(id==="stats")    renderStats();
-  if(id==="history")  renderHistory();
-  if(id==="plan")     renderPlan();
+  if(id==="stats")   renderStats();
+  if(id==="history") renderHistory();
+  if(id==="plan")    renderPlan();
+  if(id==="workout") renderWorkout();
 }
 
 // ── Toast ─────────────────────────────────────────────────────────────────────
@@ -1148,6 +1336,134 @@ function zoneBarHTML(zones){
   const colors=["#4EA8DE","#2ECC71","#FFBA00","#FF7840","#FF3860"];
   return`<div class="zone-bars">${vals.map((v,i)=>v>0?`<div class="zone-bar-seg" style="flex:${v};background:${colors[i]}"></div>`:"").join("")}</div>
     <div style="display:flex;gap:10px;margin-top:5px;flex-wrap:wrap">${vals.map((v,i)=>v>0?`<span style="font-size:10px;color:${colors[i]};font-weight:600">Z${i+1} ${fmtDur(v)}</span>`:"").join("")}</div>`;
+}
+
+// ── Workout tab ───────────────────────────────────────────────────────────────
+let postState = { legs:"goed", breath:"goed" };
+
+function setWorkoutTab(tab){
+  document.getElementById("preWorkout").style.display  = tab==="pre"  ? "block" : "none";
+  document.getElementById("postWorkout").style.display = tab==="post" ? "block" : "none";
+  document.getElementById("preBtn").style.background   = tab==="pre"  ? "var(--accent)" : "transparent";
+  document.getElementById("preBtn").style.color        = tab==="pre"  ? "#fff" : "var(--muted)";
+  document.getElementById("postBtn").style.background  = tab==="post" ? "var(--accent)" : "transparent";
+  document.getElementById("postBtn").style.color       = tab==="post" ? "#fff" : "var(--muted)";
+  if(tab==="post") renderPostHistory();
+}
+
+function renderWorkout(){
+  renderPreWorkout();
+  renderPostHistory();
+}
+
+function renderPreWorkout(){
+  const wn=weekNum(), wData=PLAN_WEEKS[Math.min(wn-1,PLAN_WEEKS.length-1)];
+  const todayIdx=getTodayIdx();
+  const day=wData.days[todayIdx];
+  const rec=S.whoop?.recovery??null;
+
+  // Today's session card
+  const dc=DISC_CLR[day.disc]||"var(--muted)";
+  document.getElementById("preTodayContent").innerHTML=`
+    <div style="font-size:28px;font-weight:800;letter-spacing:-.5px;color:${dc};margin-bottom:6px">${day.disc}</div>
+    <div style="font-size:14px;font-weight:600;color:var(--muted);margin-bottom:12px">${day.type} · ${day.dur} · ${day.zone}</div>
+    ${day.warmup?`<div style="margin-bottom:10px"><div style="font-size:10px;font-weight:700;color:var(--muted);letter-spacing:.07em;text-transform:uppercase;margin-bottom:5px">Opwarming</div><div style="font-size:13px;line-height:1.75">${day.warmup}</div></div>`:""}
+    ${day.main?`<div style="margin-bottom:10px"><div style="font-size:10px;font-weight:700;color:${dc};letter-spacing:.07em;text-transform:uppercase;margin-bottom:5px">Hoofdsessie</div><div style="font-size:13px;line-height:1.75;font-weight:500">${day.main}</div></div>`:""}
+    ${day.cooldown?`<div><div style="font-size:10px;font-weight:700;color:var(--muted);letter-spacing:.07em;text-transform:uppercase;margin-bottom:5px">Afkoeling</div><div style="font-size:13px;line-height:1.75">${day.cooldown}</div></div>`:""}
+    ${getAdaptNote(day,rec)}`;
+
+  // Timing
+  const now=new Date();
+  const endMin=now.getMinutes()+parseInt(day.dur)||60;
+  const endH=now.getHours()+Math.floor(endMin/60),endM=endMin%60;
+  document.getElementById("preTiming").innerHTML=
+    `Nu starten → klaar om <strong>${String(endH%24).padStart(2,"0")}:${String(endM).padStart(2,"0")}</strong><br>
+     Optimaal trainingstijdstip: 07:00–11:00 of 16:00–19:00`;
+
+  // Nutrition
+  const isHard=day.zone.includes("Z3")||day.zone.includes("Z4")||day.type.includes("Test")||day.type.includes("Interval");
+  document.getElementById("preNutrition").innerHTML=isHard
+    ?`2–3u voor: normale maaltijd<br>30–45min voor: banaan of gel<br>Tijdens: water + gel per 45min<br>Na: eiwit + koolhydraten`
+    :`2u voor: lichte maaltijd<br>Direct voor: optioneel banaan<br>Tijdens: water voldoende<br>Na: normaal eten`;
+
+  // AI briefing
+  genPreBriefing(day, rec);
+}
+
+async function genPreBriefing(day, rec){
+  if(!S.claudeKey){
+    document.getElementById("preContent").innerHTML=`<div style="font-size:13px;color:var(--muted)">Voeg Claude API key toe in Instellingen voor een gepersonaliseerde pre-workout briefing.</div>`;
+    return;
+  }
+  const cacheKey=`lars_pre_${todayStr()}_${day.disc}`;
+  const cached=localStorage.getItem(cacheKey);
+  if(cached){document.getElementById("preContent").innerHTML=cached;return;}
+  document.getElementById("preContent").innerHTML='<div class="dots"><span></span><span></span><span></span></div>';
+  const last3=S.sessions.slice(0,3).map(s=>`${s.discipline} ${s.duration||"?"}min`).join(", ");
+  const SYS=`Je bent Lars's Ironman triathlon coach. Geef een pre-workout briefing van 3–4 zinnen. Directioneel, motiverend maar realistisch. Verwijs naar zijn data en de concrete sessie. Antwoord in het Nederlands.`;
+  const USR=`Recovery vandaag: ${rec??"?"}%. Sessie: ${day.disc} · ${day.type} · ${day.dur} · ${day.zone}. Hoofdset: ${day.main}. Laatste sessies: ${last3||"geen"}. Geef mijn pre-workout briefing.`;
+  try{
+    const res=await fetch("https://api.anthropic.com/v1/messages",{method:"POST",headers:{"Content-Type":"application/json","x-api-key":S.claudeKey,"anthropic-version":"2023-06-01","anthropic-dangerous-direct-browser-access":"true"},body:JSON.stringify({model:"claude-sonnet-4-6",max_tokens:180,system:SYS,messages:[{role:"user",content:USR}]})});
+    const data=await res.json();
+    const text=data.content?.[0]?.text||"Klaar voor de sessie. Focus op techniek en HR.";
+    const html=`<div style="font-size:14px;line-height:1.85">${text}</div>`;
+    localStorage.setItem(cacheKey,html);
+    document.getElementById("preContent").innerHTML=html;
+  }catch{document.getElementById("preContent").innerHTML=`<div style="font-size:13px;color:var(--muted)">Ga voor het plan hierboven.</div>`;}
+}
+
+function selectGroup(group, val, btn){
+  postState[group]=val;
+  const groupId=group==="legs"?"legsGroup":"breathGroup";
+  document.querySelectorAll(`#${groupId} .db`).forEach(b=>b.classList.remove("on"));
+  btn.classList.add("on");
+}
+
+function savePostWorkout(){
+  const pw={
+    id:Date.now().toString(),
+    date:todayStr(),
+    ts:new Date().toISOString(),
+    rpe:parseInt(document.getElementById("rpeSlider").value),
+    energy:parseInt(document.getElementById("energySlider").value),
+    legs:postState.legs,
+    breath:postState.breath,
+    wentWell:document.getElementById("postWentWell").value||null,
+    wasHard:document.getElementById("postWasHard").value||null,
+    notes:document.getElementById("postNotes").value||null,
+    disc:PLAN_WEEKS[Math.min(weekNum()-1,PLAN_WEEKS.length-1)].days[getTodayIdx()].disc,
+  };
+  const pws=JSON.parse(localStorage.getItem("lars_postworkout")||"[]");
+  pws.unshift(pw);
+  localStorage.setItem("lars_postworkout",JSON.stringify(pws));
+  ["postWentWell","postWasHard","postNotes"].forEach(id=>document.getElementById(id).value="");
+  showToast("✓ Post-workout opgeslagen");
+  renderPostHistory();
+}
+
+function renderPostHistory(){
+  const pws=JSON.parse(localStorage.getItem("lars_postworkout")||"[]");
+  const el=document.getElementById("postHistory");
+  if(!pws.length){el.innerHTML=`<div style="text-align:center;color:var(--dim);font-size:13px;padding:28px 0">Nog geen post-workouts opgeslagen.</div>`;return;}
+  el.innerHTML=`<div style="font-size:11px;font-weight:700;color:var(--muted);letter-spacing:.06em;text-transform:uppercase;margin-bottom:12px;margin-top:4px">Vorige check-ins</div>`+pws.slice(0,5).map(p=>`
+    <div class="card" style="padding:14px 16px;margin-bottom:10px">
+      <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:10px">
+        <div style="display:flex;gap:8px;align-items:center">
+          <span class="pill" style="background:${DISC_CLR[p.disc]||"var(--dim)"}20;color:${DISC_CLR[p.disc]||"var(--muted)"}">${p.disc||"Workout"}</span>
+          <span style="font-size:11px;color:var(--muted)">${fmtDate(p.date)}</span>
+        </div>
+        <div style="display:flex;gap:10px">
+          <span style="font-size:12px;font-weight:700;color:var(--accent)">RPE ${p.rpe}/10</span>
+          <span style="font-size:12px;font-weight:700;color:var(--green)">⚡${p.energy}/10</span>
+        </div>
+      </div>
+      <div style="display:flex;gap:12px;font-size:12px;color:var(--muted);margin-bottom:${p.wentWell||p.wasHard?8:0}px">
+        <span>Benen: <strong style="color:var(--text)">${p.legs}</strong></span>
+        <span>Adem: <strong style="color:var(--text)">${p.breath}</strong></span>
+      </div>
+      ${p.wentWell?`<div style="font-size:12px;color:var(--green);margin-bottom:4px">✓ ${p.wentWell}</div>`:""}
+      ${p.wasHard?`<div style="font-size:12px;color:var(--muted)">⚡ ${p.wasHard}</div>`:""}
+    </div>`).join("");
 }
 
 // ── Stats ─────────────────────────────────────────────────────────────────────
