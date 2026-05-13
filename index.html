@@ -235,6 +235,7 @@ nav button.on{color:var(--accent);border-top-color:var(--accent)}
   <div class="top-l">
     <span class="wdot dead" id="wdot"></span>
     <span id="wstatus" style="font-size:11px">Disconnected</span>
+    <span id="wage" style="font-size:11px;color:var(--muted)"></span>
   </div>
   <div class="top-r">
     <button onclick="syncAll()" id="syncBtn">↻</button>
@@ -727,21 +728,23 @@ async function syncAll(){
 }
 
 async function syncToday(){
+  const setAge = t => { const e=document.getElementById("wage"); if(e) e.textContent=t; };
   try{
-    let url=S.backendUrl;
-    if(url&&!url.startsWith("http")) url="https://"+url;
-    url=url.replace(/^http:/,"https:");
+    let url=S.backendUrl||"";
+    if(!url.startsWith("http")) url="https://"+url;
+    url=url.replace(/^http:/,"https:").replace(/\/$/,"");
     if(url!==S.backendUrl){ S.backendUrl=url; localStorage.setItem(K.backend,url); }
     const r=await fetch(`${url}/today`);
-    const ct=r.headers.get("content-type")||"";
-    if(!r.ok||!ct.includes("json")){
+    const text=await r.text();
+    let d;
+    try{ d=JSON.parse(text); }
+    catch{
+      // Railway returned HTML (restarting) — retry in 10s
       setBanner(false);
-      document.getElementById("wage").textContent="· backend herstart...";
-      // Retry once after 8 seconds
-      setTimeout(syncToday, 8000);
+      setAge("· herstart...");
+      setTimeout(syncToday,10000);
       return;
     }
-    const d=await r.json();
     if(!d.error){
       S.whoop=d;
       setBanner(true,d.fetchedAt);
@@ -750,7 +753,7 @@ async function syncToday(){
     }
   }catch(e){
     setBanner(false);
-    document.getElementById("wage").textContent="· " + (e.message?.slice(0,30)||"fout");
+    setAge("· "+( e.message?.slice(0,20)||"fout"));
   }
 }
 
