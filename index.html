@@ -693,7 +693,8 @@ function showSettings(){
 function hideSettings(){ document.getElementById("settingsOverlay").classList.remove("on"); }
 
 function saveSettings(){
-  const url=document.getElementById("sBackend").value.trim().replace(/\/$/,"");
+  let url=document.getElementById("sBackend").value.trim().replace(/\/$/,"");
+  if(url&&!url.startsWith("http")) url="https://"+url;
   const key=document.getElementById("sClaudeKey").value.trim();
   if(url){S.backendUrl=url;localStorage.setItem(K.backend,url);}
   if(key){S.claudeKey=key; localStorage.setItem(K.key,key);}
@@ -727,7 +728,9 @@ async function syncAll(){
 
 async function syncToday(){
   try{
-    const url=S.backendUrl.replace(/^http:/,"https:");
+    let url=S.backendUrl;
+    if(url&&!url.startsWith("http")) url="https://"+url;
+    url=url.replace(/^http:/,"https:");
     if(url!==S.backendUrl){ S.backendUrl=url; localStorage.setItem(K.backend,url); }
     const r=await fetch(`${url}/today`);
     const ct=r.headers.get("content-type")||"";
