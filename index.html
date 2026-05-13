@@ -138,6 +138,10 @@ nav button span{font-size:17px}
       <label>Railway backend URL</label>
       <input type="url" id="backendUrlInput" placeholder="https://lars-ironman-backend-production.up.railway.app"/>
     </div>
+    <div class="inp-wrap">
+      <label>Claude API key (voor coach chat)</label>
+      <input type="password" id="claudeKeyInput" placeholder="sk-ant-..."/>
+    </div>
     <button class="btn-primary" onclick="saveBackendUrl()" style="margin-bottom:12px">CONNECT & LAUNCH →</button>
     <button onclick="hideSetup()" style="width:100%;padding:10px;background:none;border:1px solid var(--border);border-radius:8px;color:var(--muted);font-size:13px">Cancel</button>
     <div class="alert yellow" style="margin-top:16px">
@@ -210,7 +214,7 @@ nav button span{font-size:17px}
 
 <!-- TRAINING -->
 <div id="training" class="screen pad">
-  <h2 style="font-size:20px;font-weight:700;margin-bottom:4px">Week 1 plan</h2>
+  <h2 style="font-size:20px;font-weight:700;margin-bottom:4px" id="weekPlanTitle">Week 1 plan</h2>
   <p style="font-size:12px;color:var(--dim);margin-bottom:12px">Assessment week · adapts weekly based on your data · tap for detail</p>
   <div id="recAdvice" class="card" style="display:none;margin-bottom:14px"></div>
   <div id="weekPlan"></div>
@@ -378,9 +382,6 @@ const WEEK = [
   {day:"Sun",type:"Recovery", color:"#9b8fef",zone:"—",         detail:"Full rest · post all week data and we debrief + plan week 2"},
 ];
 
-const DISC_COLORS = {
-  Run:{"#3ae87a":1},Swim:{"#3ab3e8":1},AirBike:{"#e8a83a":1},Brick:{"#e83a3a":1},Recovery:{"#9b8fef":1}
-};
 function discColor(d){return d==="Run"?"#3ae87a":d==="Swim"?"#3ab3e8":d==="AirBike"?"#e8a83a":d==="Brick"?"#e83a3a":"#9b8fef"}
 
 // ── State ─────────────────────────────────────────────────────────────────────
@@ -389,6 +390,7 @@ let state = {
   dailyLogs:  JSON.parse(localStorage.getItem("im_daily_v6")||"[]"),
   chatNotes:  JSON.parse(localStorage.getItem("im_notes_v6")||"[]"),
   backendUrl: localStorage.getItem("im_backend_url")||"",
+  claudeKey:  localStorage.getItem("im_claude_key")||"",
   whoopData:  null,
   disc: "AirBike",
   feel: 3,
@@ -396,6 +398,8 @@ let state = {
   cat: "note",
   logTab: "morning",
 };
+
+let syncInterval = null;
 
 function saveState(key, val){
   const map={sessions:"im_sessions_v6",dailyLogs:"im_daily_v6",chatNotes:"im_notes_v6"};
@@ -423,7 +427,7 @@ window.onload = () => {
 
   if(state.backendUrl){
     syncWhoop();
-    setInterval(syncWhoop, 5*60*1000); // auto-sync every 5 min
+    syncInterval = setInterval(syncWhoop, 5*60*1000);
   } else {
     showSetup();
   }
@@ -525,8 +529,9 @@ function prefillWhoop(){
 // ── Dashboard ─────────────────────────────────────────────────────────────────
 function renderDashboard(){
   // Date
+  const weekNum = Math.ceil(dayNum(LARS.startDate) / 7);
   document.getElementById("todayDate").textContent =
-    new Date().toLocaleDateString("en-GB",{weekday:"long",day:"numeric",month:"long"}) + " · Week 1";
+    new Date().toLocaleDateString("en-GB",{weekday:"long",day:"numeric",month:"long"}) + ` · Week ${weekNum}`;
 
   // Today's plan
   const idx = new Date().getDay()===0?6:new Date().getDay()-1;
@@ -554,6 +559,8 @@ function renderDashboard(){
 
 // ── Training ──────────────────────────────────────────────────────────────────
 function renderTraining(){
+  const weekNum = Math.ceil(dayNum(LARS.startDate) / 7);
+  document.getElementById("weekPlanTitle").textContent = `Week ${weekNum} plan`;
   const idx = new Date().getDay()===0?6:new Date().getDay()-1;
   document.getElementById("weekPlan").innerHTML = WEEK.map((w,i)=>`
     <div class="day-row${i===idx?" today":""}" onclick="toggleDay(this)" style="border-left-color:${i===idx?w.color:"var(--border)"}">
@@ -784,11 +791,19 @@ async function sendNote(){
   const d = state.whoopData;
   const SYSTEM = `You are Lars's Ironman triathlon coach. Lars: 27yo, 71kg, Bruges Belgium. RHR 48, Max HR 197, HRV ${d?.hrv||116}ms, Recovery ${d?.recovery||66}%, Strain ${d?.strain||12.7}. Zones Z1 110–131, Z2 132–150, Z3 151–165, Z4 166–181, Z5 182–197. Week 1 baseline. AirBike 122w avg baseline. Half marathon comfortable. Football until 18, gym 3yrs. Respond under 100 words, direct and specific. If feature request, confirm you'll build it.`;
 
+  if(!state.claudeKey){
+    state.chatNotes = state.chatNotes.map(m=>m.id===msg.id?{...m,reply:"Geen API key ingesteld — voeg je Claude API key toe via Settings."}:m);
+    saveState("chatNotes", state.chatNotes);
+    renderNotes();
+    btn.textContent="SEND · ⌘↵"; btn.style.background="var(--gold)"; btn.style.color="#000";
+    return;
+  }
+
   try {
     const res  = await fetch("https://api.anthropic.com/v1/messages",{
       method:"POST",
-      headers:{"Content-Type":"application/json"},
-      body:JSON.stringify({model:"claude-sonnet-4-20250514",max_tokens:1000,system:SYSTEM,messages:[{role:"user",content:`[${state.cat.toUpperCase()}] ${text}`}]})
+      headers:{"Content-Type":"application/json","x-api-key":state.claudeKey,"anthropic-version":"2023-06-01","anthropic-dangerous-direct-browser-access":"true"},
+      body:JSON.stringify({model:"claude-sonnet-4-6",max_tokens:1000,system:SYSTEM,messages:[{role:"user",content:`[${state.cat.toUpperCase()}] ${text}`}]})
     });
     const data = await res.json();
     const reply= data.content?.[0]?.text||"Logged.";
@@ -833,6 +848,7 @@ function showTab(id, btn){
 function showSetup(){
   document.getElementById("setupScreen").style.display="block";
   if(state.backendUrl) document.getElementById("backendUrlInput").value=state.backendUrl;
+  if(state.claudeKey) document.getElementById("claudeKeyInput").value=state.claudeKey;
 }
 function hideSetup(){ document.getElementById("setupScreen").style.display="none"; }
 
@@ -841,9 +857,12 @@ function saveBackendUrl(){
   if(!url) return;
   state.backendUrl = url;
   localStorage.setItem("im_backend_url", url);
+  const key = document.getElementById("claudeKeyInput").value.trim();
+  if(key){ state.claudeKey = key; localStorage.setItem("im_claude_key", key); }
   hideSetup();
+  clearInterval(syncInterval);
   syncWhoop();
-  setInterval(syncWhoop, 5*60*1000);
+  syncInterval = setInterval(syncWhoop, 5*60*1000);
 }
 </script>
 </body>
