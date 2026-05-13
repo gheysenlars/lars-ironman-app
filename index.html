@@ -739,8 +739,8 @@ async function syncToday(){
     }else{ setBanner(false); showToast("Whoop fout: "+d.error); }
   }catch(e){
     setBanner(false);
-    showToast("Sync mislukt — check ⚙ Settings");
-    console.error("syncToday:",e.message);
+    showToast(e.message||"Fetch mislukt");
+    console.error("syncToday:",e);
   }
 }
 
