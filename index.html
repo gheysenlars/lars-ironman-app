@@ -263,6 +263,9 @@ nav button.on{color:var(--accent);border-top-color:var(--accent)}
     <!-- Today's session — MAIN CARD -->
     <div id="todaySessionCard" style="margin-bottom:12px"></div>
 
+    <!-- Tomorrow -->
+    <div id="tomorrowCard" style="margin-bottom:12px"></div>
+
   </div>
 </div>
 
@@ -968,6 +971,11 @@ function renderToday(){
     </div>
     ${done?renderTodayAnalysis():""}`;
 
+  // Tomorrow card
+  const tomorrowIdx=(getTodayIdx()+1)%7;
+  const tomorrowDay=wData.days[tomorrowIdx]||PLAN_WEEKS[Math.min(weekNum(),PLAN_WEEKS.length-1)]?.days[0];
+  if(tomorrowDay) renderTomorrow(tomorrowDay, rec);
+
   if(!S.whoop) genBriefing(false);
 }
 
@@ -975,6 +983,115 @@ function renderTodayAnalysis(){
   const todaySessions=S.sessions.filter(s=>s.date===todayStr());
   if(!todaySessions.length)return"";
   return todaySessions.map(s=>renderAnalysis(s.id,s.whoopId)).filter(Boolean).join("");
+}
+
+function renderTomorrow(day, rec){
+  const el=document.getElementById("tomorrowCard");
+  if(!el)return;
+  const isRest=day.disc==="Recovery"||day.type.includes("rust")||day.type.includes("Rust");
+  const dc=DISC_CLR[day.disc]||"var(--muted)";
+
+  if(!isRest){
+    // Normal session tomorrow
+    el.innerHTML=`<div style="background:#fff;box-shadow:var(--shadow);border-radius:16px;padding:18px;border-left:3px solid ${dc}40">
+      <div style="font-size:10px;font-weight:700;color:var(--muted);letter-spacing:.08em;text-transform:uppercase;margin-bottom:10px">Morgen</div>
+      <div style="display:flex;align-items:center;justify-content:space-between">
+        <div>
+          <div style="font-size:22px;font-weight:800;color:${dc}">${day.disc}</div>
+          <div style="font-size:13px;color:var(--muted);margin-top:3px">${day.type} · ${day.dur} · ${day.zone}</div>
+        </div>
+      </div>
+      ${day.warmup||day.main?`<div style="margin-top:12px;padding-top:12px;border-top:1px solid rgba(0,0,0,.06);font-size:12px;color:var(--muted);line-height:1.7">${day.main||""}</div>`:""}
+    </div>`;
+    return;
+  }
+
+  // Rest day — show optional training options
+  const goodRec=rec==null||rec>=50;
+  el.innerHTML=`<div style="background:#fff;box-shadow:var(--shadow);border-radius:16px;padding:18px">
+    <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:14px">
+      <div>
+        <div style="font-size:10px;font-weight:700;color:var(--muted);letter-spacing:.08em;text-transform:uppercase;margin-bottom:4px">Morgen · Rustdag gepland</div>
+        <div style="font-size:13px;color:var(--muted)">Wil je toch trainen? Kies een optie:</div>
+      </div>
+    </div>
+    ${goodRec?`
+    <div style="display:flex;flex-direction:column;gap:8px" id="optionalSessions">
+      <div onclick="showOptional('run')" style="padding:12px 14px;border:1.5px solid rgba(0,0,0,.08);border-radius:12px;cursor:pointer;transition:all .15s" onmouseover="this.style.borderColor='#2ECC71'" onmouseout="this.style.borderColor='rgba(0,0,0,.08)'">
+        <div style="display:flex;align-items:center;justify-content:space-between">
+          <div>
+            <span style="font-size:14px;font-weight:700;color:#2ECC71">Herstelloop</span>
+            <span style="font-size:12px;color:var(--muted);margin-left:10px">30–40 min · Z1 <145bpm</span>
+          </div>
+          <span style="font-size:12px;color:var(--muted)">↓</span>
+        </div>
+        <div id="opt-run" style="display:none;margin-top:10px;padding-top:10px;border-top:1px solid rgba(0,0,0,.06);font-size:12px;color:var(--text);line-height:1.8">
+          <strong>Opwarming:</strong> 5 min wandelen<br>
+          <strong>Sessie:</strong> 25–30 min heel rustig lopen · onder 145bpm · neus ademen · als HR stijgt → wandelen<br>
+          <strong>Afkoeling:</strong> 5 min wandelen + rekken<br>
+          <span style="color:var(--muted);font-style:italic">Dit is herstel, geen training — actieve recuperatie bevordert adaptatie</span>
+        </div>
+      </div>
+      <div onclick="showOptional('fitness')" style="padding:12px 14px;border:1.5px solid rgba(0,0,0,.08);border-radius:12px;cursor:pointer;transition:all .15s" onmouseover="this.style.borderColor='#9B8BFF'" onmouseout="this.style.borderColor='rgba(0,0,0,.08)'">
+        <div style="display:flex;align-items:center;justify-content:space-between">
+          <div>
+            <span style="font-size:14px;font-weight:700;color:#9B8BFF">Fitness / Kracht</span>
+            <span style="font-size:12px;color:var(--muted);margin-left:10px">40 min · geen cardio</span>
+          </div>
+          <span style="font-size:12px;color:var(--muted)">↓</span>
+        </div>
+        <div id="opt-fitness" style="display:none;margin-top:10px;padding-top:10px;border-top:1px solid rgba(0,0,0,.06);font-size:12px;color:var(--text);line-height:1.8">
+          <strong>Circuit 3×:</strong><br>
+          Hip hinge 12 reps · Glute bridge single leg 10/kant · Copenhagen plank 20s · Shoulder press 10 reps · Cable row 12 reps<br>
+          2 min rust tussen sets · geen cardio verhoogt herstel<br>
+          <span style="color:var(--muted);font-style:italic">Doel: blessurepreventie en kracht — niet moe worden</span>
+        </div>
+      </div>
+      <div onclick="showOptional('swim')" style="padding:12px 14px;border:1.5px solid rgba(0,0,0,.08);border-radius:12px;cursor:pointer;transition:all .15s" onmouseover="this.style.borderColor='#4EA8DE'" onmouseout="this.style.borderColor='rgba(0,0,0,.08)'">
+        <div style="display:flex;align-items:center;justify-content:space-between">
+          <div>
+            <span style="font-size:14px;font-weight:700;color:#4EA8DE">Techniekzwem</span>
+            <span style="font-size:12px;color:var(--muted);margin-left:10px">30 min · puur techniek</span>
+          </div>
+          <span style="font-size:12px;color:var(--muted)">↓</span>
+        </div>
+        <div id="opt-swim" style="display:none;margin-top:10px;padding-top:10px;border-top:1px solid rgba(0,0,0,.06);font-size:12px;color:var(--text);line-height:1.8">
+          <strong>Opwarming:</strong> 200m rustig<br>
+          <strong>Sessie:</strong> 4×100m catch drill · 4×100m pull buoy · 45s rust per set<br>
+          <strong>Afkoeling:</strong> 100m rustig<br>
+          <span style="color:var(--muted);font-style:italic">Geen inspanning — techniek inprenten op frisse spieren</span>
+        </div>
+      </div>
+      <div onclick="showOptional('mobil')" style="padding:12px 14px;border:1.5px solid rgba(0,0,0,.08);border-radius:12px;cursor:pointer" onmouseover="this.style.borderColor='#FF4500'" onmouseout="this.style.borderColor='rgba(0,0,0,.08)'">
+        <div style="display:flex;align-items:center;justify-content:space-between">
+          <div>
+            <span style="font-size:14px;font-weight:700;color:var(--accent)">Mobiliteit</span>
+            <span style="font-size:12px;color:var(--muted);margin-left:10px">25 min · aanbevolen altijd</span>
+          </div>
+          <span style="font-size:12px;color:var(--muted)">↓</span>
+        </div>
+        <div id="opt-mobil" style="display:none;margin-top:10px;padding-top:10px;border-top:1px solid rgba(0,0,0,.06);font-size:12px;color:var(--text);line-height:1.8">
+          <strong>Foam rolling:</strong> IT-band, heupen, kuiten, thorax — 15 min<br>
+          <strong>Stretching:</strong> heup flexors, hamstrings, schouders, enkels — 10 min<br>
+          <span style="color:var(--muted);font-style:italic">Altijd nuttig — bevordert herstel en voorkomt blessures</span>
+        </div>
+      </div>
+    </div>`:`
+    <div style="padding:12px;background:rgba(255,56,96,.06);border-radius:10px;font-size:13px;color:var(--red);line-height:1.6">
+      Recovery is laag — echt rusten morgen is de beste keuze. Maximaal: 20 min wandeling + foam rolling.
+    </div>`}
+  </div>`;
+}
+
+function showOptional(type){
+  const el=document.getElementById(`opt-${type}`);
+  if(!el)return;
+  const isOpen=el.style.display==="block";
+  ["run","fitness","swim","mobil"].forEach(t=>{
+    const e=document.getElementById(`opt-${t}`);
+    if(e)e.style.display="none";
+  });
+  if(!isOpen)el.style.display="block";
 }
 
 function calcStreak(){
