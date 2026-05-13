@@ -435,11 +435,20 @@ const WEEK = [
 ];
 
 // ── State ─────────────────────────────────────────────────────────────────────
+// Stable keys — never change these
+const K = { backend:"lars_backend", key:"lars_key", sessions:"lars_sessions", notes:"lars_notes" };
+
+// Migrate from old versioned keys (one-time)
+["im8_backend","im9_backend"].forEach(k=>{ const v=localStorage.getItem(k); if(v&&!localStorage.getItem(K.backend)){ localStorage.setItem(K.backend,v); localStorage.removeItem(k); }});
+["im8_key","im9_key"].forEach(k=>{ const v=localStorage.getItem(k); if(v&&!localStorage.getItem(K.key)){ localStorage.setItem(K.key,v); localStorage.removeItem(k); }});
+["im8_sessions","im9_sessions"].forEach(k=>{ const v=localStorage.getItem(k); if(v&&!localStorage.getItem(K.sessions)){ localStorage.setItem(K.sessions,v); localStorage.removeItem(k); }});
+["im8_notes","im9_notes"].forEach(k=>{ const v=localStorage.getItem(k); if(v&&!localStorage.getItem(K.notes)){ localStorage.setItem(K.notes,v); localStorage.removeItem(k); }});
+
 let S = {
-  sessions:  JSON.parse(localStorage.getItem("im9_sessions")||"[]"),
-  notes:     JSON.parse(localStorage.getItem("im9_notes")||"[]"),
-  backendUrl:localStorage.getItem("im9_backend")||"",
-  claudeKey: localStorage.getItem("im9_key")||"",
+  sessions:  JSON.parse(localStorage.getItem(K.sessions)||"[]"),
+  notes:     JSON.parse(localStorage.getItem(K.notes)||"[]"),
+  backendUrl:localStorage.getItem(K.backend)||"",
+  claudeKey: localStorage.getItem(K.key)||"",
   whoop:null, history:null,
   disc:"Swim", feel:3, cat:"note",
 };
@@ -455,7 +464,7 @@ const weekNum = ()=>Math.ceil(dayNum()/7);
 const getZone = hr=>LARS.zones.find(z=>hr>=z.min&&hr<=z.max);
 const recClr  = r=>r>=67?"#00C882":r>=34?"#FFD040":"#FF4848";
 const recLbl  = r=>r>=67?"Green · go hard":r>=34?"Yellow · train smart":"Red · protect recovery";
-const persist = (k,v)=>localStorage.setItem(k,JSON.stringify(v));
+const persist = (k,v)=>localStorage.setItem(K[k]||k,JSON.stringify(v));
 const mapSport= s=>{
   if(!s) return "Workout";
   for(const [k,v] of Object.entries(SPORT_MAP)) if(s.toLowerCase().includes(k.toLowerCase())) return v;
@@ -502,8 +511,8 @@ function hideSettings(){ document.getElementById("settingsOverlay").classList.re
 function saveSettings(){
   const url = document.getElementById("sBackend").value.trim().replace(/\/$/,"");
   const key = document.getElementById("sClaudeKey").value.trim();
-  if(url){ S.backendUrl=url; localStorage.setItem("im9_backend",url); }
-  if(key){ S.claudeKey=key;  localStorage.setItem("im9_key",key); }
+  if(url){ S.backendUrl=url; localStorage.setItem(K.backend,url); }
+  if(key){ S.claudeKey=key;  localStorage.setItem(K.key,key); }
   hideSettings();
   clearInterval(syncTimer);
   if(S.backendUrl){ syncAll(); syncTimer=setInterval(syncAll,5*60*1000); }
@@ -511,7 +520,7 @@ function saveSettings(){
 
 function resetData(){
   if(!confirm("Reset all training data? This cannot be undone.")) return;
-  ["im9_sessions","im9_notes"].forEach(k=>localStorage.removeItem(k));
+  [K.sessions, K.notes].forEach(k=>localStorage.removeItem(k));
   S.sessions=[]; S.notes=[];
   renderBrief(); renderSessHistory(); renderStats(); renderNotes();
   hideSettings();
