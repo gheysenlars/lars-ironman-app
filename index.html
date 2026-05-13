@@ -205,7 +205,8 @@ nav button.on{color:var(--accent);border-top-color:var(--accent)}
       </div>
       <p style="font-size:12px;color:var(--muted);line-height:1.65;font-weight:400">Voor morning briefing en dagelijkse prescription. Lokaal opgeslagen op je toestel.</p>
     </div>
-    <button onclick="saveSettings()" style="width:100%;padding:16px;background:var(--accent);color:#fff;border:none;border-radius:14px;font-weight:800;font-size:15px;margin-bottom:12px">Opslaan & verbinden →</button>
+    <button onclick="saveSettings()" style="width:100%;padding:16px;background:var(--accent);color:#fff;border:none;border-radius:14px;font-weight:800;font-size:15px;margin-bottom:10px">Opslaan & verbinden →</button>
+    <button onclick="reconnectWhoop()" style="width:100%;padding:13px;background:none;border:1px solid var(--border2);color:var(--muted);border-radius:12px;font-size:13px;font-weight:600;margin-bottom:10px">↻ Whoop opnieuw verbinden</button>
     <button onclick="resetData()" style="width:100%;padding:12px;background:none;border:1px solid rgba(255,56,96,.25);color:rgba(255,56,96,.7);border-radius:12px;font-size:13px;font-weight:600">Reset trainingsdata</button>
   </div>
 </div>
@@ -866,8 +867,10 @@ const getTodayIdx = ()=>{ const d=new Date().getDay(); return d===0?6:d-1; };
 // ── Boot ──────────────────────────────────────────────────────────────────────
 window.onload=()=>{
   renderToday(); renderPlan(); buildZones(); renderHistory(); renderStats();
+  genPrescription(false);
+  genBriefing(false);
   if(S.backendUrl){ syncAll(); syncTimer=setInterval(syncAll,5*60*1000); }
-  else{ showSettings(); genPrescription(false); genBriefing(false); }
+  else{ showSettings(); }
 };
 
 // ── Nav ───────────────────────────────────────────────────────────────────────
@@ -905,6 +908,13 @@ function saveSettings(){
   hideSettings();
   clearInterval(syncTimer);
   if(S.backendUrl){syncAll();syncTimer=setInterval(syncAll,5*60*1000);}
+}
+
+function reconnectWhoop(){
+  if(!S.backendUrl){ showToast("Voer eerst een backend URL in"); return; }
+  hideSettings();
+  window.open(`${S.backendUrl}/auth/whoop`,"_blank");
+  showToast("Whoop-pagina geopend — log in en kom terug");
 }
 
 function resetData(){
