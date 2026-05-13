@@ -23,7 +23,7 @@ button{cursor:pointer}
 .pad{padding:24px 18px}
 
 /* Top bar */
-.top{position:sticky;top:0;z-index:50;background:rgba(12,11,18,.92);backdrop-filter:blur(16px);border-bottom:1px solid var(--border);display:flex;align-items:center;justify-content:space-between;padding:13px 18px}
+.top{position:sticky;top:0;z-index:50;background:rgba(12,11,18,.93);backdrop-filter:blur(16px);border-bottom:1px solid var(--border);display:flex;align-items:center;justify-content:space-between;padding:13px 18px}
 .top-l{font-size:11px;color:var(--muted);display:flex;align-items:center;gap:7px;font-weight:500}
 .top-r{display:flex;gap:2px;align-items:center}
 .top-r button{background:none;border:none;color:var(--muted);font-size:18px;padding:6px 9px;border-radius:8px;transition:color .15s;line-height:1}
@@ -33,7 +33,7 @@ button{cursor:pointer}
 .wdot.dead{background:var(--red)}
 
 /* Nav */
-nav{position:fixed;bottom:0;left:50%;transform:translateX(-50%);width:100%;max-width:430px;display:flex;background:rgba(12,11,18,.96);border-top:1px solid var(--border);z-index:100;backdrop-filter:blur(16px);padding-bottom:env(safe-area-inset-bottom,0px)}
+nav{position:fixed;bottom:0;left:50%;transform:translateX(-50%);width:100%;max-width:430px;display:flex;background:rgba(12,11,18,.97);border-top:1px solid var(--border);z-index:100;backdrop-filter:blur(16px);padding-bottom:env(safe-area-inset-bottom,0px)}
 nav button{flex:1;padding:12px 4px 10px;border:none;background:transparent;color:var(--dim);font-size:10px;font-weight:600;letter-spacing:.02em;display:flex;flex-direction:column;align-items:center;gap:5px;border-top:2px solid transparent;transition:color .15s}
 nav button.on{color:var(--accent);border-top-color:var(--accent)}
 .ni{font-size:20px;line-height:1}
@@ -50,15 +50,13 @@ nav button.on{color:var(--accent);border-top-color:var(--accent)}
 .rec-bar-wrap{height:5px;border-radius:20px;margin:18px auto 0;max-width:160px;background:var(--border);overflow:hidden}
 .rec-bar-fill{height:100%;border-radius:20px;transition:width .7s ease,background .4s}
 
-/* Coach card */
+/* Coach / prescription cards */
 .coach-card{background:var(--bg2);border:1px solid var(--border2);border-left:3px solid var(--accent);border-radius:18px;padding:18px;margin-bottom:14px}
 .coach-top{display:flex;align-items:center;justify-content:space-between;margin-bottom:12px}
 .coach-body{font-size:14px;line-height:1.85;color:var(--text);font-weight:400}
 .coach-body.dim{color:var(--muted)}
 .coach-refresh{background:none;border:none;color:var(--muted);font-size:18px;padding:2px 6px;transition:color .15s;line-height:1}
 .coach-refresh:hover{color:var(--accent)}
-
-/* Prescription card */
 .presc-card{background:var(--bg2);border:1px solid var(--border2);border-left:3px solid var(--blue);border-radius:18px;padding:18px;margin-bottom:14px}
 .presc-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:14px}
 .presc-discipline{font-size:26px;font-weight:800;letter-spacing:-.5px}
@@ -67,7 +65,7 @@ nav button.on{color:var(--accent);border-top-color:var(--accent)}
 .presc-refresh{background:none;border:none;color:var(--muted);font-size:18px;padding:2px 6px;transition:color .15s;line-height:1}
 .presc-refresh:hover{color:var(--blue)}
 
-/* 4-metric row */
+/* 4 metrics */
 .m4{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-bottom:14px}
 .mc{background:var(--bg3);border:1px solid var(--border);border-radius:14px;padding:14px 8px;text-align:center}
 .mc .v{font-size:17px;font-weight:700;margin-bottom:5px;line-height:1}
@@ -79,15 +77,38 @@ nav button.on{color:var(--accent);border-top-color:var(--accent)}
 .sbox .sv{font-size:30px;font-weight:800;letter-spacing:-1px;line-height:1;margin-bottom:6px}
 .sbox .sl{font-size:11px;color:var(--muted);font-weight:600}
 
+/* Phase banner */
+.phase-banner{background:var(--bg2);border:1px solid var(--border);border-radius:18px;padding:18px;margin-bottom:14px}
+.phase-name{font-size:20px;font-weight:800;letter-spacing:-.3px;margin-bottom:4px}
+.phase-meta{font-size:12px;color:var(--muted);margin-bottom:14px;font-weight:500}
+.phase-progress{height:5px;border-radius:20px;background:var(--border);overflow:hidden;margin-bottom:8px}
+.phase-fill{height:100%;border-radius:20px;transition:width .6s ease}
+.phase-weeks{display:flex;justify-content:space-between;font-size:10px;color:var(--dim);font-weight:600}
+
 /* Day rows */
 .day-row{background:var(--bg2);border:1px solid var(--border);border-left:3px solid var(--dim);border-radius:14px;padding:15px 16px;margin-bottom:10px;cursor:pointer;transition:border-color .2s}
 .day-row.today{border-left-color:var(--accent)}
+.day-row.done-session{border-left-color:var(--green)}
 .day-top{display:flex;align-items:center;gap:12px}
 .day-dd{font-size:12px;color:var(--muted);min-width:32px;font-weight:600}
 .day-type{font-size:14px;font-weight:700;flex:1}
 .day-zone{font-size:11px;color:var(--dim);font-weight:500}
-.day-detail{display:none;margin-top:12px;padding-top:12px;border-top:1px solid var(--border);font-size:13px;color:var(--muted);line-height:1.7}
+.day-detail{display:none;margin-top:14px;padding-top:14px;border-top:1px solid var(--border)}
 .day-row.open .day-detail{display:block}
+
+/* Session structure blocks */
+.session-block{margin-bottom:10px}
+.session-block-label{font-size:10px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:var(--muted);margin-bottom:5px}
+.session-block-text{font-size:13px;line-height:1.7;color:var(--text);font-weight:400}
+.session-goal{font-size:12px;color:var(--muted);font-style:italic;margin-top:8px;line-height:1.6;padding-top:8px;border-top:1px solid var(--border)}
+.adapt-badge{padding:8px 12px;border-radius:10px;font-size:12px;line-height:1.6;font-weight:500;margin-top:8px}
+.adapt-green{background:rgba(46,204,113,.08);border:1px solid rgba(46,204,113,.2);color:var(--green)}
+.adapt-yellow{background:rgba(255,186,0,.08);border:1px solid rgba(255,186,0,.2);color:var(--yellow)}
+.adapt-red{background:rgba(255,56,96,.08);border:1px solid rgba(255,56,96,.2);color:var(--red)}
+
+/* Done checkmark */
+.done-badge{display:inline-flex;align-items:center;gap:5px;font-size:11px;font-weight:700;color:var(--green);background:rgba(46,204,113,.1);border:1px solid rgba(46,204,113,.25);padding:3px 10px;border-radius:20px}
+.done-detail{font-size:11px;color:var(--muted);margin-top:6px;font-weight:400}
 
 /* Zone list */
 .zrow{display:flex;align-items:center;gap:12px;padding:11px 0;border-bottom:1px solid var(--border);font-size:13px}
@@ -96,36 +117,26 @@ nav button.on{color:var(--accent);border-top-color:var(--accent)}
 .zbpm{min-width:92px;font-weight:500}
 .zname{color:var(--muted);flex:1;font-size:12px}
 
+/* Upcoming section */
+.upcoming-title{font-size:13px;font-weight:700;color:var(--muted);margin-bottom:10px;letter-spacing:.02em}
+.upcoming-row{background:var(--bg2);border:1px solid var(--border);border-radius:12px;padding:12px 14px;margin-bottom:8px;display:flex;align-items:center;gap:10px}
+.upcoming-dd{font-size:11px;color:var(--dim);font-weight:700;min-width:28px}
+.upcoming-disc{font-size:13px;font-weight:600;flex:1}
+.upcoming-type{font-size:11px;color:var(--muted);font-weight:500}
+
+/* Roadmap */
+.roadmap{display:flex;gap:0;margin-bottom:14px;border-radius:14px;overflow:hidden;border:1px solid var(--border)}
+.roadmap-phase{flex:1;padding:12px 8px;text-align:center;border-right:1px solid var(--border)}
+.roadmap-phase:last-child{border-right:none}
+.roadmap-phase.active{background:var(--bg3)}
+.roadmap-phase .rp-name{font-size:11px;font-weight:700;margin-bottom:3px}
+.roadmap-phase .rp-weeks{font-size:10px;color:var(--dim);font-weight:500}
+
 /* Zone bars */
 .zone-bars{display:flex;gap:3px;margin-top:10px;height:7px}
 .zone-bar-seg{border-radius:4px;min-width:3px}
 
-/* Log form */
-.field{margin-bottom:16px}
-.field label{display:block;font-size:11px;color:var(--muted);font-weight:600;letter-spacing:.04em;text-transform:uppercase;margin-bottom:7px}
-.field input,.field textarea,.field select{width:100%;padding:13px 14px;background:var(--bg3);border:1px solid var(--border);border-radius:12px;font-size:15px;outline:none;transition:border-color .2s;font-weight:400}
-.field input:focus,.field textarea:focus{border-color:rgba(255,92,0,.4)}
-.field textarea{resize:vertical;line-height:1.6;font-size:14px;min-height:80px}
-.field select{-webkit-appearance:none;cursor:pointer}
-.zone-hint{font-size:12px;margin-top:5px;display:none;font-weight:600}
-
-/* Disc buttons */
-.disc-btns{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:18px}
-.db{padding:8px 16px;border-radius:24px;border:1.5px solid var(--border);background:var(--bg2);color:var(--muted);font-size:13px;font-weight:600;transition:all .15s}
-.db.on{border-color:var(--accent);background:rgba(255,92,0,.1);color:var(--accent)}
-
-/* Stars */
-.stars{display:flex;gap:8px}
-.stars button{flex:1;padding:10px;border-radius:10px;border:1.5px solid var(--border);background:var(--bg3);color:var(--dim);font-size:16px;transition:all .15s}
-.stars button.on{border-color:var(--accent);background:rgba(255,92,0,.12);color:var(--accent)}
-
-/* Buttons */
-.btn{width:100%;padding:16px;background:var(--accent);color:#fff;border:none;border-radius:14px;font-weight:800;font-size:15px;letter-spacing:.02em;transition:opacity .15s}
-.btn:active{opacity:.8}
-.btn.saved{background:var(--green)}
-.btn-sm{padding:8px 16px;border-radius:24px;border:1.5px solid var(--border);background:var(--bg2);color:var(--muted);font-size:12px;font-weight:600;transition:all .15s}
-
-/* Session card */
+/* Session card (history) */
 .sesh{background:var(--bg2);border:1px solid var(--border);border-left:3px solid var(--dim);border-radius:14px;padding:14px 16px;margin-bottom:12px}
 .sesh-top{display:flex;align-items:center;gap:8px;margin-bottom:10px;flex-wrap:wrap}
 .sesh-meta{display:flex;gap:12px;flex-wrap:wrap}
@@ -141,9 +152,8 @@ nav button.on{color:var(--accent);border-top-color:var(--accent)}
 .wbar{flex:1;border-radius:4px 4px 0 0;min-height:3px;transition:height .4s ease}
 .wlbl{font-size:9px;color:var(--dim);text-align:center;margin-top:5px;font-weight:600}
 
-/* Notes */
-.note-card{background:var(--bg2);border:1px solid var(--border);border-radius:14px;padding:14px 16px;margin-bottom:12px}
-.note-reply{margin-top:12px;padding-top:12px;border-top:1px solid var(--border);font-size:13px;color:var(--muted);line-height:1.7}
+/* Week group (history) */
+.week-group-hdr{font-size:12px;font-weight:700;color:var(--muted);padding:12px 0 8px;letter-spacing:.04em;text-transform:uppercase;cursor:pointer;display:flex;align-items:center;justify-content:space-between}
 
 /* Dots loader */
 .dots{display:flex;gap:6px;align-items:center;height:22px}
@@ -152,45 +162,51 @@ nav button.on{color:var(--accent);border-top-color:var(--accent)}
 .dots span:nth-child(3){animation-delay:.4s}
 @keyframes blink{0%,100%{opacity:.15}50%{opacity:1}}
 
+/* Toast */
+.toast{position:fixed;bottom:96px;left:50%;transform:translateX(-50%);background:var(--bg3);border:1px solid var(--border2);color:var(--text);padding:10px 18px;border-radius:24px;font-size:13px;font-weight:600;z-index:500;opacity:0;transition:opacity .25s;pointer-events:none;white-space:nowrap}
+.toast.show{opacity:1}
+
 /* Overlay */
 .overlay{position:fixed;top:0;left:0;right:0;bottom:0;background:var(--bg);z-index:200;overflow-y:auto;max-width:430px;margin:0 auto;display:none}
 .overlay.on{display:block}
 
-/* Alerts */
 .ay{background:rgba(255,186,0,.07);border:1px solid rgba(255,186,0,.2);color:var(--yellow);padding:12px 14px;border-radius:12px;font-size:13px;line-height:1.6;font-weight:500}
 .ag{background:rgba(46,204,113,.07);border:1px solid rgba(46,204,113,.2);color:var(--green);padding:12px 14px;border-radius:12px;font-size:13px;line-height:1.6;font-weight:500}
 </style>
 </head>
 <body>
 
+<!-- Toast -->
+<div class="toast" id="toast"></div>
+
 <!-- SETTINGS OVERLAY -->
 <div class="overlay" id="settingsOverlay">
   <div class="pad">
-    <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:24px">
+    <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:28px">
       <div>
-        <div style="font-size:10px;color:var(--muted);letter-spacing:.1em;text-transform:uppercase;margin-bottom:4px">One-time setup</div>
-        <h1 style="font-size:24px;font-weight:700;letter-spacing:-.5px">Settings</h1>
+        <div style="font-size:11px;color:var(--muted);font-weight:600;letter-spacing:.04em;text-transform:uppercase;margin-bottom:6px">Setup</div>
+        <h1 style="font-size:26px;font-weight:800;letter-spacing:-.5px">Settings</h1>
       </div>
-      <button onclick="hideSettings()" style="background:none;border:1px solid var(--border);color:var(--muted);padding:8px 14px;border-radius:10px;font-size:12px">Close</button>
+      <button onclick="hideSettings()" style="background:none;border:1px solid var(--border);color:var(--muted);padding:9px 16px;border-radius:12px;font-size:13px;font-weight:600">Sluiten</button>
     </div>
     <div class="card">
       <span class="lbl">Whoop · Railway backend</span>
-      <div class="field" style="margin-bottom:8px">
-        <label>Backend URL</label>
-        <input type="url" id="sBackend" placeholder="https://lars-ironman-backend-production.up.railway.app"/>
+      <div style="margin-bottom:8px">
+        <div style="font-size:11px;color:var(--muted);font-weight:600;letter-spacing:.04em;text-transform:uppercase;margin-bottom:7px">Backend URL</div>
+        <input type="url" id="sBackend" placeholder="https://lars-ironman-backend-production.up.railway.app" style="width:100%;padding:13px 14px;background:var(--bg3);border:1px solid var(--border);border-radius:12px;font-size:14px;outline:none"/>
       </div>
-      <div class="ay">Visit <strong>/auth/whoop</strong> on your backend first to link your Whoop account.</div>
+      <div class="ay">Bezoek eerst <strong>/auth/whoop</strong> op je backend om Whoop te koppelen.</div>
     </div>
     <div class="card">
-      <span class="lbl">Coach AI · Claude API</span>
-      <div class="field" style="margin-bottom:8px">
-        <label>API key</label>
-        <input type="password" id="sClaudeKey" placeholder="sk-ant-..."/>
+      <span class="lbl">Coach AI · Claude API key</span>
+      <div style="margin-bottom:8px">
+        <div style="font-size:11px;color:var(--muted);font-weight:600;letter-spacing:.04em;text-transform:uppercase;margin-bottom:7px">API key</div>
+        <input type="password" id="sClaudeKey" placeholder="sk-ant-..." style="width:100%;padding:13px 14px;background:var(--bg3);border:1px solid var(--border);border-radius:12px;font-size:14px;outline:none"/>
       </div>
-      <p style="font-size:11px;color:var(--muted);line-height:1.65">Powers morning briefing, daily prescription &amp; coach chat. Stored locally on your device only.</p>
+      <p style="font-size:12px;color:var(--muted);line-height:1.65;font-weight:400">Voor morning briefing en dagelijkse prescription. Lokaal opgeslagen op je toestel.</p>
     </div>
-    <button class="btn" onclick="saveSettings()" style="margin-bottom:12px">SAVE & CONNECT →</button>
-    <button onclick="resetData()" style="width:100%;padding:12px;background:none;border:1px solid rgba(255,72,72,.25);color:rgba(255,72,72,.6);border-radius:10px;font-size:12px">Reset all training data</button>
+    <button onclick="saveSettings()" style="width:100%;padding:16px;background:var(--accent);color:#fff;border:none;border-radius:14px;font-weight:800;font-size:15px;margin-bottom:12px">Opslaan & verbinden →</button>
+    <button onclick="resetData()" style="width:100%;padding:12px;background:none;border:1px solid rgba(255,56,96,.25);color:rgba(255,56,96,.7);border-radius:12px;font-size:13px;font-weight:600">Reset trainingsdata</button>
   </div>
 </div>
 
@@ -198,7 +214,7 @@ nav button.on{color:var(--accent);border-top-color:var(--accent)}
 <div class="top">
   <div class="top-l">
     <span class="wdot dead" id="wdot"></span>
-    <span id="wstatus">DISCONNECTED</span>
+    <span id="wstatus">Disconnected</span>
     <span id="wage" style="color:var(--dim)"></span>
   </div>
   <div class="top-r">
@@ -207,18 +223,18 @@ nav button.on{color:var(--accent);border-top-color:var(--accent)}
   </div>
 </div>
 
-<!-- ═══════════════════════ BRIEF ═══════════════════════ -->
-<div class="scr on" id="s-brief">
+<!-- ═══════════ TODAY ═══════════ -->
+<div class="scr on" id="s-today">
   <div class="pad">
-    <div style="margin-bottom:20px">
-      <div id="bDate" style="font-size:11px;color:var(--muted);letter-spacing:.08em;text-transform:uppercase;margin-bottom:6px"></div>
-      <h1 style="font-size:34px;font-weight:700;letter-spacing:-1.5px;line-height:1">Lars.</h1>
+    <div style="margin-bottom:24px">
+      <div id="bDate" style="font-size:12px;color:var(--muted);font-weight:600;margin-bottom:8px"></div>
+      <h1 style="font-size:36px;font-weight:900;letter-spacing:-1.5px;line-height:1">Lars.</h1>
     </div>
 
     <!-- Daily prescription -->
-    <div class="presc-card" id="prescCard">
+    <div class="presc-card">
       <div class="presc-header">
-        <span class="lbl" style="margin:0;color:var(--blue)">Today's training</span>
+        <span class="lbl" style="margin:0;color:var(--blue)">Vandaag</span>
         <button class="presc-refresh" onclick="genPrescription(true)">↻</button>
       </div>
       <div id="prescContent"><div class="dots"><span></span><span></span><span></span></div></div>
@@ -237,7 +253,7 @@ nav button.on{color:var(--accent);border-top-color:var(--accent)}
     <div class="rec-hero" id="recHero">
       <span class="lbl">Recovery</span>
       <div class="rec-pct" id="recPct" style="color:var(--muted)">—</div>
-      <div class="rec-sub" id="recSub" style="color:var(--muted)">awaiting whoop sync</div>
+      <div class="rec-sub" id="recSub" style="color:var(--muted)">wacht op whoop sync</div>
       <div class="rec-bar-wrap"><div class="rec-bar-fill" id="recFill" style="width:0;background:var(--muted)"></div></div>
     </div>
 
@@ -245,153 +261,103 @@ nav button.on{color:var(--accent);border-top-color:var(--accent)}
     <div class="m4">
       <div class="mc"><div class="v" id="mHRV" style="color:var(--purple)">—</div><div class="l">HRV</div></div>
       <div class="mc"><div class="v" id="mRHR" style="color:var(--blue)">—</div><div class="l">RHR</div></div>
-      <div class="mc"><div class="v" id="mStrain" style="color:var(--gold)">—</div><div class="l">Strain</div></div>
-      <div class="mc"><div class="v" id="mSleep" style="color:var(--green)">—</div><div class="l">Sleep</div></div>
+      <div class="mc"><div class="v" id="mStrain" style="color:var(--accent)">—</div><div class="l">Strain</div></div>
+      <div class="mc"><div class="v" id="mSleep" style="color:var(--green)">—</div><div class="l">Slaap</div></div>
     </div>
 
     <!-- HRV trend -->
     <div class="card" id="hrvTrendCard" style="display:none">
       <span class="lbl">HRV trend · 7 dagen</span>
       <div id="hrvTrend"></div>
-      <div id="hrvTrendNote" style="font-size:11px;color:var(--muted);margin-top:8px"></div>
+      <div id="hrvTrendNote" style="font-size:12px;color:var(--muted);margin-top:10px;font-weight:500"></div>
     </div>
 
-    <!-- Mini stats -->
+    <!-- Stats strip -->
     <div class="g2">
-      <div class="sbox"><div class="sv" id="bSessions" style="color:var(--gold)">0</div><div class="sl">Sessions</div></div>
-      <div class="sbox"><div class="sv" id="bWeek" style="color:var(--green)">0</div><div class="sl">This week</div></div>
-      <div class="sbox"><div class="sv" id="bDay" style="color:var(--blue)">1</div><div class="sl">Training day</div></div>
-      <div class="sbox"><div class="sv" id="bStreak" style="color:var(--purple)">0</div><div class="sl">Day streak</div></div>
+      <div class="sbox"><div class="sv" id="bSessions" style="color:var(--accent)">0</div><div class="sl">Sessies</div></div>
+      <div class="sbox"><div class="sv" id="bWeek" style="color:var(--green)">0</div><div class="sl">Deze week</div></div>
+      <div class="sbox"><div class="sv" id="bDay" style="color:var(--blue)">1</div><div class="sl">Trainingsdag</div></div>
+      <div class="sbox"><div class="sv" id="bStreak" style="color:var(--purple)">0</div><div class="sl">Streak</div></div>
     </div>
   </div>
 </div>
 
-<!-- ═══════════════════════ PLAN ═══════════════════════ -->
+<!-- ═══════════ PLAN ═══════════ -->
 <div class="scr" id="s-plan">
   <div class="pad">
-    <div style="margin-bottom:20px">
-      <div id="planWkLbl" style="font-size:10px;color:var(--muted);letter-spacing:.1em;text-transform:uppercase;margin-bottom:4px">WEEK 1 · BASE BUILDING</div>
-      <h2 style="font-size:22px;font-weight:700;letter-spacing:-.5px">Training plan</h2>
+    <div style="margin-bottom:24px">
+      <h2 style="font-size:26px;font-weight:800;letter-spacing:-.5px">Trainingsplan</h2>
+      <p style="font-size:13px;color:var(--muted);margin-top:6px;font-weight:400">Past automatisch op basis van je Whoop data</p>
     </div>
-    <div id="planAdvice" style="display:none;margin-bottom:12px"></div>
+
+    <!-- Phases roadmap -->
+    <div class="roadmap" id="planRoadmap"></div>
+
+    <!-- Phase banner -->
+    <div class="phase-banner" id="phaseBanner"></div>
+
+    <!-- Recovery advice -->
+    <div id="planAdvice" style="display:none;margin-bottom:14px"></div>
+
+    <!-- This week -->
+    <div style="font-size:13px;font-weight:700;color:var(--muted);margin-bottom:10px;letter-spacing:.02em" id="planWeekLabel"></div>
     <div id="weekPlan"></div>
-    <div class="card" style="margin-top:4px">
-      <span class="lbl">Hartslag zones · Max 197 · RHR 53</span>
+
+    <!-- Upcoming -->
+    <div id="planUpcoming" style="margin-top:20px"></div>
+
+    <!-- Zones -->
+    <div class="card" style="margin-top:8px">
+      <span class="lbl">Hartslagzones · Max 197 · RHR 53</span>
       <div id="zoneList"></div>
     </div>
   </div>
 </div>
 
-<!-- ═══════════════════════ LOG ═══════════════════════ -->
-<div class="scr" id="s-log">
+<!-- ═══════════ HISTORY ═══════════ -->
+<div class="scr" id="s-history">
   <div class="pad">
-    <div style="margin-bottom:20px">
-      <h2 style="font-size:22px;font-weight:700;letter-spacing:-.5px">Log session</h2>
-      <p style="font-size:12px;color:var(--muted);margin-top:4px">Whoop activities auto-detected · or log manually</p>
+    <div style="margin-bottom:24px">
+      <h2 style="font-size:26px;font-weight:800;letter-spacing:-.5px">Sessies</h2>
+      <p style="font-size:13px;color:var(--muted);margin-top:6px;font-weight:400" id="historySubtitle">Automatisch gesynchroniseerd via Whoop</p>
     </div>
-
-    <!-- Whoop activities to import -->
-    <div id="whoopActivities"></div>
-
-    <div class="field">
-      <label>Discipline</label>
-      <div class="disc-btns" id="discBtns">
-        <button class="db on" onclick="setDisc(this,'Swim')">Swim</button>
-        <button class="db" onclick="setDisc(this,'Bike')">Bike</button>
-        <button class="db" onclick="setDisc(this,'Run')">Run</button>
-        <button class="db" onclick="setDisc(this,'AirBike')">AirBike</button>
-        <button class="db" onclick="setDisc(this,'Strength')">Strength</button>
-        <button class="db" onclick="setDisc(this,'Recovery')">Recovery</button>
-      </div>
-    </div>
-
-    <div class="field"><label>Date</label><input type="date" id="lDate"/></div>
-    <div class="g2" style="gap:10px;margin-bottom:0">
-      <div class="field"><label>Duration (min)</label><input type="number" id="lDur" placeholder="60"/></div>
-      <div class="field"><label>Distance</label><input type="text" id="lDist" placeholder="e.g. 5km"/></div>
-      <div class="field">
-        <label>Avg HR (bpm)</label>
-        <input type="number" id="lAvgHR" placeholder="from Whoop" oninput="showZoneHint()"/>
-        <div id="zoneHint" class="zone-hint"></div>
-      </div>
-      <div class="field"><label>Max HR (bpm)</label><input type="number" id="lMaxHR" placeholder="from Whoop"/></div>
-      <div class="field"><label>Avg watts</label><input type="number" id="lWatts" placeholder="AirBike / Bike"/></div>
-      <div class="field"><label>Whoop strain</label><input type="number" id="lStrain" placeholder="auto"/></div>
-      <div class="field"><label>Recovery %</label><input type="number" id="lRec" placeholder="auto"/></div>
-    </div>
-
-    <div class="field">
-      <label>How did it feel? <span id="feelLbl">😐</span></label>
-      <div class="stars" id="feelStars">
-        <button onclick="setFeel(1)">★</button>
-        <button onclick="setFeel(2)">★</button>
-        <button class="on" onclick="setFeel(3)">★</button>
-        <button onclick="setFeel(4)">★</button>
-        <button onclick="setFeel(5)">★</button>
-      </div>
-    </div>
-
-    <div class="field"><label>Notes</label><textarea id="lNotes" placeholder="splits · how it felt · what you noticed..."></textarea></div>
-    <button class="btn" id="saveBtn" onclick="saveSession()">SAVE SESSION</button>
-    <div style="margin-top:28px" id="sessHistory"></div>
+    <div id="historyList"></div>
   </div>
 </div>
 
-<!-- ═══════════════════════ STATS ═══════════════════════ -->
+<!-- ═══════════ STATS ═══════════ -->
 <div class="scr" id="s-stats">
   <div class="pad">
-    <div style="margin-bottom:20px">
-      <h2 style="font-size:22px;font-weight:700;letter-spacing:-.5px">Progress</h2>
-      <p style="font-size:12px;color:var(--muted);margin-top:4px">Training load &amp; trends</p>
+    <div style="margin-bottom:24px">
+      <h2 style="font-size:26px;font-weight:800;letter-spacing:-.5px">Progressie</h2>
+      <p style="font-size:13px;color:var(--muted);margin-top:6px;font-weight:400">Trainingsbelasting &amp; trends</p>
     </div>
     <div class="card">
-      <span class="lbl">Trainingsbelasting · 8 weken</span>
+      <span class="lbl">Weekbelasting · 8 weken</span>
       <div id="weekBars"></div>
     </div>
     <div class="g2">
-      <div class="sbox"><div class="sv" id="stTotal" style="color:var(--gold)">0</div><div class="sl">Total sessions</div></div>
-      <div class="sbox"><div class="sv" id="stStreak" style="color:var(--green)">0</div><div class="sl">Day streak</div></div>
-      <div class="sbox"><div class="sv" id="stSwim" style="color:var(--blue)">0</div><div class="sl">Swims</div></div>
-      <div class="sbox"><div class="sv" id="stBike" style="color:var(--gold)">0</div><div class="sl">Bikes</div></div>
-      <div class="sbox"><div class="sv" id="stRun" style="color:var(--green)">0</div><div class="sl">Runs</div></div>
-      <div class="sbox"><div class="sv" id="stDays" style="color:var(--blue)">1</div><div class="sl">Training days</div></div>
+      <div class="sbox"><div class="sv" id="stTotal" style="color:var(--accent)">0</div><div class="sl">Sessies totaal</div></div>
+      <div class="sbox"><div class="sv" id="stStreak" style="color:var(--green)">0</div><div class="sl">Streak</div></div>
+      <div class="sbox"><div class="sv" id="stSwim" style="color:var(--blue)">0</div><div class="sl">Zwem</div></div>
+      <div class="sbox"><div class="sv" id="stBike" style="color:var(--accent)">0</div><div class="sl">Fiets</div></div>
+      <div class="sbox"><div class="sv" id="stRun" style="color:var(--green)">0</div><div class="sl">Loop</div></div>
+      <div class="sbox"><div class="sv" id="stDays" style="color:var(--blue)">1</div><div class="sl">Trainingsdagen</div></div>
     </div>
     <div class="card" id="recTrendCard" style="display:none">
-      <span class="lbl">Recovery trend · 7 days</span>
+      <span class="lbl">Recovery trend · 7 sessies</span>
       <div id="recTrend"></div>
     </div>
     <div id="statsSessions"></div>
   </div>
 </div>
 
-<!-- ═══════════════════════ COACH ═══════════════════════ -->
-<div class="scr" id="s-coach">
-  <div class="pad">
-    <div style="margin-bottom:20px">
-      <h2 style="font-size:22px;font-weight:700;letter-spacing:-.5px">Coach</h2>
-      <p style="font-size:12px;color:var(--muted);margin-top:4px">Ask anything · log feelings · ideas</p>
-    </div>
-    <div class="card">
-      <div style="display:flex;gap:6px;flex-wrap:wrap;margin-bottom:12px" id="catBtns">
-        <button class="db on" onclick="setCat(this,'note')">📝 Note</button>
-        <button class="db" onclick="setCat(this,'question')">? Ask</button>
-        <button class="db" onclick="setCat(this,'feeling')">♡ Feeling</button>
-        <button class="db" onclick="setCat(this,'idea')">⚡ Idea</button>
-      </div>
-      <textarea id="coachInput" placeholder="What's on your mind..." style="width:100%;padding:11px 12px;background:var(--bg3);border:1px solid var(--border);border-radius:10px;font-size:13px;outline:none;resize:none;line-height:1.65;min-height:88px;margin-bottom:10px;transition:border-color .2s;color:var(--text)"></textarea>
-      <button class="btn" id="sendBtn" onclick="sendMsg()" style="padding:12px;font-size:13px;letter-spacing:.04em">SEND · ⌘↵</button>
-    </div>
-    <div id="notesList"></div>
-  </div>
-</div>
-
 <!-- NAV -->
 <nav>
-  <button class="on" onclick="goTo('brief',this)"><span class="ni">◐</span>Brief</button>
+  <button class="on" onclick="goTo('today',this)"><span class="ni">◐</span>Vandaag</button>
   <button onclick="goTo('plan',this)"><span class="ni">▦</span>Plan</button>
-  <button onclick="goTo('log',this)"><span class="ni">⊕</span>Log</button>
+  <button onclick="goTo('history',this)"><span class="ni">☰</span>Sessies</button>
   <button onclick="goTo('stats',this)"><span class="ni">◉</span>Stats</button>
-  <button onclick="goTo('coach',this)"><span class="ni">◎</span>Coach</button>
 </nav>
 
 <script>
@@ -400,15 +366,20 @@ const LARS = {
   startDate:"2026-05-13",
   maxHR:197, rhr:53, age:27, weight:71,
   zones:[
-    {z:1,name:"Recovery",  min:110,max:131,color:"#4DA8FF"},
-    {z:2,name:"Aerobic",   min:132,max:150,color:"#00C882"},
-    {z:3,name:"Tempo",     min:151,max:165,color:"#FFD040"},
+    {z:1,name:"Recovery",  min:110,max:131,color:"#4EA8DE"},
+    {z:2,name:"Aerobic",   min:132,max:150,color:"#2ECC71"},
+    {z:3,name:"Tempo",     min:151,max:165,color:"#FFBA00"},
     {z:4,name:"Threshold", min:166,max:181,color:"#FF7840"},
-    {z:5,name:"Max",       min:182,max:197,color:"#FF4848"},
+    {z:5,name:"Max",       min:182,max:197,color:"#FF3860"},
   ]
 };
 
-// Whoop sport ID → discipline mapping
+const DISC_CLR = {Swim:"#4EA8DE",Bike:"#FF5C00",Run:"#2ECC71",AirBike:"#FF5C00",Strength:"#9B8BFF",Recovery:"#9B8BFF",Brick:"#FF7840",Workout:"#8A879A"};
+const FEEL_EMO = ["😵","😓","😐","💪","🔥"];
+const ZONE_DESC= ["warm-up · cool-down","hoofdmotor · basistrain.","Ironman race pace","FTP-intervallen","sprints only"];
+const DAYS_NL  = ["Zo","Ma","Di","Wo","Do","Vr","Za"];
+const DAYS_FULL= ["Zondag","Maandag","Dinsdag","Woensdag","Donderdag","Vrijdag","Zaterdag"];
+
 const SPORT_MAP = {
   "Running":"Run","Cycling":"Bike","Swimming":"Swim",
   "Assault Bike":"AirBike","Air Bike":"AirBike","Functional Fitness":"Strength",
@@ -418,669 +389,800 @@ const SPORT_MAP = {
   "Open Water Swimming":"Swim","Pool Swimming":"Swim",
 };
 
-const DISC_CLR = {Swim:"#4DA8FF",Bike:"#E8A020",Run:"#00C882",AirBike:"#E8A020",Strength:"#9180FF",Recovery:"#9180FF",Brick:"#FF7840"};
-const FEEL_EMO = ["😵","😓","😐","💪","🔥"];
-const CAT_CLR  = {note:"var(--text)",question:"var(--blue)",feeling:"var(--purple)",idea:"var(--gold)"};
-const CAT_LBL  = {note:"📝 Note",question:"? Ask",feeling:"♡ Feeling",idea:"⚡ Idea"};
-const ZONE_DESC= ["warm-up · cool-down","main engine · base building","Ironman race pace","FTP intervals","sprints only"];
+// ── Training Plan (24 weeks) ──────────────────────────────────────────────────
+const PHASES = [
+  {id:1,name:"Base Building",weeks:[1,8], color:"#4EA8DE",goal:"Aerobe motor opbouwen, Z2 dominantie, techniek verankeren"},
+  {id:2,name:"Build",        weeks:[9,16],color:"#FF5C00",goal:"Volume verhogen, eerste kwaliteitssessies, brick workouts"},
+  {id:3,name:"Specific",     weeks:[17,22],color:"#FFBA00",goal:"Race-specifieke intensiteit, lange sessies, mentaliteit"},
+  {id:4,name:"Peak & Taper", weeks:[23,24],color:"#2ECC71",goal:"Scherpte behouden, volume verlagen, recupereren voor race"},
+];
 
-const WEEK = [
-  {day:"Mon",type:"Run",      color:"#00C882",zone:"Z2 <150bpm",  detail:"30–45 min easy run · stay under 150 bpm · conversational pace"},
-  {day:"Tue",type:"Swim",     color:"#4DA8FF",zone:"Z2 <150bpm",  detail:"Pool · 400m time trial + technique drills · breathe every 3 strokes"},
-  {day:"Wed",type:"AirBike",  color:"#E8A020",zone:"Z2–Z4",       detail:"60 min base · keep Z2 most of the time · 8-min FTP test when fully recovered"},
-  {day:"Thu",type:"Rest",     color:"#3E4560",zone:"Active rest",  detail:"20 min foam rolling only · hips, calves, shoulders · no cardio"},
-  {day:"Fri",type:"Swim",     color:"#4DA8FF",zone:"Z2 <150bpm",  detail:"Easy 20–30 min · focus on breathing rhythm + stroke count"},
-  {day:"Sat",type:"Long Run", color:"#00C882",zone:"Z2 <150bpm",  detail:"60 min long run · true Z2 means staying under 150 bpm"},
-  {day:"Sun",type:"Recovery", color:"#9180FF",zone:"—",            detail:"Full rest · review week data · prepare for next week"},
+// Session template helper: {disc, type, dur, zone, hrCap, warmup, main, cooldown, goal, adaptMed, adaptLow}
+const PLAN_WEEKS = [
+  // ── Week 1: Oriëntatie ────────────────────────────────────────────────────
+  {label:"Week 1 · Oriëntatie",focus:"Baselines vaststellen · leer je Z2 kennen · geen prestatiedruk",
+   days:[
+    {i:0,disc:"Run",     type:"Z2 Base",    dur:"35 min",  zone:"Z2 <150bpm",   hrCap:150,
+     warmup:"10 min wandelen / licht joggen",
+     main:"20 min rustige Z2-loop · ritme waarbij je volledige zinnen kunt spreken",
+     cooldown:"5 min wandelen",
+     goal:"Eerste Z2-looptempo vaststellen als baseline",
+     adaptMed:"Zelfde sessie, max HR 145bpm",
+     adaptLow:"20 min wandeling — geen jogging vandaag"},
+    {i:1,disc:"Swim",    type:"Techniek",   dur:"45 min",  zone:"Z1–Z2",        hrCap:148,
+     warmup:"200m rustig — bilateraal ademen",
+     main:"4×100m catch drill (pull buoy) + 4×100m bilateraal ademen · 30s rust tussen",
+     cooldown:"100m rustig op de rug of drijven",
+     goal:"Eerste watergevoel — high-elbow catch inprenten",
+     adaptMed:"2×100m drills in plaats van 4×100m",
+     adaptLow:"Enkel warm-up: 400m heel rustig, geen drills"},
+    {i:2,disc:"AirBike", type:"Z2 Base",    dur:"50 min",  zone:"Z2 <150bpm",   hrCap:150,
+     warmup:"10 min lichtjes uitrijden",
+     main:"35 min stabiele Z2 · target 115–125w · neus ademen",
+     cooldown:"5 min uitrijden",
+     goal:"AirBike aerobe baseline vaststellen",
+     adaptMed:"30 min in Z2, geen harder",
+     adaptLow:"20 min heel rustig uitrijden — recovery ride"},
+    {i:3,disc:"Recovery",type:"Rust",       dur:"20 min",  zone:"—",             hrCap:null,
+     warmup:"",main:"Foam rolling: heupen, kuiten, thorax · 20 min",cooldown:"",
+     goal:"Actief herstel — spierweefsel mobiliseren",
+     adaptMed:"Zelfde",adaptLow:"Volledige rust, geen mobiliteit"},
+    {i:4,disc:"Run",     type:"Z2 Base",    dur:"35 min",  zone:"Z2 <150bpm",   hrCap:150,
+     warmup:"5 min wandelen",
+     main:"25–30 min Z2 loop · check of pace vergelijkbaar is met maandag bij zelfde HR",
+     cooldown:"5 min wandelen",
+     goal:"Maandag valideren — HR-drift of stabiliteit?",
+     adaptMed:"20 min Z1–Z2, geen harder",
+     adaptLow:"Vandaag niet lopen — morgen zwemmen"},
+    {i:5,disc:"Swim",    type:"Techniek",   dur:"50 min",  zone:"Z1–Z2",        hrCap:148,
+     warmup:"300m rustig",
+     main:"4×150m pull buoy + 200m kick drill (plankje) · noteer slagen per lengte",
+     cooldown:"100m rustig",
+     goal:"Volume + techniek — nog geen conditie, wel consistentie",
+     adaptMed:"Zelfde, iets korter cool-down",
+     adaptLow:"300m warm-up enkel — stop dan"},
+    {i:6,disc:"Recovery",type:"Volledig rust",dur:"—",     zone:"—",             hrCap:null,
+     warmup:"",main:"Geen sport · wandeling optioneel · data reviewen",cooldown:"",
+     goal:"Adaptatie gebeurt tijdens rust",
+     adaptMed:"Zelfde",adaptLow:"Zelfde"},
+  ]},
+  // ── Week 2: Volume ────────────────────────────────────────────────────────
+  {label:"Week 2 · Volume opbouwen",focus:"Alle sessies 10–15 min langer · zelfde intensiteit · Z2 discipline",
+   days:[
+    {i:0,disc:"Run",     type:"Z2 Base",    dur:"45 min",  zone:"Z2 <150bpm",   hrCap:150,
+     warmup:"10 min inlopen",
+     main:"30 min Z2 continu · als HR >152 → wandel tot het daalt",
+     cooldown:"5 min uitlopen",
+     goal:"Z2-loop met 10 min meer dan week 1",
+     adaptMed:"35 min totaal, max 145bpm",
+     adaptLow:"25 min rustige wandeling"},
+    {i:1,disc:"AirBike", type:"Z2 Base",    dur:"60 min",  zone:"Z2 <150bpm",   hrCap:150,
+     warmup:"10 min licht",
+     main:"45 min aan 120–130w · neus ademen · langer aerobe venster",
+     cooldown:"5 min uitrijden",
+     goal:"Langere aerobe window — mitochondriën aanmaken",
+     adaptMed:"40 min totaal, iets lager tempo",
+     adaptLow:"30 min zeer rustig uitrijden"},
+    {i:2,disc:"Swim",    type:"Techniek",   dur:"50 min",  zone:"Z1–Z2",        hrCap:148,
+     warmup:"200m rustig",
+     main:"6×100m afwisselend: 100m catch drill · 100m pull buoy · 45s rust",
+     cooldown:"200m rustig",
+     goal:"Slagtechniek ingraven bij lichte vermoeidheid",
+     adaptMed:"4×100m ipv 6×100m",
+     adaptLow:"400m rustig enkel"},
+    {i:3,disc:"Strength",type:"Kracht",     dur:"40 min",  zone:"—",             hrCap:null,
+     warmup:"5 min mobiliteit",
+     main:"Hip hinge 3×10 · glute bridge 3×15 · plank 3×30s · shoulder mobility 3×10 · geen zwaar gewicht",
+     cooldown:"5 min stretching",
+     goal:"Blessurepreventie · loopeconomie · schoudercontrole zwemmen",
+     adaptMed:"Zelfde maar trager",
+     adaptLow:"Enkel mobiliteit, 20 min"},
+    {i:4,disc:"Run",     type:"Z2 Base",    dur:"40 min",  zone:"Z2 <150bpm",   hrCap:150,
+     warmup:"5 min wandelen",
+     main:"30 min Z2 · vergelijk pace met maandag bij zelfde HR · noteer",
+     cooldown:"5 min",
+     goal:"HR-drift vergelijken — word je efficiënter?",
+     adaptMed:"25 min max",
+     adaptLow:"Rustdag vandaag"},
+    {i:5,disc:"Run",     type:"Long run",   dur:"70 min",  zone:"Z2 <150bpm",   hrCap:150,
+     warmup:"10 min inlopen",
+     main:"55 min continu Z2 · wandel als HR >152 · geen muziek of mindere afleiding · let op hoe je je voelt",
+     cooldown:"5 min uitlopen",
+     goal:"Eerste echte long run — glycogeenefficiëntie trainen",
+     adaptMed:"50 min totaal",
+     adaptLow:"30 min wandeling"},
+    {i:6,disc:"Recovery",type:"Volledig rust",dur:"—",     zone:"—",             hrCap:null,
+     warmup:"",main:"Volledig rust of 20 min wandeling · weekdata reviewen",cooldown:"",
+     goal:"Weekbelasting laten landen",
+     adaptMed:"Zelfde",adaptLow:"Zelfde"},
+  ]},
+  // ── Week 3: Eerste intervalles ────────────────────────────────────────────
+  {label:"Week 3 · Eerste kwaliteit",focus:"Eerste Z4-intervallen op AirBike · Z2 basis intact houden",
+   days:[
+    {i:0,disc:"Run",     type:"Z2 Base",    dur:"45 min",  zone:"Z2 <150bpm",   hrCap:150,
+     warmup:"10 min",
+     main:"30 min Z2 · verse benen na rustdag · noteer pace",
+     cooldown:"5 min",
+     goal:"Wekelijkse Z2 anker",
+     adaptMed:"35 min max",
+     adaptLow:"20 min wandelen"},
+    {i:1,disc:"AirBike", type:"Intervallen", dur:"55 min", zone:"Z2 + Z4",      hrCap:175,
+     warmup:"15 min Z2 opwarmen",
+     main:"2×8 min Z4 (155–170bpm) · 5 min Z1 herstel ertussen · voel hoe Z4 aanvoelt zonder te exploderen",
+     cooldown:"12 min uitrijden Z1",
+     goal:"Eerste kennismaking met intensiteit — Z4 voelen zonder over te gaan",
+     adaptMed:"2×5 min Z3 ipv Z4 · geen Z4 vandaag",
+     adaptLow:"40 min puur Z2, geen intervallen"},
+    {i:2,disc:"Swim",    type:"Z2 Endurance",dur:"50 min", zone:"Z2 <148bpm",   hrCap:148,
+     warmup:"300m rustig",
+     main:"1200m continu rustig · adem elke 3 slagen · slagen per lengte tellen",
+     cooldown:"100m rustig",
+     goal:"Comfortzwemmen bij continue afstand opbouwen",
+     adaptMed:"800m continu",
+     adaptLow:"500m rustig, geen push"},
+    {i:3,disc:"Recovery",type:"Rust",        dur:"20 min", zone:"—",             hrCap:null,
+     warmup:"",main:"Foam rolling · midweekse herstel",cooldown:"",
+     goal:"Spieren losmaken na intervalsessie",
+     adaptMed:"Volledig rust",adaptLow:"Volledig rust"},
+    {i:4,disc:"Run",     type:"Tempo",       dur:"40 min", zone:"Z2–Z3",         hrCap:165,
+     warmup:"10 min Z1",
+     main:"20 min met de laatste 5 min opbouwend naar Z3-rand · voelen wat tempo is",
+     cooldown:"10 min Z1",
+     goal:"Eerste tempowaarneming — gecontroleerde Z3",
+     adaptMed:"Volledige 40 min in Z2 — geen Z3",
+     adaptLow:"30 min Z1–Z2 maximum"},
+    {i:5,disc:"Run",     type:"Long run",    dur:"80 min", zone:"Z2 <150bpm",   hrCap:150,
+     warmup:"10 min inlopen",
+     main:"60 min Z2 · mee een gel nemen, innemen op 50 min · noteer hoe je HR evolueert",
+     cooldown:"10 min uitlopen",
+     goal:"Vetverbranding + fueling ritueel inprenten",
+     adaptMed:"60 min totaal",
+     adaptLow:"40 min wandeling"},
+    {i:6,disc:"Recovery",type:"Volledig rust",dur:"—",     zone:"—",             hrCap:null,
+     warmup:"",main:"Volledig rust · week 3 data reviewen",cooldown:"",
+     goal:"Week 3 laten landen",
+     adaptMed:"Zelfde",adaptLow:"Zelfde"},
+  ]},
+  // ── Week 4: Test & herstel ────────────────────────────────────────────────
+  {label:"Week 4 · Test & herstel",focus:"FTP-test op AirBike · lagere volume · eerste baseline meting",
+   days:[
+    {i:0,disc:"Run",     type:"Z1 herstel",  dur:"35 min", zone:"Z1 <145bpm",   hrCap:145,
+     warmup:"5 min wandelen",
+     main:"25 min heel rustig · HR onder 145 · vermoeidheid uitspoelen",
+     cooldown:"5 min wandelen",
+     goal:"Benen flushen voor FTP-test",
+     adaptMed:"25 min max",
+     adaptLow:"20 min wandeling"},
+    {i:1,disc:"AirBike", type:"FTP Test",    dur:"40 min", zone:"Alles geven",  hrCap:197,
+     warmup:"20 min opwarmen — eindigen met 2×30s prikken, 2 min rust",
+     main:"20 min FTP-test · alles geven · noteer gemiddelde wattage — dit is je baseline",
+     cooldown:"10 min uitrijden",
+     goal:"AirBike FTP-baseline meten — kritiek getal voor intensiteitszones",
+     adaptMed:"Als recovery <50%: test uitstellen naar vrijdag",
+     adaptLow:"Test niet doen — enkel 30 min Z1"},
+    {i:2,disc:"Swim",    type:"Techniek",    dur:"40 min", zone:"Z1",            hrCap:140,
+     warmup:"200m rustig",
+     main:"4×100m catch drill · 4×100m rustig pull · 45s rust per 100m",
+     cooldown:"100m rustig",
+     goal:"Herstel + techniek — geen conditie vandaag",
+     adaptMed:"Zelfde",
+     adaptLow:"300m rustig enkel"},
+    {i:3,disc:"Recovery",type:"Volledig rust",dur:"—",     zone:"—",             hrCap:null,
+     warmup:"",main:"Volledige rust — herstelweek, laat het landen",cooldown:"",
+     goal:"Adaptatie na testweek",
+     adaptMed:"Zelfde",adaptLow:"Zelfde"},
+    {i:4,disc:"Run",     type:"Z1 herstel",  dur:"30 min", zone:"Z1 <143bpm",   hrCap:143,
+     warmup:"5 min wandelen",
+     main:"20 min heel rustig · onder 143bpm de hele tijd",
+     cooldown:"5 min",
+     goal:"Benen spoelen voor zaterdag",
+     adaptMed:"20 min wandeling",
+     adaptLow:"Rustdag"},
+    {i:5,disc:"Run",     type:"Long run",    dur:"60 min", zone:"Z2 <150bpm",   hrCap:150,
+     warmup:"10 min",
+     main:"45 min Z2 · kortere long run (herstelweek) · vergelijk pace week 1 — ben je sneller bij zelfde HR?",
+     cooldown:"5 min",
+     goal:"Progressiemeting vs. week 1",
+     adaptMed:"40 min totaal",
+     adaptLow:"30 min wandeling"},
+    {i:6,disc:"Recovery",type:"Volledig rust",dur:"—",     zone:"—",             hrCap:null,
+     warmup:"",main:"Volledig rust · 4-weekse data reviewen · eerste fase afgerond",cooldown:"",
+     goal:"4-wekenblok laten landen · klaar voor opbouw",
+     adaptMed:"Zelfde",adaptLow:"Zelfde"},
+  ]},
+  // ── Week 5–8: stub (progressief opbouwen) ────────────────────────────────
+  ...Array.from({length:4},(_,wi)=>({
+    label:`Week ${5+wi} · Progressie`,
+    focus:"Volume verhogen · Z2 dominantie consolideren · AirBike intervallen uitbreiden",
+    days:DAYS_NL.slice(1).concat(DAYS_NL[0]).map((d,i)=>({i,
+      disc:["Run","AirBike","Swim","Recovery","Run","Run","Recovery"][i],
+      type:["Z2 Base","Intervallen","Z2 Swim","Rust","Z2 Base","Long run","Rust"][i],
+      dur:[`${45+wi*5}min`,`${55+wi*5}min`,`${50+wi*5}min`,"—",`${40+wi*5}min`,`${80+wi*10}min`,"—"][i],
+      zone:["Z2 <150bpm","Z2+Z4","Z2","—","Z2 <150bpm","Z2 <150bpm","—"][i],
+      hrCap:[150,175,148,null,150,150,null][i],
+      warmup:"",main:`${["Z2 loop","AirBike: "+(`${2+wi}×8min Z4 · ${3+wi} min Z1 herstel`),"Swim continu Z2","Foam rolling · rust","Z2 loop","Long run Z2","Rust"][i]}`,
+      cooldown:"",
+      goal:["Aerobe basis","FTP opbouwen","Zwemvolume","Herstel","Consistentie","Vetverbranding","Recuperatie"][i],
+      adaptMed:"Intensiteit verlagen naar Z2",adaptLow:"Volledig rust of wandeling"}))
+  })),
+  // ── Week 9–16: Build fase stubs ───────────────────────────────────────────
+  ...Array.from({length:8},(_,wi)=>({
+    label:`Week ${9+wi} · Build fase`,
+    focus:"Volume + kwaliteit verhogen · brick workouts · race-tempo verkennen",
+    days:DAYS_NL.slice(1).concat(DAYS_NL[0]).map((d,i)=>({i,
+      disc:["Run","Bike","Swim","Recovery","Run","Brick","Recovery"][i],
+      type:["Tempo","Z3-Z4","Intervallen","Rust","Z2 Base","Bike+Run","Rust"][i],
+      dur:[`${50+wi*5}min`,`${75+wi*5}min`,`${55+wi*5}min`,"—",`${45+wi*5}min`,`${90+wi*10}min`,"—"][i],
+      zone:["Z2–Z3","Z3–Z4","Z2–Z3","—","Z2","Z2–Z3","—"][i],
+      hrCap:[163,175,158,null,150,163,null][i],
+      warmup:"",main:`Build week ${9+wi} · ${["Tempo loop","Bike intervallen","Swim kwaliteit","Rust","Herstelloop","Brick workout","Rust"][i]}`,
+      cooldown:"",
+      goal:["Race pace","FTP","Zwemsnelheid","Herstel","Basis","Transitie","Recuperatie"][i],
+      adaptMed:"Z2 alleen",adaptLow:"Rust"}))
+  })),
+  // ── Week 17–22: Specific fase stubs ──────────────────────────────────────
+  ...Array.from({length:6},(_,wi)=>({
+    label:`Week ${17+wi} · Race-specifiek`,
+    focus:"Race-intensiteit · lange sessies · mentale kracht",
+    days:DAYS_NL.slice(1).concat(DAYS_NL[0]).map((d,i)=>({i,
+      disc:["Run","Bike","Swim","Recovery","Run","Brick","Recovery"][i],
+      type:["Race tempo","Lang Z2","Race pace","Rust","Z2 Base","Race sim.","Rust"][i],
+      dur:[`${60+wi*5}min`,`${120+wi*10}min`,`${60+wi*5}min`,"—",`${50+wi*5}min`,`${150+wi*10}min`,"—"][i],
+      zone:["Z3–Z4","Z2","Z3","—","Z2","Z2–Z3","—"][i],
+      hrCap:[170,150,163,null,150,163,null][i],
+      warmup:"",main:`Specifieke week ${17+wi}`,cooldown:"",
+      goal:"Race readiness",adaptMed:"Z2 enkel",adaptLow:"Rust"}))
+  })),
+  // ── Week 23–24: Taper ────────────────────────────────────────────────────
+  ...[23,24].map(wn=>({
+    label:`Week ${wn} · Taper`,
+    focus:"Volume verlagen · intensiteit behouden · uitgerust aan de start",
+    days:DAYS_NL.slice(1).concat(DAYS_NL[0]).map((d,i)=>({i,
+      disc:["Run","Bike","Swim","Recovery","Run","Recovery","Recovery"][i],
+      type:["Kort+scherp","Activering","Techniek","Rust","Easy","Rust","Rust"][i],
+      dur:["30min","45min","30min","—","25min","—","—"][i],
+      zone:["Z2–Z3","Z2","Z1","—","Z1–Z2","—","—"][i],
+      hrCap:[163,150,140,null,150,null,null][i],
+      warmup:"",main:`Taper week ${wn}`,cooldown:"",
+      goal:"Scherp en uitgerust",adaptMed:"Zelfde",adaptLow:"Volledig rust"}))
+  })),
 ];
 
 // ── State ─────────────────────────────────────────────────────────────────────
-// Stable keys — never change these
-const K = { backend:"lars_backend", key:"lars_key", sessions:"lars_sessions", notes:"lars_notes" };
+const K={backend:"lars_backend",key:"lars_key",sessions:"lars_sessions",notes:"lars_notes"};
+["im8_backend","im9_backend"].forEach(k=>{const v=localStorage.getItem(k);if(v&&!localStorage.getItem(K.backend)){localStorage.setItem(K.backend,v);localStorage.removeItem(k);}});
+["im8_key","im9_key"].forEach(k=>{const v=localStorage.getItem(k);if(v&&!localStorage.getItem(K.key)){localStorage.setItem(K.key,v);localStorage.removeItem(k);}});
+["im8_sessions","im9_sessions"].forEach(k=>{const v=localStorage.getItem(k);if(v&&!localStorage.getItem(K.sessions)){localStorage.setItem(K.sessions,v);localStorage.removeItem(k);}});
 
-// Migrate from old versioned keys (one-time)
-["im8_backend","im9_backend"].forEach(k=>{ const v=localStorage.getItem(k); if(v&&!localStorage.getItem(K.backend)){ localStorage.setItem(K.backend,v); localStorage.removeItem(k); }});
-["im8_key","im9_key"].forEach(k=>{ const v=localStorage.getItem(k); if(v&&!localStorage.getItem(K.key)){ localStorage.setItem(K.key,v); localStorage.removeItem(k); }});
-["im8_sessions","im9_sessions"].forEach(k=>{ const v=localStorage.getItem(k); if(v&&!localStorage.getItem(K.sessions)){ localStorage.setItem(K.sessions,v); localStorage.removeItem(k); }});
-["im8_notes","im9_notes"].forEach(k=>{ const v=localStorage.getItem(k); if(v&&!localStorage.getItem(K.notes)){ localStorage.setItem(K.notes,v); localStorage.removeItem(k); }});
-
-let S = {
-  sessions:  JSON.parse(localStorage.getItem(K.sessions)||"[]"),
-  notes:     JSON.parse(localStorage.getItem(K.notes)||"[]"),
+let S={
+  sessions: JSON.parse(localStorage.getItem(K.sessions)||"[]"),
   backendUrl:localStorage.getItem(K.backend)||"",
   claudeKey: localStorage.getItem(K.key)||"",
-  whoop:null, history:null,
-  disc:"Swim", feel:3, cat:"note",
+  whoop:null,history:null,
 };
-let syncTimer = null;
+let syncTimer=null;
 
 // ── Utils ─────────────────────────────────────────────────────────────────────
 const todayStr= ()=>new Date().toISOString().split("T")[0];
-const fmtDate = iso=>new Date(iso).toLocaleDateString("en-GB",{day:"numeric",month:"short"});
-const fmtTime = iso=>new Date(iso).toLocaleTimeString("en-GB",{hour:"2-digit",minute:"2-digit"});
+const fmtDate = iso=>new Date(iso).toLocaleDateString("nl-BE",{day:"numeric",month:"short"});
+const fmtTime = iso=>new Date(iso).toLocaleTimeString("nl-BE",{hour:"2-digit",minute:"2-digit"});
 const fmtDur  = ms=>ms?Math.round(ms/60000)+"min":"";
 const dayNum  = ()=>Math.max(1,Math.floor((Date.now()-new Date(LARS.startDate))/86400000)+1);
 const weekNum = ()=>Math.ceil(dayNum()/7);
 const getZone = hr=>LARS.zones.find(z=>hr>=z.min&&hr<=z.max);
-const recClr  = r=>r>=67?"#00C882":r>=34?"#FFD040":"#FF4848";
-const recLbl  = r=>r>=67?"Green · go hard":r>=34?"Yellow · train smart":"Red · protect recovery";
+const recClr  = r=>r>=67?"#2ECC71":r>=34?"#FFBA00":"#FF3860";
+const recLbl  = r=>r>=67?"Groen · volledig gaan":r>=34?"Geel · slim trainen":"Rood · herstellen";
 const persist = (k,v)=>localStorage.setItem(K[k]||k,JSON.stringify(v));
-const mapSport= s=>{
-  if(!s) return "Workout";
-  for(const [k,v] of Object.entries(SPORT_MAP)) if(s.toLowerCase().includes(k.toLowerCase())) return v;
-  return "Workout";
-};
+const mapSport= s=>{if(!s)return"Workout";for(const[k,v]of Object.entries(SPORT_MAP))if(s.toLowerCase().includes(k.toLowerCase()))return v;return"Workout";};
+const getTodayIdx = ()=>{ const d=new Date().getDay(); return d===0?6:d-1; };
 
 // ── Boot ──────────────────────────────────────────────────────────────────────
-window.onload = ()=>{
-  document.getElementById("lDate").value = todayStr();
-  renderBrief();
-  renderPlan();
-  buildZones();
-  renderSessHistory();
-  renderStats();
-  renderNotes();
-  if(S.backendUrl){
-    syncAll();
-    syncTimer = setInterval(syncAll, 5*60*1000);
-  } else {
-    showSettings();
-    genPrescription(false);
-    genBriefing(false);
-  }
+window.onload=()=>{
+  renderToday(); renderPlan(); buildZones(); renderHistory(); renderStats();
+  if(S.backendUrl){ syncAll(); syncTimer=setInterval(syncAll,5*60*1000); }
+  else{ showSettings(); genPrescription(false); genBriefing(false); }
 };
 
 // ── Nav ───────────────────────────────────────────────────────────────────────
-function goTo(id, btn){
+function goTo(id,btn){
   document.querySelectorAll(".scr").forEach(s=>s.classList.remove("on"));
   document.getElementById("s-"+id).classList.add("on");
   document.querySelectorAll("nav button").forEach(b=>b.classList.remove("on"));
   btn.classList.add("on");
-  if(id==="stats") renderStats();
+  if(id==="stats")    renderStats();
+  if(id==="history")  renderHistory();
+  if(id==="plan")     renderPlan();
 }
-function goLog(){ goTo("log", document.querySelectorAll("nav button")[2]); }
+
+// ── Toast ─────────────────────────────────────────────────────────────────────
+function showToast(msg){
+  const t=document.getElementById("toast");
+  t.textContent=msg; t.classList.add("show");
+  setTimeout(()=>t.classList.remove("show"),2500);
+}
 
 // ── Settings ──────────────────────────────────────────────────────────────────
 function showSettings(){
   document.getElementById("settingsOverlay").classList.add("on");
-  if(S.backendUrl) document.getElementById("sBackend").value = S.backendUrl;
-  if(S.claudeKey)  document.getElementById("sClaudeKey").value = S.claudeKey;
+  if(S.backendUrl) document.getElementById("sBackend").value=S.backendUrl;
+  if(S.claudeKey)  document.getElementById("sClaudeKey").value=S.claudeKey;
 }
 function hideSettings(){ document.getElementById("settingsOverlay").classList.remove("on"); }
 
 function saveSettings(){
-  const url = document.getElementById("sBackend").value.trim().replace(/\/$/,"");
-  const key = document.getElementById("sClaudeKey").value.trim();
-  if(url){ S.backendUrl=url; localStorage.setItem(K.backend,url); }
-  if(key){ S.claudeKey=key;  localStorage.setItem(K.key,key); }
+  const url=document.getElementById("sBackend").value.trim().replace(/\/$/,"");
+  const key=document.getElementById("sClaudeKey").value.trim();
+  if(url){S.backendUrl=url;localStorage.setItem(K.backend,url);}
+  if(key){S.claudeKey=key; localStorage.setItem(K.key,key);}
   hideSettings();
   clearInterval(syncTimer);
-  if(S.backendUrl){ syncAll(); syncTimer=setInterval(syncAll,5*60*1000); }
+  if(S.backendUrl){syncAll();syncTimer=setInterval(syncAll,5*60*1000);}
 }
 
 function resetData(){
-  if(!confirm("Reset all training data? This cannot be undone.")) return;
-  [K.sessions, K.notes].forEach(k=>localStorage.removeItem(k));
-  S.sessions=[]; S.notes=[];
-  renderBrief(); renderSessHistory(); renderStats(); renderNotes();
+  if(!confirm("Reset alle trainingsdata? Dit kan niet ongedaan worden."))return;
+  [K.sessions].forEach(k=>localStorage.removeItem(k));
+  S.sessions=[];
+  renderToday(); renderHistory(); renderStats(); renderPlan();
   hideSettings();
 }
 
 // ── Sync ──────────────────────────────────────────────────────────────────────
 async function syncAll(){
-  if(!S.backendUrl) return;
+  if(!S.backendUrl)return;
   document.getElementById("syncBtn").textContent="↻...";
-  await Promise.all([syncToday(), syncHistory()]);
+  await Promise.all([syncToday(),syncHistory()]);
   document.getElementById("syncBtn").textContent="↻";
 }
 
 async function syncToday(){
   try{
-    const r = await fetch(`${S.backendUrl}/today`);
-    const d = await r.json();
+    const r=await fetch(`${S.backendUrl}/today`);
+    const d=await r.json();
     if(!d.error){
-      S.whoop = d;
-      setBanner(true, d.fetchedAt);
+      S.whoop=d;
+      setBanner(true,d.fetchedAt);
       applyWhoopToUI(d);
+      autoImport(d.workouts||[]);
     }
-  }catch{ setBanner(false); }
+  }catch{setBanner(false);}
 }
 
 async function syncHistory(){
   try{
-    const r = await fetch(`${S.backendUrl}/history?days=14`);
-    const d = await r.json();
+    const r=await fetch(`${S.backendUrl}/history?days=14`);
+    const d=await r.json();
     if(!d.error){
-      S.history = d;
+      S.history=d;
       renderHRVTrend(d.recoveries);
-      renderPlanAdvice(S.whoop?.recovery);
+      if(S.whoop?.recovery!=null)renderPlanAdvice(S.whoop.recovery);
+      // auto-import historical workouts too
+      autoImport(d.workouts||[]);
     }
   }catch{}
 }
 
-function setBanner(live, at){
-  const dot=document.getElementById("wdot");
-  const st =document.getElementById("wstatus");
-  const age=document.getElementById("wage");
+function setBanner(live,at){
+  const dot=document.getElementById("wdot"),st=document.getElementById("wstatus"),age=document.getElementById("wage");
   dot.className="wdot "+(live?"live":"dead");
-  st.textContent=live?"WHOOP LIVE":"DISCONNECTED";
+  st.textContent=live?"Whoop live":"Disconnected";
   st.style.color=live?"var(--green)":"var(--red)";
-  if(live&&at){
-    const m=Math.round((Date.now()-new Date(at))/60000);
-    age.textContent=m<1?"· just now":`· ${m}m ago`;
-  }
+  if(live&&at){const m=Math.round((Date.now()-new Date(at))/60000);age.textContent=m<1?"· net gesynchroniseerd":`· ${m}m geleden`;}
 }
 
 function applyWhoopToUI(d){
-  if(d.hrv)      document.getElementById("mHRV").textContent    = d.hrv+"ms";
-  if(d.rhr)      document.getElementById("mRHR").textContent    = d.rhr;
-  if(d.strain)   document.getElementById("mStrain").textContent = d.strain;
-  if(d.sleepPerf)document.getElementById("mSleep").textContent  = d.sleepPerf+"%";
-
+  if(d.hrv)      document.getElementById("mHRV").textContent   =d.hrv+"ms";
+  if(d.rhr)      document.getElementById("mRHR").textContent   =d.rhr;
+  if(d.strain)   document.getElementById("mStrain").textContent=d.strain;
+  if(d.sleepPerf)document.getElementById("mSleep").textContent =d.sleepPerf+"%";
   if(d.recovery!=null){
     const c=recClr(d.recovery);
-    document.getElementById("recPct").textContent  = d.recovery+"%";
-    document.getElementById("recPct").style.color  = c;
-    document.getElementById("recSub").textContent  = recLbl(d.recovery);
-    document.getElementById("recSub").style.color  = c;
-    document.getElementById("recFill").style.width    = d.recovery+"%";
-    document.getElementById("recFill").style.background = c;
-    document.getElementById("recHero").style.borderColor = c+"30";
+    document.getElementById("recPct").textContent=d.recovery+"%";
+    document.getElementById("recPct").style.color=c;
+    document.getElementById("recSub").textContent=recLbl(d.recovery);
+    document.getElementById("recSub").style.color=c;
+    document.getElementById("recFill").style.width=d.recovery+"%";
+    document.getElementById("recFill").style.background=c;
+    document.getElementById("recHero").style.borderColor=c+"30";
   }
-
-  // Show Whoop activities for import on Log screen
-  renderWhoopActivities(d.workouts||[]);
-
-  // Trigger AI generation (once per day)
   genPrescription(false);
   genBriefing(false);
+  renderPlan();
 }
 
-// ── Whoop Activities ──────────────────────────────────────────────────────────
-function renderWhoopActivities(workouts){
-  const el = document.getElementById("whoopActivities");
-  if(!workouts.length){ el.innerHTML=""; return; }
-
-  // Filter out already-imported ones
-  const imported = new Set(S.sessions.filter(s=>s.whoopId).map(s=>s.whoopId));
-  const pending  = workouts.filter(w=>!imported.has(String(w.id)));
-  if(!pending.length){ el.innerHTML=""; return; }
-
-  el.innerHTML = pending.map(w=>{
-    const disc    = mapSport(w.sport);
-    const dc      = DISC_CLR[disc]||"var(--muted)";
-    const dur     = w.start&&w.end ? Math.round((new Date(w.end)-new Date(w.start))/60000) : null;
-    const zones   = zoneBarHTML(w.zones);
-    return `<div class="card" style="border-color:${dc}25;margin-bottom:12px">
-      <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:8px">
-        <div>
-          <span class="pill" style="background:${dc}20;color:${dc}">${disc}</span>
-          <span style="font-size:10px;color:var(--muted);margin-left:8px">Whoop · ${fmtTime(w.start)}</span>
-        </div>
-        <button class="btn-sm" onclick='importWorkout(${JSON.stringify(w)})' style="color:${dc};border-color:${dc}30;font-size:11px">Import ↓</button>
-      </div>
-      <div style="display:flex;gap:12px;flex-wrap:wrap;font-size:11px">
-        ${dur?`<span><span style="color:var(--muted)">dur </span>${dur}min</span>`:""}
-        ${w.avgHR?`<span><span style="color:var(--muted)">avg </span>${w.avgHR}bpm</span>`:""}
-        ${w.maxHR?`<span><span style="color:var(--muted)">max </span>${w.maxHR}bpm</span>`:""}
-        ${w.strain?`<span><span style="color:var(--muted)">strain </span>${w.strain}</span>`:""}
-        ${w.distanceKm?`<span>${w.distanceKm}km</span>`:""}
-        ${w.calories?`<span><span style="color:var(--muted)">cal </span>${w.calories}</span>`:""}
-      </div>
-      ${zones}
-    </div>`;
-  }).join("");
+// ── Auto-import Whoop workouts ────────────────────────────────────────────────
+function autoImport(workouts){
+  if(!workouts.length)return;
+  const imported=new Set(S.sessions.filter(s=>s.whoopId).map(s=>s.whoopId));
+  const newOnes=workouts.filter(w=>!imported.has(String(w.id)));
+  if(!newOnes.length)return;
+  newOnes.forEach(w=>{
+    const disc=mapSport(w.sport);
+    const dur=w.start&&w.end?Math.round((new Date(w.end)-new Date(w.start))/60000):null;
+    const date=w.start?w.start.split("T")[0]:todayStr();
+    S.sessions.unshift({
+      id:Date.now().toString()+Math.random(),
+      whoopId:String(w.id),date,discipline:disc,duration:dur,
+      distance:w.distanceKm?w.distanceKm+"km":null,
+      avgHR:w.avgHR||null,maxHR:w.maxHR||null,watts:null,
+      strain:w.strain||null,recovery:S.whoop?.recovery||null,
+      calories:w.calories||null,zones:w.zones||null,feel:3,fromWhoop:true,
+    });
+  });
+  persist("sessions",S.sessions);
+  renderToday(); renderHistory(); renderPlan();
+  if(newOnes.length===1) showToast(`✓ ${mapSport(newOnes[0].sport)} geïmporteerd`);
+  else showToast(`✓ ${newOnes.length} sessies geïmporteerd`);
 }
 
-function importWorkout(w){
-  const disc = mapSport(w.sport);
-  const dur  = w.start&&w.end ? Math.round((new Date(w.end)-new Date(w.start))/60000) : null;
-  const date = w.start ? w.start.split("T")[0] : todayStr();
-  const s = {
-    id:       Date.now().toString(),
-    whoopId:  String(w.id),
-    date, discipline:disc,
-    duration: dur,
-    distance: w.distanceKm ? w.distanceKm+"km" : null,
-    avgHR:    w.avgHR || null,
-    maxHR:    w.maxHR || null,
-    watts:    null,
-    strain:   w.strain || null,
-    recovery: S.whoop?.recovery || null,
-    calories: w.calories || null,
-    zones:    w.zones || null,
-    notes:    null, feel:3,
-    fromWhoop:true,
-  };
-  S.sessions.unshift(s);
-  persist("im9_sessions", S.sessions);
-  renderWhoopActivities(S.whoop?.workouts||[]);
-  renderSessHistory(); renderBrief();
-  goLog();
-}
-
-function zoneBarHTML(zones){
-  if(!zones) return "";
-  const vals = [zones.z1,zones.z2,zones.z3,zones.z4,zones.z5].map(v=>v||0);
-  const total = vals.reduce((a,b)=>a+b,0);
-  if(!total) return "";
-  const colors = ["#4DA8FF","#00C882","#FFD040","#FF7840","#FF4848"];
-  const bars = vals.map((v,i)=>v>0?`<div class="zone-bar-seg" style="flex:${v};background:${colors[i]};opacity:.8" title="Z${i+1}: ${fmtDur(v)}"></div>`:"").join("");
-  return `<div class="zone-bars" style="margin-top:10px">${bars}</div>
-    <div style="display:flex;gap:10px;margin-top:4px;flex-wrap:wrap">
-      ${vals.map((v,i)=>v>0?`<span style="font-size:9px;color:${colors[i]}">Z${i+1} ${fmtDur(v)}</span>`:"").join("")}
-    </div>`;
-}
-
-// ── Brief ─────────────────────────────────────────────────────────────────────
-function renderBrief(){
-  const wday=new Date().toLocaleDateString("en-GB",{weekday:"long",day:"numeric",month:"long"});
-  document.getElementById("bDate").textContent=`${wday} · Week ${weekNum()} · Day ${dayNum()}`;
-  const thisWeek=S.sessions.filter(s=>(Date.now()-new Date(s.date))/86400000<=7).length;
+// ── Today ─────────────────────────────────────────────────────────────────────
+function renderToday(){
+  const wday=new Date().toLocaleDateString("nl-BE",{weekday:"long",day:"numeric",month:"long"});
+  document.getElementById("bDate").textContent=`${wday} · Week ${weekNum()} · Dag ${dayNum()}`;
+  const w7=S.sessions.filter(s=>(Date.now()-new Date(s.date))/86400000<=7).length;
   document.getElementById("bSessions").textContent=S.sessions.length;
-  document.getElementById("bWeek").textContent=thisWeek;
+  document.getElementById("bWeek").textContent=w7;
   document.getElementById("bDay").textContent=dayNum();
   document.getElementById("bStreak").textContent=calcStreak();
+  if(!S.whoop)genBriefing(false);
 }
 
 function calcStreak(){
-  if(!S.sessions.length) return 0;
+  if(!S.sessions.length)return 0;
   const dates=[...new Set(S.sessions.map(s=>s.date))].sort().reverse();
-  let streak=0, cur=new Date(); cur.setHours(0,0,0,0);
-  for(const ds of dates){
-    const d=new Date(ds); d.setHours(0,0,0,0);
-    if((cur-d)/86400000<=1){ streak++; cur=d; } else break;
-  }
+  let streak=0,cur=new Date();cur.setHours(0,0,0,0);
+  for(const ds of dates){const d=new Date(ds);d.setHours(0,0,0,0);if((cur-d)/86400000<=1){streak++;cur=d;}else break;}
   return streak;
 }
 
 // ── HRV Trend ────────────────────────────────────────────────────────────────
 function renderHRVTrend(recoveries){
-  if(!recoveries||recoveries.length<3) return;
-  const pts = recoveries
-    .filter(r=>r.score?.hrv_rmssd_milli)
-    .slice(0,7)
-    .map(r=>Math.round(r.score.hrv_rmssd_milli))
-    .reverse();
-  if(pts.length<3) return;
-
+  if(!recoveries||recoveries.length<3)return;
+  const pts=recoveries.filter(r=>r.score?.hrv_rmssd_milli).slice(0,7).map(r=>Math.round(r.score.hrv_rmssd_milli)).reverse();
+  if(pts.length<3)return;
   document.getElementById("hrvTrendCard").style.display="block";
-  const mx=Math.max(...pts), mn=Math.min(...pts);
-  const colors=["#4DA8FF","#4DA8FF","#00C882","#00C882","#FFD040","#FF7840","#FF4848"];
+  const mx=Math.max(...pts),mn=Math.min(...pts);
   document.getElementById("hrvTrend").innerHTML=`
-    <div class="spark">
-      ${pts.map((v,i)=>`<div class="spark-bar" style="height:${Math.max((v-mn)/(mx-mn||1)*28+4,4)}px;background:var(--purple);flex:1;opacity:${.4+.6*(i/(pts.length-1))}"></div>`).join("")}
-    </div>
-    <div style="display:flex;justify-content:space-between;margin-top:4px">
-      <span style="font-size:10px;color:var(--muted)">7d ago</span>
-      <span style="font-size:10px;color:var(--purple);font-weight:600">today ${pts[pts.length-1]}ms</span>
+    <div class="spark">${pts.map((v,i)=>`<div class="spark-bar" style="height:${Math.max((v-mn)/(mx-mn||1)*28+4,4)}px;background:var(--purple);flex:1;opacity:${.35+.65*(i/(pts.length-1))}"></div>`).join("")}</div>
+    <div style="display:flex;justify-content:space-between;margin-top:5px">
+      <span style="font-size:11px;color:var(--dim)">7 dagen geleden</span>
+      <span style="font-size:11px;color:var(--purple);font-weight:700">vandaag ${pts[pts.length-1]}ms</span>
     </div>`;
-
-  const trend = pts[pts.length-1] - pts[0];
-  const avg7  = Math.round(pts.reduce((a,b)=>a+b,0)/pts.length);
-  document.getElementById("hrvTrendNote").textContent =
-    trend>3 ? `↑ HRV trending up ${trend}ms — body adapting well · 7d avg ${avg7}ms` :
-    trend<-3? `↓ HRV trending down ${Math.abs(trend)}ms — consider backing off · 7d avg ${avg7}ms` :
-              `→ HRV stable · 7d avg ${avg7}ms`;
-  document.getElementById("hrvTrendNote").style.color =
-    trend>3?"var(--green)":trend<-3?"var(--red)":"var(--muted)";
+  const trend=pts[pts.length-1]-pts[0],avg7=Math.round(pts.reduce((a,b)=>a+b,0)/pts.length);
+  document.getElementById("hrvTrendNote").textContent=
+    trend>3?`↑ HRV stijgt +${trend}ms — lichaam past goed aan · 7d gem. ${avg7}ms`:
+    trend<-3?`↓ HRV daalt ${Math.abs(trend)}ms — overweeg minder intensiteit · 7d gem. ${avg7}ms`:
+    `→ HRV stabiel · 7d gemiddelde ${avg7}ms`;
+  document.getElementById("hrvTrendNote").style.color=trend>3?"var(--green)":trend<-3?"var(--red)":"var(--muted)";
 }
 
-// ── Daily Prescription ────────────────────────────────────────────────────────
+// ── Prescription ──────────────────────────────────────────────────────────────
 async function genPrescription(force=false){
   if(!S.claudeKey){
-    document.getElementById("prescContent").innerHTML=
-      `<div style="font-size:12px;color:var(--muted)">Add your Claude API key in Settings to get a daily training prescription.</div>`;
+    document.getElementById("prescContent").innerHTML=`<div style="font-size:13px;color:var(--muted)">Voeg je Claude API key toe in Instellingen voor dagelijkse training prescription.</div>`;
     return;
   }
-
-  const cacheKey="im9_presc_"+todayStr();
+  const cacheKey="lars_presc_"+todayStr();
   const cached=localStorage.getItem(cacheKey);
-  if(cached&&!force){
-    document.getElementById("prescContent").innerHTML=cached;
-    return;
-  }
-
+  if(cached&&!force){document.getElementById("prescContent").innerHTML=cached;return;}
   document.getElementById("prescContent").innerHTML='<div class="dots"><span></span><span></span><span></span></div>';
 
-  const d   = S.whoop;
-  const h   = S.history;
-  const last5 = S.sessions.slice(0,5).map(s=>`${s.discipline}(${s.duration||"?"}min,feel:${s.feel}/5,${s.avgHR||"?"}bpm)`).join(", ");
-  const wkSessions = S.sessions.filter(s=>(Date.now()-new Date(s.date))/86400000<=7);
-  const discThisWeek = [...new Set(wkSessions.map(s=>s.discipline))].join(", ")||"none";
-
-  // HRV context from history
-  let hrvContext = "";
+  const d=S.whoop,h=S.history;
+  const last5=S.sessions.slice(0,5).map(s=>`${s.discipline}(${s.duration||"?"}min,${s.avgHR||"?"}bpm,feel:${s.feel}/5)`).join(", ");
+  const wkS=S.sessions.filter(s=>(Date.now()-new Date(s.date))/86400000<=7);
+  const disc7=[...new Set(wkS.map(s=>s.discipline))].join(", ")||"geen";
+  let hrvCtx="";
   if(h?.recoveries?.length>=3){
     const hrs=h.recoveries.filter(r=>r.score?.hrv_rmssd_milli).slice(0,7).map(r=>Math.round(r.score.hrv_rmssd_milli));
-    if(hrs.length>=3){
-      const avg=Math.round(hrs.reduce((a,b)=>a+b,0)/hrs.length);
-      const trend=hrs[0]-hrs[hrs.length-1];
-      hrvContext=`HRV 7d avg: ${avg}ms, trend: ${trend>0?"↑ improving":"↓ declining"} ${Math.abs(trend)}ms`;
-    }
+    if(hrs.length>=3){const avg=Math.round(hrs.reduce((a,b)=>a+b,0)/hrs.length);const tr=hrs[0]-hrs[hrs.length-1];hrvCtx=`HRV 7d gem: ${avg}ms, trend: ${tr>0?"↑ verbeterend":"↓ dalend"} ${Math.abs(tr)}ms`;}
   }
 
-  const SYSTEM=`You are Lars's personal Ironman triathlon coach. Generate a precise daily training prescription.
+  const SYS=`Je bent Lars's persoonlijke Ironman triathlon coach. Genereer een precieze dagelijkse trainingsvoorschrift.
 
-Lars profile: 27yo, 71kg, Bruges Belgium. Training for triathlons & Ironman.
-Max HR: 197 · RHR: 53 · HRR: 144
-Zones: Z1 110–131bpm (recovery), Z2 132–150bpm (aerobic/base), Z3 151–165bpm (tempo), Z4 166–181bpm (threshold), Z5 182–197bpm (max)
-AirBike baseline: ~122w avg. Half marathon comfortable. Pool swimmer (improving).
-Week ${weekNum()}, Day ${dayNum()} of training.
-This week trained: ${discThisWeek} (${wkSessions.length} sessions)
-Last 5 sessions: ${last5||"none yet"}
-${hrvContext}
+Lars: 27j, 71kg, Brugge. Traint voor triathlons & Ironman.
+Max HR: 197 · RHR: 53
+Zones: Z1 110–131bpm (herstel), Z2 132–150bpm (aerobe basis), Z3 151–165bpm (tempo), Z4 166–181bpm (drempel), Z5 182–197bpm (max)
+AirBike baseline: ~122w gem. Halfmarathon comfortabel. Pool-zwemmer (in verbetering).
+Week ${weekNum()}, Dag ${dayNum()}.
+Deze week getraind: ${disc7} (${wkS.length} sessies)
+Laatste 5 sessies: ${last5||"geen"}
+${hrvCtx}
 
-Output FORMAT (use exactly this structure):
-DISCIPLINE · DURATION · INTENSITY
+OUTPUT FORMAT (gebruik exact deze structuur):
+DISCIPLINE · DUUR · INTENSITEIT
 ---
-[2-3 line session structure with specific HR ranges and timing]
+[2-3 lijnen sessiestructuur met specifieke HR-ranges en timing]
 ---
-[1 line: why this session today based on the data]
+[1 lijn: waarom deze sessie vandaag op basis van de data]
 
-Keep it concise and specific. If rest is needed, say "REST DAY" with a brief reason.`;
+Wees concreet en specifiek. Bij rustdag: "RUSTDAG" met korte reden.`;
 
-  const USER=`Today's Whoop: Recovery ${d?.recovery??"?"}%, HRV ${d?.hrv??"?"}ms, RHR ${d?.rhr??"?"}bpm, Strain yesterday ${d?.strain??"?"}, Sleep ${d?.sleepPerf??"?"}%.
+  const USR=`Whoop vandaag: Recovery ${d?.recovery??"?"}%, HRV ${d?.hrv??"?"}ms, RHR ${d?.rhr??"?"}bpm, Strain gisteren ${d?.strain??"?"}, Slaap ${d?.sleepPerf??"?"}%.
 
-Generate today's training prescription.`;
+Genereer de trainingsvoorschrift voor vandaag.`;
 
   try{
-    const res=await fetch("https://api.anthropic.com/v1/messages",{
-      method:"POST",
-      headers:{"Content-Type":"application/json","x-api-key":S.claudeKey,"anthropic-version":"2023-06-01","anthropic-dangerous-direct-browser-access":"true"},
-      body:JSON.stringify({model:"claude-sonnet-4-6",max_tokens:250,system:SYSTEM,messages:[{role:"user",content:USER}]})
-    });
+    const res=await fetch("https://api.anthropic.com/v1/messages",{method:"POST",headers:{"Content-Type":"application/json","x-api-key":S.claudeKey,"anthropic-version":"2023-06-01","anthropic-dangerous-direct-browser-access":"true"},body:JSON.stringify({model:"claude-sonnet-4-6",max_tokens:280,system:SYS,messages:[{role:"user",content:USR}]})});
     const data=await res.json();
-    const text=data.content?.[0]?.text||"Check your Whoop data and train at Z2 today.";
-    const html=formatPrescription(text);
-    localStorage.setItem(cacheKey, html);
+    const text=data.content?.[0]?.text||"Check je Whoop data en train vandaag in Z2.";
+    const html=formatPresc(text);
+    localStorage.setItem(cacheKey,html);
     document.getElementById("prescContent").innerHTML=html;
   }catch{
-    document.getElementById("prescContent").innerHTML=`<div style="font-size:12px;color:var(--muted)">Could not generate prescription — check your connection.</div>`;
+    document.getElementById("prescContent").innerHTML=`<div style="font-size:13px;color:var(--muted)">Kon prescription niet laden — controleer verbinding.</div>`;
   }
 }
 
-function formatPrescription(text){
-  const lines=text.split("\n").filter(l=>l.trim());
-  if(!lines.length) return `<div style="font-size:13px">${text}</div>`;
-
+function formatPresc(text){
   const parts=text.split("---");
   if(parts.length>=3){
-    const header=parts[0].trim();
-    const structure=parts[1].trim();
-    const rationale=parts[2].trim();
-    const headerParts=header.split("·").map(p=>p.trim());
-    const disc=headerParts[0]||"";
-    const dc=DISC_CLR[disc]||"var(--blue)";
+    const hdr=parts[0].trim().split("·").map(p=>p.trim());
+    const disc=hdr[0]||"",dc=DISC_CLR[disc]||"var(--blue)";
     return `<div class="presc-discipline" style="color:${dc}">${disc}</div>
-      <div class="presc-meta">${headerParts.slice(1).join(" · ")}</div>
-      <div class="presc-structure">${structure.replace(/\n/g,"<br>")}</div>
-      <div style="font-size:11px;color:var(--muted);margin-top:10px;line-height:1.5;font-style:italic">${rationale}</div>
-      <button class="btn" onclick="goLog()" style="margin-top:14px;padding:12px;font-size:13px">LOG THIS SESSION →</button>`;
+      <div class="presc-meta">${hdr.slice(1).join(" · ")}</div>
+      <div class="presc-structure">${parts[1].trim().replace(/\n/g,"<br>")}</div>
+      <div style="font-size:12px;color:var(--muted);margin-top:12px;line-height:1.6;font-style:italic">${parts[2].trim()}</div>`;
   }
-  return `<div style="font-size:13px;line-height:1.7;white-space:pre-wrap">${text}</div>
-    <button class="btn" onclick="goLog()" style="margin-top:14px;padding:12px;font-size:13px">LOG SESSION →</button>`;
+  return `<div style="font-size:14px;line-height:1.7;white-space:pre-wrap">${text}</div>`;
 }
 
 // ── Morning Briefing ──────────────────────────────────────────────────────────
 async function genBriefing(force=false){
   if(!S.claudeKey){
     document.getElementById("coachText").className="coach-body dim";
-    document.getElementById("coachText").textContent="Add your Claude API key in Settings to activate the coach.";
+    document.getElementById("coachText").textContent="Voeg je Claude API key toe in Instellingen om de coach te activeren.";
     return;
   }
-  const cacheKey="im9_brief_"+todayStr();
+  const cacheKey="lars_brief_"+todayStr();
   const cached=localStorage.getItem(cacheKey);
-  if(cached&&!force){
-    document.getElementById("coachText").className="coach-body";
-    document.getElementById("coachText").textContent=cached;
-    return;
-  }
+  if(cached&&!force){document.getElementById("coachText").className="coach-body";document.getElementById("coachText").textContent=cached;return;}
   document.getElementById("coachText").className="coach-body dim";
   document.getElementById("coachText").innerHTML='<div class="dots"><span></span><span></span><span></span></div>';
-
-  const d   = S.whoop;
+  const d=S.whoop;
   const last3=S.sessions.slice(0,3).map(s=>`${s.discipline} ${s.duration||"?"}min feel:${s.feel}/5`).join("; ");
-  const SYS=`You are Lars's personal Ironman triathlon coach. Give a 2–3 sentence morning check-in. Direct, personal, like a real coach texting — not a chatbot. Reference his actual data. Week ${weekNum()}, Day ${dayNum()}.`;
-  const USR=`Whoop: Recovery ${d?.recovery??"?"}%, HRV ${d?.hrv??"?"}ms, RHR ${d?.rhr??"?"}bpm, Sleep ${d?.sleepPerf??"?"}%, Strain yesterday ${d?.strain??"?"}.
-Last sessions: ${last3||"none yet"}.
-Give me my morning check-in.`;
-
+  const SYS=`Je bent Lars's persoonlijke Ironman triathlon coach. Geef een ochtendcheck-in van 2–3 zinnen. Direct, persoonlijk, zoals een echte coach sms't — geen chatbot. Verwijs naar zijn echte data. Week ${weekNum()}, Dag ${dayNum()}. Antwoord in het Nederlands.`;
+  const USR=`Whoop: Recovery ${d?.recovery??"?"}%, HRV ${d?.hrv??"?"}ms, RHR ${d?.rhr??"?"}bpm, Slaap ${d?.sleepPerf??"?"}%, Strain gisteren ${d?.strain??"?"}.
+Laatste sessies: ${last3||"nog geen sessies"}.
+Geef mijn ochtendcheck-in.`;
   try{
-    const res=await fetch("https://api.anthropic.com/v1/messages",{
-      method:"POST",
-      headers:{"Content-Type":"application/json","x-api-key":S.claudeKey,"anthropic-version":"2023-06-01","anthropic-dangerous-direct-browser-access":"true"},
-      body:JSON.stringify({model:"claude-sonnet-4-6",max_tokens:180,system:SYS,messages:[{role:"user",content:USR}]})
-    });
+    const res=await fetch("https://api.anthropic.com/v1/messages",{method:"POST",headers:{"Content-Type":"application/json","x-api-key":S.claudeKey,"anthropic-version":"2023-06-01","anthropic-dangerous-direct-browser-access":"true"},body:JSON.stringify({model:"claude-sonnet-4-6",max_tokens:180,system:SYS,messages:[{role:"user",content:USR}]})});
     const data=await res.json();
-    const text=data.content?.[0]?.text||"Check your data and get after today's session.";
-    localStorage.setItem(cacheKey, text);
+    const text=data.content?.[0]?.text||"Check je data en ga aan de slag met de sessie van vandaag.";
+    localStorage.setItem(cacheKey,text);
     document.getElementById("coachText").className="coach-body";
     document.getElementById("coachText").textContent=text;
-  }catch{
-    document.getElementById("coachText").className="coach-body dim";
-    document.getElementById("coachText").textContent="Check your Whoop and hit today's session.";
-  }
+  }catch{document.getElementById("coachText").className="coach-body dim";document.getElementById("coachText").textContent="Check je Whoop en ga voor de sessie van vandaag.";}
 }
 
 // ── Plan ──────────────────────────────────────────────────────────────────────
+function getPhaseForWeek(wn){return PHASES.find(p=>wn>=p.weeks[0]&&wn<=p.weeks[1])||PHASES[0];}
+
 function renderPlan(){
-  document.getElementById("planWkLbl").textContent=`WEEK ${weekNum()} · BASE BUILDING`;
-  const idx=new Date().getDay()===0?6:new Date().getDay()-1;
-  document.getElementById("weekPlan").innerHTML=WEEK.map((w,i)=>`
-    <div class="day-row${i===idx?" today":""}" onclick="this.classList.toggle('open')" style="${i===idx?`border-left-color:${w.color}`:""}">
-      <div class="day-top">
-        <span class="day-dd">${w.day}</span>
-        <span class="day-type" style="color:${w.color}">${w.type}</span>
-        ${i===idx?`<span class="pill" style="background:${w.color}22;color:${w.color};font-size:9px">TODAY</span>`:""}
-        <span class="day-zone">${w.zone}</span>
+  const wn=weekNum(),phase=getPhaseForWeek(wn);
+  const wData=PLAN_WEEKS[Math.min(wn-1,PLAN_WEEKS.length-1)];
+  const rec=S.whoop?.recovery??null;
+  const todayIdx=getTodayIdx();
+
+  // Roadmap
+  document.getElementById("planRoadmap").innerHTML=PHASES.map(p=>{
+    const active=wn>=p.weeks[0]&&wn<=p.weeks[1];
+    return `<div class="roadmap-phase${active?" active":""}" style="${active?`background:${p.color}12;`:""}">
+      <div class="rp-name" style="color:${active?p.color:"var(--dim)"}">${p.name.split(" ")[0]}</div>
+      <div class="rp-weeks" style="color:${active?"var(--muted)":"var(--dim)"}">W${p.weeks[0]}–${p.weeks[1]}</div>
+    </div>`;
+  }).join("");
+
+  // Phase banner
+  const phaseWk=wn-phase.weeks[0]+1,phaseTot=phase.weeks[1]-phase.weeks[0]+1;
+  const phasePct=Math.round(phaseWk/phaseTot*100);
+  document.getElementById("phaseBanner").innerHTML=`
+    <div style="display:flex;align-items:flex-start;justify-content:space-between;margin-bottom:8px">
+      <div>
+        <div class="phase-name" style="color:${phase.color}">${phase.name}</div>
+        <div class="phase-meta">${wData.focus}</div>
       </div>
-      <div class="day-detail">${w.detail}</div>
-    </div>`).join("");
+      <span style="font-size:12px;color:var(--muted);font-weight:600;margin-top:4px">Wk ${phaseWk}/${phaseTot}</span>
+    </div>
+    <div class="phase-progress"><div class="phase-fill" style="width:${phasePct}%;background:${phase.color}"></div></div>
+    <div class="phase-weeks"><span>${phase.weeks[0] < wn ? `${wn-phase.weeks[0]} weken in fase` : "Start fase"}</span><span>${phase.weeks[1]-wn+1} weken resterend</span></div>`;
+
+  // Plan advice based on recovery
+  renderPlanAdvice(rec);
+
+  // Week label
+  document.getElementById("planWeekLabel").textContent=`${wData.label} · ${new Date().toLocaleDateString("nl-BE",{month:"long"})}`;
+
+  // Days
+  document.getElementById("weekPlan").innerHTML=wData.days.map(day=>{
+    const isToday=day.i===todayIdx;
+    const dc=DISC_CLR[day.disc]||"var(--dim)";
+    const done=isDone(day);
+    const adaptNote=getAdaptNote(day,rec);
+
+    return `<div class="day-row${isToday?" today":""}${done?" done-session":""}" onclick="this.classList.toggle('open')" style="${isToday?`border-left-color:${dc}`:""}">
+      <div class="day-top">
+        <span class="day-dd">${DAYS_NL[day.i+1>6?0:day.i+1] || DAYS_NL[day.i]}</span>
+        <div style="flex:1">
+          <span class="day-type" style="color:${dc}">${day.disc}</span>
+          <span style="font-size:11px;color:var(--muted);margin-left:8px;font-weight:500">${day.type}</span>
+        </div>
+        ${isToday?`<span class="pill" style="background:${dc}20;color:${dc};font-size:9px">VANDAAG</span>`:""}
+        ${done?`<span class="done-badge">✓ Gedaan</span>`:""}
+        <span class="day-zone">${day.zone}</span>
+      </div>
+      <div class="day-detail">
+        ${day.dur&&day.dur!=="—"?`<div style="font-size:22px;font-weight:800;letter-spacing:-.5px;color:${dc};margin-bottom:12px">${day.dur}</div>`:""}
+        ${day.warmup?`<div class="session-block"><div class="session-block-label">Opwarming</div><div class="session-block-text">${day.warmup}</div></div>`:""}
+        ${day.main?`<div class="session-block"><div class="session-block-label">${day.type==="Rust"||day.type==="Volledig rust"?"":"Hoofdsessie"}</div><div class="session-block-text">${day.main}</div></div>`:""}
+        ${day.cooldown?`<div class="session-block"><div class="session-block-label">Afkoeling</div><div class="session-block-text">${day.cooldown}</div></div>`:""}
+        ${day.goal?`<div class="session-goal">Doel: ${day.goal}</div>`:""}
+        ${adaptNote}
+        ${done?renderDoneDetail(day):""}
+      </div>
+    </div>`;
+  }).join("");
+
+  // Upcoming weeks
+  renderUpcoming(wn);
+}
+
+function getAdaptNote(day,rec){
+  if(rec===null||!day.adaptMed)return"";
+  if(rec>=67)return`<div class="adapt-badge adapt-green">✓ ${rec}% recovery — train zoals gepland</div>`;
+  if(rec>=34)return`<div class="adapt-badge adapt-yellow">⚡ ${rec}% recovery — ${day.adaptMed}</div>`;
+  return`<div class="adapt-badge adapt-red">⚠ ${rec}% recovery — ${day.adaptLow}</div>`;
+}
+
+function isDone(day){
+  const wn=weekNum();
+  const weekStart=new Date(LARS.startDate);weekStart.setDate(weekStart.getDate()+(wn-1)*7+day.i);
+  const dateStr=weekStart.toISOString().split("T")[0];
+  return S.sessions.some(s=>s.date===dateStr&&(s.discipline===day.disc||(s.discipline==="AirBike"&&day.disc==="Bike")));
+}
+
+function renderDoneDetail(day){
+  const wn=weekNum();
+  const weekStart=new Date(LARS.startDate);weekStart.setDate(weekStart.getDate()+(wn-1)*7+day.i);
+  const dateStr=weekStart.toISOString().split("T")[0];
+  const s=S.sessions.find(s=>s.date===dateStr);
+  if(!s)return"";
+  return`<div class="done-detail">${[s.duration?`${s.duration}min`:"",s.avgHR?`${s.avgHR}bpm gem.`:"",s.strain?`strain ${s.strain}`:""].filter(Boolean).join(" · ")}</div>`;
 }
 
 function renderPlanAdvice(rec){
-  if(rec==null) return;
-  const el=document.getElementById("planAdvice"), c=recClr(rec);
+  if(rec==null){document.getElementById("planAdvice").style.display="none";return;}
+  const el=document.getElementById("planAdvice"),c=recClr(rec);
   el.style.display="block";
   el.className="coach-card";
   el.style.borderLeftColor=c;
-  el.innerHTML=`<div style="font-size:11px;font-weight:600;color:${c};margin-bottom:6px">${rec}% recovery · ${recLbl(rec)}</div>
-    <div style="font-size:12px;color:var(--muted);line-height:1.65">${
-      rec>=67?"You're primed. Train at full planned intensity.":
-      rec>=34?"Stay in Z2. Volume is fine, intensity is not.":
-      "Mobility only. Hard training now costs more than it gains."
-    }</div>`;
+  el.innerHTML=`<div style="font-size:12px;font-weight:700;color:${c};margin-bottom:6px">${rec}% recovery · ${recLbl(rec)}</div>
+    <div style="font-size:13px;color:var(--muted);line-height:1.7">${rec>=67?"Je bent klaar. Train op de geplande intensiteit.":rec>=34?"Blijf in Z2. Volume oké, maximale intensiteit niet.":"Enkel mobiliteit. Hard trainen nu kost meer dan het oplevert."}</div>`;
+}
+
+function renderUpcoming(wn){
+  const next=[PLAN_WEEKS[wn],PLAN_WEEKS[wn+1]].filter(Boolean);
+  if(!next.length){document.getElementById("planUpcoming").innerHTML="";return;}
+  document.getElementById("planUpcoming").innerHTML=`
+    <div class="upcoming-title">De komende weken</div>
+    ${next.map((w,i)=>`
+      <div style="margin-bottom:14px">
+        <div style="font-size:12px;font-weight:700;color:var(--muted);margin-bottom:8px">Week ${wn+i+1} · ${w.focus.split("·")[0].trim()}</div>
+        ${w.days.filter(d=>d.disc!=="Recovery").map(d=>`
+          <div class="upcoming-row">
+            <span class="upcoming-dd">${DAYS_NL[d.i+1>6?0:d.i+1]||DAYS_NL[d.i]}</span>
+            <div style="flex:1">
+              <span class="upcoming-disc" style="color:${DISC_CLR[d.disc]||"var(--muted)"}">${d.disc}</span>
+              <span class="upcoming-type"> · ${d.type}</span>
+            </div>
+            <span style="font-size:11px;color:var(--dim);font-weight:500">${d.dur}</span>
+          </div>`).join("")}
+      </div>`).join("")}`;
 }
 
 function buildZones(){
   document.getElementById("zoneList").innerHTML=LARS.zones.map((z,i)=>`
     <div class="zrow">
       <div class="zdot" style="background:${z.color}"></div>
-      <span style="font-size:12px;color:${z.color};min-width:22px;font-weight:600">Z${z.z}</span>
+      <span style="font-size:13px;color:${z.color};min-width:22px;font-weight:700">Z${z.z}</span>
       <span class="zbpm">${z.min}–${z.max} bpm</span>
       <span class="zname">${ZONE_DESC[i]}</span>
     </div>`).join("");
 }
 
-// ── Log ───────────────────────────────────────────────────────────────────────
-function setDisc(btn, disc){
-  S.disc=disc;
-  document.querySelectorAll("#discBtns .db").forEach(b=>b.classList.remove("on"));
-  btn.classList.add("on");
-}
-function setFeel(n){
-  S.feel=n;
-  document.getElementById("feelLbl").textContent=FEEL_EMO[n-1];
-  document.querySelectorAll("#feelStars button").forEach((b,i)=>b.classList.toggle("on",i<n));
-}
-function showZoneHint(){
-  const hr=parseInt(document.getElementById("lAvgHR").value);
-  const hint=document.getElementById("zoneHint");
-  if(!hr){ hint.style.display="none"; return; }
-  const z=getZone(hr);
-  if(z){ hint.style.display="block"; hint.style.color=z.color; hint.textContent=`→ Z${z.z} · ${z.name}`; }
-  else   hint.style.display="none";
-}
-
-function saveSession(){
-  const s={
-    id:         Date.now().toString(),
-    date:       document.getElementById("lDate").value||todayStr(),
-    discipline: S.disc,
-    duration:   parseInt(document.getElementById("lDur").value)||null,
-    distance:   document.getElementById("lDist").value||null,
-    avgHR:      parseInt(document.getElementById("lAvgHR").value)||null,
-    maxHR:      parseInt(document.getElementById("lMaxHR").value)||null,
-    watts:      parseInt(document.getElementById("lWatts").value)||null,
-    strain:     parseFloat(document.getElementById("lStrain").value)||null,
-    recovery:   parseInt(document.getElementById("lRec").value)||null,
-    notes:      document.getElementById("lNotes").value||null,
-    feel:       S.feel,
-  };
-  S.sessions.unshift(s);
-  persist("im9_sessions", S.sessions);
-  ["lDur","lDist","lAvgHR","lMaxHR","lWatts","lStrain","lRec","lNotes"].forEach(id=>document.getElementById(id).value="");
-  document.getElementById("zoneHint").style.display="none";
-  const btn=document.getElementById("saveBtn");
-  btn.textContent="✓  SAVED"; btn.classList.add("saved");
-  setTimeout(()=>{ btn.textContent="SAVE SESSION"; btn.classList.remove("saved"); },2500);
-  renderSessHistory(); renderBrief();
+// ── History ───────────────────────────────────────────────────────────────────
+function renderHistory(){
+  const el=document.getElementById("historyList");
+  document.getElementById("historySubtitle").textContent=`${S.sessions.length} sessie${S.sessions.length!==1?"s":""} gesynchroniseerd via Whoop`;
+  if(!S.sessions.length){
+    el.innerHTML=`<div style="text-align:center;color:var(--dim);font-size:14px;padding:40px 0;line-height:1.7">Nog geen sessies gelogd.<br>Sync je Whoop na een training.</div>`;
+    return;
+  }
+  // Group by week
+  const groups={};
+  S.sessions.forEach(s=>{
+    const d=new Date(s.date),startDate=new Date(LARS.startDate);
+    const wk=Math.ceil((Math.floor((d-startDate)/86400000)+1)/7);
+    const key=`week_${wk}`;
+    if(!groups[key])groups[key]={wk,sessions:[]};
+    groups[key].sessions.push(s);
+  });
+  el.innerHTML=Object.values(groups).sort((a,b)=>b.wk-a.wk).map(g=>`
+    <div>
+      <div class="week-group-hdr" onclick="this.nextElementSibling.classList.toggle('hidden')">
+        <span>Week ${g.wk}</span>
+        <span style="font-size:11px;color:var(--dim)">${g.sessions.length} sessie${g.sessions.length!==1?"s":""}</span>
+      </div>
+      <div>${g.sessions.map(s=>seshHTML(s)).join("")}</div>
+    </div>`).join("");
 }
 
 function seshHTML(s){
   const dc=DISC_CLR[s.discipline]||"var(--muted)";
-  const z =s.avgHR?getZone(s.avgHR):null;
-  return `<div class="sesh" style="border-left-color:${dc}">
+  const z=s.avgHR?getZone(s.avgHR):null;
+  return`<div class="sesh" style="border-left-color:${dc}">
     <div class="sesh-top">
       <span class="pill" style="background:${dc}20;color:${dc}">${s.discipline}</span>
-      ${s.fromWhoop?`<span class="pill" style="background:var(--green)15;color:var(--green);font-size:9px">Whoop</span>`:""}
+      ${s.fromWhoop?`<span class="pill" style="background:rgba(46,204,113,.12);color:var(--green);font-size:10px">Whoop</span>`:""}
       ${z?`<span class="pill" style="background:${z.color}20;color:${z.color}">Z${z.z}</span>`:""}
       ${s.recovery?`<span class="pill" style="background:${recClr(s.recovery)}20;color:${recClr(s.recovery)}">${s.recovery}% rec</span>`:""}
-      <span style="font-size:10px;color:var(--muted);margin-left:auto">${fmtDate(s.date)}</span>
+      <span style="font-size:11px;color:var(--muted);margin-left:auto;font-weight:500">${fmtDate(s.date)}</span>
     </div>
     <div class="sesh-meta">
-      ${s.duration?`<span><em>dur </em>${s.duration}min</span>`:""}
+      ${s.duration?`<span><em>duur </em>${s.duration}min</span>`:""}
       ${s.distance?`<span>${s.distance}</span>`:""}
-      ${s.avgHR?`<span><em>avg </em>${s.avgHR}bpm</span>`:""}
+      ${s.avgHR?`<span><em>gem. </em>${s.avgHR}bpm</span>`:""}
       ${s.maxHR?`<span><em>max </em>${s.maxHR}bpm</span>`:""}
-      ${s.watts?`<span style="color:var(--gold)">${s.watts}w</span>`:""}
+      ${s.watts?`<span style="color:var(--accent)">${s.watts}w</span>`:""}
       ${s.strain?`<span><em>strain </em>${s.strain}</span>`:""}
       ${s.calories?`<span><em>cal </em>${s.calories}</span>`:""}
-      ${s.feel?`<span>${"★".repeat(s.feel)}${"☆".repeat(5-s.feel)}</span>`:""}
     </div>
     ${s.zones?zoneBarHTML(s.zones):""}
-    ${s.notes?`<p style="font-size:11px;color:var(--muted);margin-top:8px;line-height:1.6;font-style:italic">${s.notes}</p>`:""}
   </div>`;
 }
 
-function renderSessHistory(){
-  const el=document.getElementById("sessHistory");
-  if(!S.sessions.length){ el.innerHTML=""; return; }
-  el.innerHTML=`<span class="lbl">History</span>`+S.sessions.map(s=>seshHTML(s)).join("");
+function zoneBarHTML(zones){
+  if(!zones)return"";
+  const vals=[zones.z1,zones.z2,zones.z3,zones.z4,zones.z5].map(v=>v||0);
+  const total=vals.reduce((a,b)=>a+b,0);
+  if(!total)return"";
+  const colors=["#4EA8DE","#2ECC71","#FFBA00","#FF7840","#FF3860"];
+  return`<div class="zone-bars">${vals.map((v,i)=>v>0?`<div class="zone-bar-seg" style="flex:${v};background:${colors[i]}"></div>`:"").join("")}</div>
+    <div style="display:flex;gap:10px;margin-top:5px;flex-wrap:wrap">${vals.map((v,i)=>v>0?`<span style="font-size:10px;color:${colors[i]};font-weight:600">Z${i+1} ${fmtDur(v)}</span>`:"").join("")}</div>`;
 }
 
 // ── Stats ─────────────────────────────────────────────────────────────────────
 function renderStats(){
-  document.getElementById("stTotal").textContent  = S.sessions.length;
-  document.getElementById("stStreak").textContent = calcStreak();
-  document.getElementById("stSwim").textContent   = S.sessions.filter(s=>s.discipline==="Swim").length;
-  document.getElementById("stBike").textContent   = S.sessions.filter(s=>s.discipline==="Bike"||s.discipline==="AirBike").length;
-  document.getElementById("stRun").textContent    = S.sessions.filter(s=>s.discipline==="Run").length;
-  document.getElementById("stDays").textContent   = dayNum();
+  document.getElementById("stTotal").textContent =S.sessions.length;
+  document.getElementById("stStreak").textContent=calcStreak();
+  document.getElementById("stSwim").textContent  =S.sessions.filter(s=>s.discipline==="Swim").length;
+  document.getElementById("stBike").textContent  =S.sessions.filter(s=>s.discipline==="Bike"||s.discipline==="AirBike").length;
+  document.getElementById("stRun").textContent   =S.sessions.filter(s=>s.discipline==="Run").length;
+  document.getElementById("stDays").textContent  =dayNum();
 
+  const wn=weekNum();
   const bars=[];
   for(let w=7;w>=0;w--){
-    const wStart=new Date(LARS.startDate); wStart.setDate(wStart.getDate()+((weekNum()-1-w)*7));
-    const wEnd=new Date(wStart); wEnd.setDate(wEnd.getDate()+7);
-    const count=S.sessions.filter(s=>{ const d=new Date(s.date); return d>=wStart&&d<wEnd; }).length;
-    bars.push({count,lbl:w===0?"now":`-${w}w`,cur:w===0});
+    const wStart=new Date(LARS.startDate);wStart.setDate(wStart.getDate()+(wn-1-w)*7);
+    const wEnd=new Date(wStart);wEnd.setDate(wEnd.getDate()+7);
+    const count=S.sessions.filter(s=>{const d=new Date(s.date);return d>=wStart&&d<wEnd;}).length;
+    bars.push({count,lbl:w===0?"nu":`-${w}w`,cur:w===0});
   }
   const maxB=Math.max(...bars.map(b=>b.count),1);
   document.getElementById("weekBars").innerHTML=`
-    <div class="wbars">${bars.map(b=>`<div style="flex:1">
-      <div class="wbar" style="height:${Math.max(b.count/maxB*56,3)}px;background:${b.cur?"var(--gold)":"var(--border2)"}"></div>
-      <div class="wlbl">${b.count||""}</div></div>`).join("")}
-    </div>
-    <div style="display:flex;margin-top:4px">${bars.map(b=>`<div style="flex:1;text-align:center;font-size:9px;color:var(--dim)">${b.lbl}</div>`).join("")}</div>`;
+    <div class="wbars">${bars.map(b=>`<div style="flex:1"><div class="wbar" style="height:${Math.max(b.count/maxB*60,3)}px;background:${b.cur?"var(--accent)":"var(--border2)"}"></div><div class="wlbl">${b.count||""}</div></div>`).join("")}</div>
+    <div style="display:flex;margin-top:5px">${bars.map(b=>`<div style="flex:1;text-align:center;font-size:9px;color:var(--dim);font-weight:600">${b.lbl}</div>`).join("")}</div>`;
 
   const withRec=S.sessions.filter(s=>s.recovery).slice(0,7).reverse();
   if(withRec.length>1){
     document.getElementById("recTrendCard").style.display="block";
     const maxR=Math.max(...withRec.map(r=>r.recovery));
     document.getElementById("recTrend").innerHTML=`
-      <div class="wbars">${withRec.map(s=>`<div style="flex:1">
-        <div class="wbar" style="height:${s.recovery/maxR*56}px;background:${recClr(s.recovery)}"></div>
-        <div class="wlbl">${s.recovery}%</div></div>`).join("")}
-      </div>`;
+      <div class="wbars">${withRec.map(s=>`<div style="flex:1"><div class="wbar" style="height:${s.recovery/maxR*60}px;background:${recClr(s.recovery)}"></div><div class="wlbl">${s.recovery}%</div></div>`).join("")}</div>`;
   }
 
   const el=document.getElementById("statsSessions");
-  if(!S.sessions.length){ el.innerHTML=""; return; }
-  el.innerHTML=`<span class="lbl">Recent sessions</span>`+S.sessions.slice(0,5).map(s=>seshHTML(s)).join("");
-}
-
-// ── Coach ─────────────────────────────────────────────────────────────────────
-function setCat(btn, cat){
-  S.cat=cat;
-  document.querySelectorAll("#catBtns .db").forEach(b=>b.classList.remove("on"));
-  btn.classList.add("on");
-}
-
-async function sendMsg(){
-  const input=document.getElementById("coachInput");
-  const text=input.value.trim(); if(!text) return;
-  const msg={id:Date.now().toString(),text,cat:S.cat,ts:new Date().toISOString(),reply:null};
-  S.notes.unshift(msg); persist("im9_notes",S.notes);
-  input.value=""; renderNotes();
-
-  if(!S.claudeKey){
-    S.notes=S.notes.map(m=>m.id===msg.id?{...m,reply:"No API key set — add it in Settings."}:m);
-    persist("im9_notes",S.notes); renderNotes(); return;
-  }
-
-  const btn=document.getElementById("sendBtn");
-  btn.textContent="thinking..."; btn.style.background="var(--border2)"; btn.style.color="var(--muted)";
-
-  const d    = S.whoop;
-  const last3= S.sessions.slice(0,3).map(s=>`${s.discipline} ${s.duration||"?"}min feel:${s.feel}/5`).join(", ");
-  const SYS  = `You are Lars's personal Ironman triathlon coach. Lars: 27yo, 71kg, Bruges. Max HR 197, RHR ${d?.rhr||53}, HRV ${d?.hrv??"?"}ms, Recovery ${d?.recovery??"?"}%. Week ${weekNum()}, Day ${dayNum()}. Last sessions: ${last3||"none"}. Zones: Z1 110–131, Z2 132–150, Z3 151–165, Z4 166–181, Z5 182–197. Reply under 100 words, direct and specific.`;
-
-  try{
-    const res=await fetch("https://api.anthropic.com/v1/messages",{
-      method:"POST",
-      headers:{"Content-Type":"application/json","x-api-key":S.claudeKey,"anthropic-version":"2023-06-01","anthropic-dangerous-direct-browser-access":"true"},
-      body:JSON.stringify({model:"claude-sonnet-4-6",max_tokens:150,system:SYS,messages:[{role:"user",content:`[${S.cat.toUpperCase()}] ${text}`}]})
-    });
-    const data=await res.json();
-    const reply=data.content?.[0]?.text||"Logged.";
-    S.notes=S.notes.map(m=>m.id===msg.id?{...m,reply}:m);
-  }catch{
-    S.notes=S.notes.map(m=>m.id===msg.id?{...m,reply:"Logged."}:m);
-  }
-  persist("im9_notes",S.notes); renderNotes();
-  btn.textContent="SEND · ⌘↵"; btn.style.background="var(--gold)"; btn.style.color="#000";
-}
-
-document.addEventListener("keydown",e=>{
-  if(e.key==="Enter"&&(e.metaKey||e.ctrlKey)&&document.activeElement.id==="coachInput") sendMsg();
-});
-
-function renderNotes(){
-  const el=document.getElementById("notesList");
-  if(!S.notes.length){
-    el.innerHTML=`<div style="text-align:center;color:var(--dim);font-size:13px;padding:24px 0">Nothing logged yet</div>`;
-    return;
-  }
-  el.innerHTML=S.notes.map(n=>`
-    <div class="note-card" style="border-left:3px solid ${CAT_CLR[n.cat]||"var(--border2)"}">
-      <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:8px">
-        <span class="pill" style="background:${CAT_CLR[n.cat]||"var(--dim)"}20;color:${CAT_CLR[n.cat]||"var(--dim)"}">${CAT_LBL[n.cat]||n.cat}</span>
-        <span style="font-size:10px;color:var(--dim)">${fmtDate(n.ts)}</span>
-      </div>
-      <p style="font-size:13px;line-height:1.65">${n.text}</p>
-      ${n.reply?`<div class="note-reply"><span style="color:var(--gold);font-weight:600">COACH › </span>${n.reply}</div>`:""}
-    </div>`).join("");
+  if(!S.sessions.length){el.innerHTML="";return;}
+  el.innerHTML=`<span class="lbl">Recente sessies</span>`+S.sessions.slice(0,5).map(s=>seshHTML(s)).join("");
 }
 </script>
 </body>
