@@ -727,15 +727,21 @@ async function syncAll(){
 
 async function syncToday(){
   try{
-    const r=await fetch(`${S.backendUrl}/today`);
+    const url=S.backendUrl.replace(/^http:/,"https:");
+    if(url!==S.backendUrl){ S.backendUrl=url; localStorage.setItem(K.backend,url); }
+    const r=await fetch(`${url}/today`);
     const d=await r.json();
     if(!d.error){
       S.whoop=d;
       setBanner(true,d.fetchedAt);
       applyWhoopToUI(d);
       autoImport(d.workouts||[]);
-    }
-  }catch{setBanner(false);}
+    }else{ setBanner(false); showToast("Whoop fout: "+d.error); }
+  }catch(e){
+    setBanner(false);
+    showToast("Sync mislukt — check ⚙ Settings");
+    console.error("syncToday:",e.message);
+  }
 }
 
 async function syncHistory(){
