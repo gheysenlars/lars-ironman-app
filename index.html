@@ -230,8 +230,7 @@ nav button.on{color:var(--accent);border-top-color:var(--accent)}
 <div class="top">
   <div class="top-l">
     <span class="wdot dead" id="wdot"></span>
-    <span id="wstatus">Disconnected</span>
-    <span id="wage" style="color:var(--dim)"></span>
+    <span id="wstatus" style="font-size:11px">Disconnected</span>
   </div>
   <div class="top-r">
     <button onclick="syncAll()" id="syncBtn">↻</button>
@@ -239,24 +238,16 @@ nav button.on{color:var(--accent);border-top-color:var(--accent)}
   </div>
 </div>
 
-<!-- ═══════════ TODAY ═══════════ -->
+<!-- ═══════════ VANDAAG ═══════════ -->
 <div class="scr on" id="s-today">
   <div class="pad">
-    <div style="margin-bottom:24px">
-      <div id="bDate" style="font-size:12px;color:var(--muted);font-weight:600;margin-bottom:8px"></div>
-      <h1 style="font-size:36px;font-weight:900;letter-spacing:-1.5px;line-height:1">Lars.</h1>
+
+    <div style="margin-bottom:28px">
+      <div id="bDate" style="font-size:12px;color:var(--muted);font-weight:500;margin-bottom:6px;letter-spacing:.02em"></div>
+      <h1 style="font-size:38px;font-weight:900;letter-spacing:-2px;line-height:1">Lars.</h1>
     </div>
 
-    <!-- Daily prescription -->
-    <div class="presc-card">
-      <div class="presc-header">
-        <span class="lbl" style="margin:0;color:var(--blue)">Vandaag</span>
-        <button class="presc-refresh" onclick="genPrescription(true)">↻</button>
-      </div>
-      <div id="prescContent"><div class="dots"><span></span><span></span><span></span></div></div>
-    </div>
-
-    <!-- Coach briefing -->
+    <!-- Coach -->
     <div class="coach-card">
       <div class="coach-top">
         <span class="lbl" style="margin:0;color:var(--accent)">Coach</span>
@@ -265,64 +256,25 @@ nav button.on{color:var(--accent);border-top-color:var(--accent)}
       <div class="coach-body dim" id="coachText"><div class="dots"><span></span><span></span><span></span></div></div>
     </div>
 
-    <!-- Recovery hero -->
-    <div class="rec-hero" id="recHero">
-      <span class="lbl">Recovery</span>
-      <div class="rec-pct" id="recPct" style="color:var(--muted)">—</div>
-      <div class="rec-sub" id="recSub" style="color:var(--muted)">wacht op whoop sync</div>
-      <div class="rec-bar-wrap"><div class="rec-bar-fill" id="recFill" style="width:0;background:var(--muted)"></div></div>
-    </div>
+    <!-- Today's session — MAIN CARD -->
+    <div id="todaySessionCard" style="margin-bottom:12px"></div>
 
-    <!-- 4 metrics -->
-    <div class="m4">
-      <div class="mc"><div class="v" id="mHRV" style="color:var(--purple)">—</div><div class="l">HRV</div></div>
-      <div class="mc"><div class="v" id="mRHR" style="color:var(--blue)">—</div><div class="l">RHR</div></div>
-      <div class="mc"><div class="v" id="mStrain" style="color:var(--accent)">—</div><div class="l">Strain</div></div>
-      <div class="mc"><div class="v" id="mSleep" style="color:var(--green)">—</div><div class="l">Slaap</div></div>
-    </div>
-
-    <!-- HRV trend -->
-    <div class="card" id="hrvTrendCard" style="display:none">
-      <span class="lbl">HRV trend · 7 dagen</span>
-      <div id="hrvTrend"></div>
-      <div id="hrvTrendNote" style="font-size:12px;color:var(--muted);margin-top:10px;font-weight:500"></div>
-    </div>
-
-    <!-- Stats strip -->
-    <div class="g2">
-      <div class="sbox"><div class="sv" id="bSessions" style="color:var(--accent)">0</div><div class="sl">Sessies</div></div>
-      <div class="sbox"><div class="sv" id="bWeek" style="color:var(--green)">0</div><div class="sl">Deze week</div></div>
-      <div class="sbox"><div class="sv" id="bDay" style="color:var(--blue)">1</div><div class="sl">Trainingsdag</div></div>
-      <div class="sbox"><div class="sv" id="bStreak" style="color:var(--purple)">0</div><div class="sl">Streak</div></div>
-    </div>
   </div>
 </div>
 
-<!-- ═══════════ PLAN ═══════════ -->
+<!-- ═══════════ SCHEMA ═══════════ -->
 <div class="scr" id="s-plan">
   <div class="pad">
     <div style="margin-bottom:24px">
-      <h2 style="font-size:26px;font-weight:800;letter-spacing:-.5px">Trainingsplan</h2>
-      <p style="font-size:13px;color:var(--muted);margin-top:6px;font-weight:400">Past automatisch op basis van je Whoop data</p>
+      <h2 style="font-size:28px;font-weight:900;letter-spacing:-1px">Trainingsschema</h2>
+      <p style="font-size:13px;color:var(--muted);margin-top:6px">Past dagelijks aan op basis van je Whoop data</p>
     </div>
-
-    <!-- Phases roadmap -->
     <div class="roadmap" id="planRoadmap"></div>
-
-    <!-- Phase banner -->
     <div class="phase-banner" id="phaseBanner"></div>
-
-    <!-- Recovery advice -->
     <div id="planAdvice" style="display:none;margin-bottom:14px"></div>
-
-    <!-- This week -->
-    <div style="font-size:13px;font-weight:700;color:var(--muted);margin-bottom:10px;letter-spacing:.02em" id="planWeekLabel"></div>
+    <div style="font-size:11px;font-weight:700;color:var(--muted);margin-bottom:10px;letter-spacing:.06em;text-transform:uppercase" id="planWeekLabel"></div>
     <div id="weekPlan"></div>
-
-    <!-- Upcoming -->
     <div id="planUpcoming" style="margin-top:20px"></div>
-
-    <!-- Zones -->
     <div class="card" style="margin-top:8px">
       <span class="lbl">Hartslagzones · Max 197 · RHR 53</span>
       <div id="zoneList"></div>
@@ -330,143 +282,56 @@ nav button.on{color:var(--accent);border-top-color:var(--accent)}
   </div>
 </div>
 
-<!-- ═══════════ HISTORY ═══════════ -->
-<div class="scr" id="s-history">
+<!-- ═══════════ PROGRESSIE ═══════════ -->
+<div class="scr" id="s-progressie">
   <div class="pad">
-    <div style="margin-bottom:24px">
-      <h2 style="font-size:26px;font-weight:800;letter-spacing:-.5px">Sessies</h2>
-      <p style="font-size:13px;color:var(--muted);margin-top:6px;font-weight:400" id="historySubtitle">Automatisch gesynchroniseerd via Whoop</p>
+    <div style="margin-bottom:28px">
+      <h2 style="font-size:28px;font-weight:900;letter-spacing:-1px">Progressie</h2>
+      <p style="font-size:13px;color:var(--muted);margin-top:6px">Jouw weg naar de Ironman</p>
     </div>
-    <div id="historyList"></div>
-  </div>
-</div>
 
-<!-- ═══════════ STATS ═══════════ -->
-<div class="scr" id="s-stats">
-  <div class="pad">
-    <div style="margin-bottom:24px">
-      <h2 style="font-size:26px;font-weight:800;letter-spacing:-.5px">Progressie</h2>
-      <p style="font-size:13px;color:var(--muted);margin-top:6px;font-weight:400">Trainingsbelasting &amp; trends</p>
+    <!-- Big numbers -->
+    <div class="g2" style="margin-bottom:20px">
+      <div class="sbox">
+        <div class="sv" id="pDay" style="color:var(--accent)">1</div>
+        <div class="sl">Trainingsdag</div>
+      </div>
+      <div class="sbox">
+        <div class="sv" id="pWeeks" style="color:var(--blue)">1</div>
+        <div class="sl">Week</div>
+      </div>
+      <div class="sbox">
+        <div class="sv" id="pTotal" style="color:var(--green)">0</div>
+        <div class="sl">Sessies totaal</div>
+      </div>
+      <div class="sbox">
+        <div class="sv" id="pStreak" style="color:var(--accent)">0</div>
+        <div class="sl">Streak</div>
+      </div>
     </div>
+
+    <!-- Weekly load -->
     <div class="card">
-      <span class="lbl">Weekbelasting · 8 weken</span>
+      <span class="lbl">Sessies per week</span>
       <div id="weekBars"></div>
     </div>
-    <div class="g2">
-      <div class="sbox"><div class="sv" id="stTotal" style="color:var(--accent)">0</div><div class="sl">Sessies totaal</div></div>
-      <div class="sbox"><div class="sv" id="stStreak" style="color:var(--green)">0</div><div class="sl">Streak</div></div>
-      <div class="sbox"><div class="sv" id="stSwim" style="color:var(--blue)">0</div><div class="sl">Zwem</div></div>
-      <div class="sbox"><div class="sv" id="stBike" style="color:var(--accent)">0</div><div class="sl">Fiets</div></div>
-      <div class="sbox"><div class="sv" id="stRun" style="color:var(--green)">0</div><div class="sl">Loop</div></div>
-      <div class="sbox"><div class="sv" id="stDays" style="color:var(--blue)">1</div><div class="sl">Trainingsdagen</div></div>
-    </div>
-    <div class="card" id="recTrendCard" style="display:none">
-      <span class="lbl">Recovery trend · 7 sessies</span>
-      <div id="recTrend"></div>
-    </div>
-    <div id="statsSessions"></div>
-  </div>
-</div>
 
-<!-- ═══════════ WORKOUT ═══════════ -->
-<div class="scr" id="s-workout">
-  <div class="pad">
-    <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:24px">
-      <h2 style="font-size:26px;font-weight:800;letter-spacing:-.5px">Workout</h2>
-      <div style="display:flex;gap:0;background:var(--bg3);border:1px solid var(--border);border-radius:12px;overflow:hidden">
-        <button id="preBtn" onclick="setWorkoutTab('pre')" style="padding:9px 18px;border:none;background:var(--accent);color:#fff;font-size:13px;font-weight:700">Pre</button>
-        <button id="postBtn" onclick="setWorkoutTab('post')" style="padding:9px 18px;border:none;background:transparent;color:var(--muted);font-size:13px;font-weight:600">Post</button>
-      </div>
+    <!-- Discipline balance -->
+    <div class="card" id="discCard">
+      <span class="lbl">Discipline balans</span>
+      <div id="discBars"></div>
     </div>
 
-    <!-- PRE-WORKOUT -->
-    <div id="preWorkout">
-      <div class="card" id="preHeader" style="border-left:3px solid var(--blue)">
-        <span class="lbl" style="color:var(--blue)">Pre-workout briefing</span>
-        <div id="preContent"><div class="dots"><span></span><span></span><span></span></div></div>
-      </div>
-      <div class="card" id="preTodayCard">
-        <span class="lbl">Vandaag's sessie</span>
-        <div id="preTodayContent"></div>
-      </div>
-      <div class="g2">
-        <div class="card" style="margin-bottom:0">
-          <span class="lbl">Timing</span>
-          <div id="preTiming" style="font-size:13px;color:var(--text);line-height:1.8"></div>
-        </div>
-        <div class="card" style="margin-bottom:0">
-          <span class="lbl">Voeding</span>
-          <div id="preNutrition" style="font-size:13px;color:var(--text);line-height:1.8"></div>
-        </div>
-      </div>
-    </div>
-
-    <!-- POST-WORKOUT (hidden by default) -->
-    <div id="postWorkout" style="display:none">
-      <div class="card" style="border-left:3px solid var(--accent)">
-        <span class="lbl" style="color:var(--accent)">Post-workout check-in</span>
-        <p style="font-size:13px;color:var(--muted);margin-bottom:16px">Hoe was de training? Dit helpt de coach jouw plan te verfijnen.</p>
-
-        <div style="margin-bottom:18px">
-          <div style="font-size:11px;font-weight:700;color:var(--muted);letter-spacing:.06em;text-transform:uppercase;margin-bottom:10px">RPE — hoe zwaar was het? <span id="rpeVal" style="color:var(--accent)">6</span>/10</div>
-          <input type="range" id="rpeSlider" min="1" max="10" value="6" oninput="document.getElementById('rpeVal').textContent=this.value" style="width:100%;accent-color:var(--accent);height:4px"/>
-          <div style="display:flex;justify-content:space-between;font-size:10px;color:var(--dim);margin-top:4px"><span>Heel makkelijk</span><span>Maximaal</span></div>
-        </div>
-
-        <div style="margin-bottom:18px">
-          <div style="font-size:11px;font-weight:700;color:var(--muted);letter-spacing:.06em;text-transform:uppercase;margin-bottom:10px">Energieniveau <span id="energyVal" style="color:var(--green)">7</span>/10</div>
-          <input type="range" id="energySlider" min="1" max="10" value="7" oninput="document.getElementById('energyVal').textContent=this.value" style="width:100%;accent-color:var(--green);height:4px"/>
-        </div>
-
-        <div class="g2" style="margin-bottom:18px">
-          <div>
-            <div style="font-size:11px;font-weight:700;color:var(--muted);letter-spacing:.06em;text-transform:uppercase;margin-bottom:8px">Benen</div>
-            <div style="display:flex;gap:6px" id="legsGroup">
-              <button class="db on" onclick="selectGroup('legs','goed',this)">Goed</button>
-              <button class="db" onclick="selectGroup('legs','matig',this)">Matig</button>
-              <button class="db" onclick="selectGroup('legs','zwaar',this)">Zwaar</button>
-            </div>
-          </div>
-          <div>
-            <div style="font-size:11px;font-weight:700;color:var(--muted);letter-spacing:.06em;text-transform:uppercase;margin-bottom:8px">Adem</div>
-            <div style="display:flex;gap:6px" id="breathGroup">
-              <button class="db on" onclick="selectGroup('breath','goed',this)">Goed</button>
-              <button class="db" onclick="selectGroup('breath','matig',this)">Matig</button>
-              <button class="db" onclick="selectGroup('breath','zwaar',this)">Zwaar</button>
-            </div>
-          </div>
-        </div>
-
-        <div style="margin-bottom:14px">
-          <div style="font-size:11px;font-weight:700;color:var(--muted);letter-spacing:.06em;text-transform:uppercase;margin-bottom:7px">Wat ging goed?</div>
-          <textarea id="postWentWell" placeholder="Ritme, tempo, techniek, mentaal..." style="width:100%;padding:12px 14px;background:var(--bg3);border:1px solid var(--border);border-radius:12px;font-size:13px;outline:none;resize:none;line-height:1.65;min-height:72px;color:var(--text)"></textarea>
-        </div>
-
-        <div style="margin-bottom:18px">
-          <div style="font-size:11px;font-weight:700;color:var(--muted);letter-spacing:.06em;text-transform:uppercase;margin-bottom:7px">Wat was moeilijk?</div>
-          <textarea id="postWasHard" placeholder="Conditie, motivatie, weer, pijn..." style="width:100%;padding:12px 14px;background:var(--bg3);border:1px solid var(--border);border-radius:12px;font-size:13px;outline:none;resize:none;line-height:1.65;min-height:72px;color:var(--text)"></textarea>
-        </div>
-
-        <div style="margin-bottom:20px">
-          <div style="font-size:11px;font-weight:700;color:var(--muted);letter-spacing:.06em;text-transform:uppercase;margin-bottom:7px">Extra notities</div>
-          <textarea id="postNotes" placeholder="Splits, wattage, gevoel, voeding..." style="width:100%;padding:12px 14px;background:var(--bg3);border:1px solid var(--border);border-radius:12px;font-size:13px;outline:none;resize:none;line-height:1.65;min-height:60px;color:var(--text)"></textarea>
-        </div>
-
-        <button onclick="savePostWorkout()" style="width:100%;padding:16px;background:var(--accent);color:#fff;border:none;border-radius:14px;font-weight:800;font-size:15px">SAVE POST-WORKOUT</button>
-      </div>
-
-      <div id="postHistory"></div>
-    </div>
+    <!-- Recent sessions -->
+    <div id="recentSessions"></div>
   </div>
 </div>
 
 <!-- NAV -->
 <nav>
   <button class="on" onclick="goTo('today',this)"><span class="ni">◐</span>Vandaag</button>
-  <button onclick="goTo('plan',this)"><span class="ni">▦</span>Plan</button>
-  <button onclick="goTo('workout',this)"><span class="ni">⚡</span>Workout</button>
-  <button onclick="goTo('history',this)"><span class="ni">☰</span>Sessies</button>
-  <button onclick="goTo('stats',this)"><span class="ni">◉</span>Stats</button>
+  <button onclick="goTo('plan',this)"><span class="ni">▦</span>Schema</button>
+  <button onclick="goTo('progressie',this)"><span class="ni">◉</span>Progressie</button>
 </nav>
 
 <script>
@@ -788,8 +653,7 @@ const getTodayIdx = ()=>{ const d=new Date().getDay(); return d===0?6:d-1; };
 
 // ── Boot ──────────────────────────────────────────────────────────────────────
 window.onload=()=>{
-  renderToday(); renderPlan(); buildZones(); renderHistory(); renderStats();
-  genPrescription(false);
+  renderToday(); renderPlan(); buildZones(); renderProgressie();
   genBriefing(false);
   if(S.backendUrl){ syncAll(); syncTimer=setInterval(syncAll,5*60*1000); }
   else{ showSettings(); }
@@ -801,10 +665,8 @@ function goTo(id,btn){
   document.getElementById("s-"+id).classList.add("on");
   document.querySelectorAll("nav button").forEach(b=>b.classList.remove("on"));
   btn.classList.add("on");
-  if(id==="stats")   renderStats();
-  if(id==="history") renderHistory();
-  if(id==="plan")    renderPlan();
-  if(id==="workout") renderWorkout();
+  if(id==="plan")        renderPlan();
+  if(id==="progressie")  renderProgressie();
 }
 
 // ── Toast ─────────────────────────────────────────────────────────────────────
@@ -843,7 +705,7 @@ function resetData(){
   if(!confirm("Reset alle trainingsdata? Dit kan niet ongedaan worden."))return;
   [K.sessions].forEach(k=>localStorage.removeItem(k));
   S.sessions=[];
-  renderToday(); renderHistory(); renderStats(); renderPlan();
+  renderToday(); renderProgressie(); renderPlan();
   hideSettings();
 }
 
@@ -891,22 +753,9 @@ function setBanner(live,at){
 }
 
 function applyWhoopToUI(d){
-  if(d.hrv)      document.getElementById("mHRV").textContent   =d.hrv+"ms";
-  if(d.rhr)      document.getElementById("mRHR").textContent   =d.rhr;
-  if(d.strain)   document.getElementById("mStrain").textContent=d.strain;
-  if(d.sleepPerf)document.getElementById("mSleep").textContent =d.sleepPerf+"%";
-  if(d.recovery!=null){
-    const c=recClr(d.recovery);
-    document.getElementById("recPct").textContent=d.recovery+"%";
-    document.getElementById("recPct").style.color=c;
-    document.getElementById("recSub").textContent=recLbl(d.recovery);
-    document.getElementById("recSub").style.color=c;
-    document.getElementById("recFill").style.width=d.recovery+"%";
-    document.getElementById("recFill").style.background=c;
-    document.getElementById("recHero").style.borderColor=c+"30";
-  }
-  genPrescription(false);
+  autoImport(d.workouts||[]);
   genBriefing(false);
+  renderToday();
   renderPlan();
 }
 
@@ -930,7 +779,7 @@ function autoImport(workouts){
     });
   });
   persist("sessions",S.sessions);
-  renderToday(); renderHistory(); renderPlan();
+  renderToday(); renderProgressie(); renderPlan();
   if(newOnes.length===1) showToast(`✓ ${mapSport(newOnes[0].sport)} geïmporteerd`);
   else showToast(`✓ ${newOnes.length} sessies geïmporteerd`);
 }
@@ -939,12 +788,47 @@ function autoImport(workouts){
 function renderToday(){
   const wday=new Date().toLocaleDateString("nl-BE",{weekday:"long",day:"numeric",month:"long"});
   document.getElementById("bDate").textContent=`${wday} · Week ${weekNum()} · Dag ${dayNum()}`;
-  const w7=S.sessions.filter(s=>(Date.now()-new Date(s.date))/86400000<=7).length;
-  document.getElementById("bSessions").textContent=S.sessions.length;
-  document.getElementById("bWeek").textContent=w7;
-  document.getElementById("bDay").textContent=dayNum();
-  document.getElementById("bStreak").textContent=calcStreak();
-  if(!S.whoop)genBriefing(false);
+
+  const wData=PLAN_WEEKS[Math.min(weekNum()-1,PLAN_WEEKS.length-1)];
+  const day=wData.days[getTodayIdx()];
+  const rec=S.whoop?.recovery??null;
+  const dc=DISC_CLR[day.disc]||"var(--muted)";
+  const done=isDone(day);
+  const adaptNote=getAdaptNote(day,rec);
+
+  document.getElementById("todaySessionCard").innerHTML=`
+    <div style="background:#fff;box-shadow:var(--shadow);border-radius:20px;padding:22px;border-left:4px solid ${dc}${done?";opacity:.75":""}">
+      <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:16px">
+        <div>
+          <div style="font-size:11px;font-weight:700;color:var(--muted);letter-spacing:.08em;text-transform:uppercase;margin-bottom:4px">Vandaag</div>
+          <div style="font-size:30px;font-weight:900;letter-spacing:-.5px;color:${dc};line-height:1">${day.disc}</div>
+          <div style="font-size:14px;color:var(--muted);font-weight:500;margin-top:4px">${day.type} · ${day.dur}</div>
+        </div>
+        <div style="text-align:right">
+          <div style="font-size:22px;font-weight:800;color:var(--text)">${day.zone}</div>
+          ${done?`<div style="font-size:11px;font-weight:700;color:var(--green);margin-top:4px">✓ Voltooid</div>`:""}
+        </div>
+      </div>
+      ${day.warmup?`
+      <div style="border-top:1px solid rgba(0,0,0,.06);padding-top:14px;margin-bottom:12px">
+        <div style="font-size:9px;font-weight:700;color:var(--muted);letter-spacing:.1em;text-transform:uppercase;margin-bottom:6px">Opwarming</div>
+        <div style="font-size:13px;line-height:1.7;color:var(--text)">${day.warmup}</div>
+      </div>`:""}
+      ${day.main?`
+      <div style="margin-bottom:12px">
+        <div style="font-size:9px;font-weight:700;color:${dc};letter-spacing:.1em;text-transform:uppercase;margin-bottom:6px">Hoofdsessie</div>
+        <div style="font-size:14px;line-height:1.75;color:var(--text);font-weight:500">${day.main.replace(/\n/g,"<br>")}</div>
+      </div>`:""}
+      ${day.cooldown?`
+      <div style="border-top:1px solid rgba(0,0,0,.06);padding-top:12px;margin-bottom:12px">
+        <div style="font-size:9px;font-weight:700;color:var(--muted);letter-spacing:.1em;text-transform:uppercase;margin-bottom:6px">Afkoeling</div>
+        <div style="font-size:13px;line-height:1.7;color:var(--text)">${day.cooldown}</div>
+      </div>`:""}
+      ${day.goal?`<div style="font-size:12px;color:var(--muted);font-style:italic;padding-top:10px;border-top:1px solid rgba(0,0,0,.06)">${day.goal}</div>`:""}
+      ${adaptNote}
+    </div>`;
+
+  if(!S.whoop) genBriefing(false);
 }
 
 function calcStreak(){
@@ -955,96 +839,6 @@ function calcStreak(){
   return streak;
 }
 
-// ── HRV Trend ────────────────────────────────────────────────────────────────
-function renderHRVTrend(recoveries){
-  if(!recoveries||recoveries.length<3)return;
-  const pts=recoveries.filter(r=>r.score?.hrv_rmssd_milli).slice(0,7).map(r=>Math.round(r.score.hrv_rmssd_milli)).reverse();
-  if(pts.length<3)return;
-  document.getElementById("hrvTrendCard").style.display="block";
-  const mx=Math.max(...pts),mn=Math.min(...pts);
-  document.getElementById("hrvTrend").innerHTML=`
-    <div class="spark">${pts.map((v,i)=>`<div class="spark-bar" style="height:${Math.max((v-mn)/(mx-mn||1)*28+4,4)}px;background:var(--purple);flex:1;opacity:${.35+.65*(i/(pts.length-1))}"></div>`).join("")}</div>
-    <div style="display:flex;justify-content:space-between;margin-top:5px">
-      <span style="font-size:11px;color:var(--dim)">7 dagen geleden</span>
-      <span style="font-size:11px;color:var(--purple);font-weight:700">vandaag ${pts[pts.length-1]}ms</span>
-    </div>`;
-  const trend=pts[pts.length-1]-pts[0],avg7=Math.round(pts.reduce((a,b)=>a+b,0)/pts.length);
-  document.getElementById("hrvTrendNote").textContent=
-    trend>3?`↑ HRV stijgt +${trend}ms — lichaam past goed aan · 7d gem. ${avg7}ms`:
-    trend<-3?`↓ HRV daalt ${Math.abs(trend)}ms — overweeg minder intensiteit · 7d gem. ${avg7}ms`:
-    `→ HRV stabiel · 7d gemiddelde ${avg7}ms`;
-  document.getElementById("hrvTrendNote").style.color=trend>3?"var(--green)":trend<-3?"var(--red)":"var(--muted)";
-}
-
-// ── Prescription ──────────────────────────────────────────────────────────────
-async function genPrescription(force=false){
-  if(!S.claudeKey){
-    document.getElementById("prescContent").innerHTML=`<div style="font-size:13px;color:var(--muted)">Voeg je Claude API key toe in Instellingen voor dagelijkse training prescription.</div>`;
-    return;
-  }
-  const cacheKey="lars_presc_"+todayStr();
-  const cached=localStorage.getItem(cacheKey);
-  if(cached&&!force){document.getElementById("prescContent").innerHTML=cached;return;}
-  document.getElementById("prescContent").innerHTML='<div class="dots"><span></span><span></span><span></span></div>';
-
-  const d=S.whoop,h=S.history;
-  const last5=S.sessions.slice(0,5).map(s=>`${s.discipline}(${s.duration||"?"}min,${s.avgHR||"?"}bpm,feel:${s.feel}/5)`).join(", ");
-  const wkS=S.sessions.filter(s=>(Date.now()-new Date(s.date))/86400000<=7);
-  const disc7=[...new Set(wkS.map(s=>s.discipline))].join(", ")||"geen";
-  let hrvCtx="";
-  if(h?.recoveries?.length>=3){
-    const hrs=h.recoveries.filter(r=>r.score?.hrv_rmssd_milli).slice(0,7).map(r=>Math.round(r.score.hrv_rmssd_milli));
-    if(hrs.length>=3){const avg=Math.round(hrs.reduce((a,b)=>a+b,0)/hrs.length);const tr=hrs[0]-hrs[hrs.length-1];hrvCtx=`HRV 7d gem: ${avg}ms, trend: ${tr>0?"↑ verbeterend":"↓ dalend"} ${Math.abs(tr)}ms`;}
-  }
-
-  const SYS=`Je bent Lars's persoonlijke Ironman triathlon coach. Genereer een precieze dagelijkse trainingsvoorschrift.
-
-Lars: 27j, 71kg, Brugge. Traint voor triathlons & Ironman.
-Max HR: 197 · RHR: 53
-Zones: Z1 110–131bpm (herstel), Z2 132–150bpm (aerobe basis), Z3 151–165bpm (tempo), Z4 166–181bpm (drempel), Z5 182–197bpm (max)
-AirBike baseline: ~122w gem. Halfmarathon comfortabel. Pool-zwemmer (in verbetering).
-Week ${weekNum()}, Dag ${dayNum()}.
-Deze week getraind: ${disc7} (${wkS.length} sessies)
-Laatste 5 sessies: ${last5||"geen"}
-${hrvCtx}
-
-OUTPUT FORMAT (gebruik exact deze structuur):
-DISCIPLINE · DUUR · INTENSITEIT
----
-[2-3 lijnen sessiestructuur met specifieke HR-ranges en timing]
----
-[1 lijn: waarom deze sessie vandaag op basis van de data]
-
-Wees concreet en specifiek. Bij rustdag: "RUSTDAG" met korte reden.`;
-
-  const USR=`Whoop vandaag: Recovery ${d?.recovery??"?"}%, HRV ${d?.hrv??"?"}ms, RHR ${d?.rhr??"?"}bpm, Strain gisteren ${d?.strain??"?"}, Slaap ${d?.sleepPerf??"?"}%.
-
-Genereer de trainingsvoorschrift voor vandaag.`;
-
-  try{
-    const res=await fetch("https://api.anthropic.com/v1/messages",{method:"POST",headers:{"Content-Type":"application/json","x-api-key":S.claudeKey,"anthropic-version":"2023-06-01","anthropic-dangerous-direct-browser-access":"true"},body:JSON.stringify({model:"claude-sonnet-4-6",max_tokens:280,system:SYS,messages:[{role:"user",content:USR}]})});
-    const data=await res.json();
-    const text=data.content?.[0]?.text||"Check je Whoop data en train vandaag in Z2.";
-    const html=formatPresc(text);
-    localStorage.setItem(cacheKey,html);
-    document.getElementById("prescContent").innerHTML=html;
-  }catch{
-    document.getElementById("prescContent").innerHTML=`<div style="font-size:13px;color:var(--muted)">Kon prescription niet laden — controleer verbinding.</div>`;
-  }
-}
-
-function formatPresc(text){
-  const parts=text.split("---");
-  if(parts.length>=3){
-    const hdr=parts[0].trim().split("·").map(p=>p.trim());
-    const disc=hdr[0]||"",dc=DISC_CLR[disc]||"var(--blue)";
-    return `<div class="presc-discipline" style="color:${dc}">${disc}</div>
-      <div class="presc-meta">${hdr.slice(1).join(" · ")}</div>
-      <div class="presc-structure">${parts[1].trim().replace(/\n/g,"<br>")}</div>
-      <div style="font-size:12px;color:var(--muted);margin-top:12px;line-height:1.6;font-style:italic">${parts[2].trim()}</div>`;
-  }
-  return `<div style="font-size:14px;line-height:1.7;white-space:pre-wrap">${text}</div>`;
-}
 
 // ── Morning Briefing ──────────────────────────────────────────────────────────
 async function genBriefing(force=false){
@@ -1209,32 +1003,7 @@ function buildZones(){
     </div>`).join("");
 }
 
-// ── History ───────────────────────────────────────────────────────────────────
-function renderHistory(){
-  const el=document.getElementById("historyList");
-  document.getElementById("historySubtitle").textContent=`${S.sessions.length} sessie${S.sessions.length!==1?"s":""} gesynchroniseerd via Whoop`;
-  if(!S.sessions.length){
-    el.innerHTML=`<div style="text-align:center;color:var(--dim);font-size:14px;padding:40px 0;line-height:1.7">Nog geen sessies gelogd.<br>Sync je Whoop na een training.</div>`;
-    return;
-  }
-  // Group by week
-  const groups={};
-  S.sessions.forEach(s=>{
-    const d=new Date(s.date),startDate=new Date(LARS.startDate);
-    const wk=Math.ceil((Math.floor((d-startDate)/86400000)+1)/7);
-    const key=`week_${wk}`;
-    if(!groups[key])groups[key]={wk,sessions:[]};
-    groups[key].sessions.push(s);
-  });
-  el.innerHTML=Object.values(groups).sort((a,b)=>b.wk-a.wk).map(g=>`
-    <div>
-      <div class="week-group-hdr" onclick="this.nextElementSibling.classList.toggle('hidden')">
-        <span>Week ${g.wk}</span>
-        <span style="font-size:11px;color:var(--dim)">${g.sessions.length} sessie${g.sessions.length!==1?"s":""}</span>
-      </div>
-      <div>${g.sessions.map(s=>seshHTML(s)).join("")}</div>
-    </div>`).join("");
-}
+// ── History (internal helper) ────────────────────────────────────────────────
 
 function seshHTML(s){
   const dc=DISC_CLR[s.discipline]||"var(--muted)";
@@ -1270,144 +1039,15 @@ function zoneBarHTML(zones){
     <div style="display:flex;gap:10px;margin-top:5px;flex-wrap:wrap">${vals.map((v,i)=>v>0?`<span style="font-size:10px;color:${colors[i]};font-weight:600">Z${i+1} ${fmtDur(v)}</span>`:"").join("")}</div>`;
 }
 
-// ── Workout tab ───────────────────────────────────────────────────────────────
-let postState = { legs:"goed", breath:"goed" };
-
-function setWorkoutTab(tab){
-  document.getElementById("preWorkout").style.display  = tab==="pre"  ? "block" : "none";
-  document.getElementById("postWorkout").style.display = tab==="post" ? "block" : "none";
-  document.getElementById("preBtn").style.background   = tab==="pre"  ? "var(--accent)" : "transparent";
-  document.getElementById("preBtn").style.color        = tab==="pre"  ? "#fff" : "var(--muted)";
-  document.getElementById("postBtn").style.background  = tab==="post" ? "var(--accent)" : "transparent";
-  document.getElementById("postBtn").style.color       = tab==="post" ? "#fff" : "var(--muted)";
-  if(tab==="post") renderPostHistory();
-}
-
-function renderWorkout(){
-  renderPreWorkout();
-  renderPostHistory();
-}
-
-function renderPreWorkout(){
-  const wn=weekNum(), wData=PLAN_WEEKS[Math.min(wn-1,PLAN_WEEKS.length-1)];
-  const todayIdx=getTodayIdx();
-  const day=wData.days[todayIdx];
-  const rec=S.whoop?.recovery??null;
-
-  // Today's session card
-  const dc=DISC_CLR[day.disc]||"var(--muted)";
-  document.getElementById("preTodayContent").innerHTML=`
-    <div style="font-size:28px;font-weight:800;letter-spacing:-.5px;color:${dc};margin-bottom:6px">${day.disc}</div>
-    <div style="font-size:14px;font-weight:600;color:var(--muted);margin-bottom:12px">${day.type} · ${day.dur} · ${day.zone}</div>
-    ${day.warmup?`<div style="margin-bottom:10px"><div style="font-size:10px;font-weight:700;color:var(--muted);letter-spacing:.07em;text-transform:uppercase;margin-bottom:5px">Opwarming</div><div style="font-size:13px;line-height:1.75">${day.warmup}</div></div>`:""}
-    ${day.main?`<div style="margin-bottom:10px"><div style="font-size:10px;font-weight:700;color:${dc};letter-spacing:.07em;text-transform:uppercase;margin-bottom:5px">Hoofdsessie</div><div style="font-size:13px;line-height:1.75;font-weight:500">${day.main}</div></div>`:""}
-    ${day.cooldown?`<div><div style="font-size:10px;font-weight:700;color:var(--muted);letter-spacing:.07em;text-transform:uppercase;margin-bottom:5px">Afkoeling</div><div style="font-size:13px;line-height:1.75">${day.cooldown}</div></div>`:""}
-    ${getAdaptNote(day,rec)}`;
-
-  // Timing
-  const now=new Date();
-  const endMin=now.getMinutes()+parseInt(day.dur)||60;
-  const endH=now.getHours()+Math.floor(endMin/60),endM=endMin%60;
-  document.getElementById("preTiming").innerHTML=
-    `Nu starten → klaar om <strong>${String(endH%24).padStart(2,"0")}:${String(endM).padStart(2,"0")}</strong><br>
-     Optimaal trainingstijdstip: 07:00–11:00 of 16:00–19:00`;
-
-  // Nutrition
-  const isHard=day.zone.includes("Z3")||day.zone.includes("Z4")||day.type.includes("Test")||day.type.includes("Interval");
-  document.getElementById("preNutrition").innerHTML=isHard
-    ?`2–3u voor: normale maaltijd<br>30–45min voor: banaan of gel<br>Tijdens: water + gel per 45min<br>Na: eiwit + koolhydraten`
-    :`2u voor: lichte maaltijd<br>Direct voor: optioneel banaan<br>Tijdens: water voldoende<br>Na: normaal eten`;
-
-  // AI briefing
-  genPreBriefing(day, rec);
-}
-
-async function genPreBriefing(day, rec){
-  if(!S.claudeKey){
-    document.getElementById("preContent").innerHTML=`<div style="font-size:13px;color:var(--muted)">Voeg Claude API key toe in Instellingen voor een gepersonaliseerde pre-workout briefing.</div>`;
-    return;
-  }
-  const cacheKey=`lars_pre_${todayStr()}_${day.disc}`;
-  const cached=localStorage.getItem(cacheKey);
-  if(cached){document.getElementById("preContent").innerHTML=cached;return;}
-  document.getElementById("preContent").innerHTML='<div class="dots"><span></span><span></span><span></span></div>';
-  const last3=S.sessions.slice(0,3).map(s=>`${s.discipline} ${s.duration||"?"}min`).join(", ");
-  const SYS=`Je bent Lars's Ironman triathlon coach. Geef een pre-workout briefing van 3–4 zinnen. Directioneel, motiverend maar realistisch. Verwijs naar zijn data en de concrete sessie. Antwoord in het Nederlands.`;
-  const USR=`Recovery vandaag: ${rec??"?"}%. Sessie: ${day.disc} · ${day.type} · ${day.dur} · ${day.zone}. Hoofdset: ${day.main}. Laatste sessies: ${last3||"geen"}. Geef mijn pre-workout briefing.`;
-  try{
-    const res=await fetch("https://api.anthropic.com/v1/messages",{method:"POST",headers:{"Content-Type":"application/json","x-api-key":S.claudeKey,"anthropic-version":"2023-06-01","anthropic-dangerous-direct-browser-access":"true"},body:JSON.stringify({model:"claude-sonnet-4-6",max_tokens:180,system:SYS,messages:[{role:"user",content:USR}]})});
-    const data=await res.json();
-    const text=data.content?.[0]?.text||"Klaar voor de sessie. Focus op techniek en HR.";
-    const html=`<div style="font-size:14px;line-height:1.85">${text}</div>`;
-    localStorage.setItem(cacheKey,html);
-    document.getElementById("preContent").innerHTML=html;
-  }catch{document.getElementById("preContent").innerHTML=`<div style="font-size:13px;color:var(--muted)">Ga voor het plan hierboven.</div>`;}
-}
-
-function selectGroup(group, val, btn){
-  postState[group]=val;
-  const groupId=group==="legs"?"legsGroup":"breathGroup";
-  document.querySelectorAll(`#${groupId} .db`).forEach(b=>b.classList.remove("on"));
-  btn.classList.add("on");
-}
-
-function savePostWorkout(){
-  const pw={
-    id:Date.now().toString(),
-    date:todayStr(),
-    ts:new Date().toISOString(),
-    rpe:parseInt(document.getElementById("rpeSlider").value),
-    energy:parseInt(document.getElementById("energySlider").value),
-    legs:postState.legs,
-    breath:postState.breath,
-    wentWell:document.getElementById("postWentWell").value||null,
-    wasHard:document.getElementById("postWasHard").value||null,
-    notes:document.getElementById("postNotes").value||null,
-    disc:PLAN_WEEKS[Math.min(weekNum()-1,PLAN_WEEKS.length-1)].days[getTodayIdx()].disc,
-  };
-  const pws=JSON.parse(localStorage.getItem("lars_postworkout")||"[]");
-  pws.unshift(pw);
-  localStorage.setItem("lars_postworkout",JSON.stringify(pws));
-  ["postWentWell","postWasHard","postNotes"].forEach(id=>document.getElementById(id).value="");
-  showToast("✓ Post-workout opgeslagen");
-  renderPostHistory();
-}
-
-function renderPostHistory(){
-  const pws=JSON.parse(localStorage.getItem("lars_postworkout")||"[]");
-  const el=document.getElementById("postHistory");
-  if(!pws.length){el.innerHTML=`<div style="text-align:center;color:var(--dim);font-size:13px;padding:28px 0">Nog geen post-workouts opgeslagen.</div>`;return;}
-  el.innerHTML=`<div style="font-size:11px;font-weight:700;color:var(--muted);letter-spacing:.06em;text-transform:uppercase;margin-bottom:12px;margin-top:4px">Vorige check-ins</div>`+pws.slice(0,5).map(p=>`
-    <div class="card" style="padding:14px 16px;margin-bottom:10px">
-      <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:10px">
-        <div style="display:flex;gap:8px;align-items:center">
-          <span class="pill" style="background:${DISC_CLR[p.disc]||"var(--dim)"}20;color:${DISC_CLR[p.disc]||"var(--muted)"}">${p.disc||"Workout"}</span>
-          <span style="font-size:11px;color:var(--muted)">${fmtDate(p.date)}</span>
-        </div>
-        <div style="display:flex;gap:10px">
-          <span style="font-size:12px;font-weight:700;color:var(--accent)">RPE ${p.rpe}/10</span>
-          <span style="font-size:12px;font-weight:700;color:var(--green)">⚡${p.energy}/10</span>
-        </div>
-      </div>
-      <div style="display:flex;gap:12px;font-size:12px;color:var(--muted);margin-bottom:${p.wentWell||p.wasHard?8:0}px">
-        <span>Benen: <strong style="color:var(--text)">${p.legs}</strong></span>
-        <span>Adem: <strong style="color:var(--text)">${p.breath}</strong></span>
-      </div>
-      ${p.wentWell?`<div style="font-size:12px;color:var(--green);margin-bottom:4px">✓ ${p.wentWell}</div>`:""}
-      ${p.wasHard?`<div style="font-size:12px;color:var(--muted)">⚡ ${p.wasHard}</div>`:""}
-    </div>`).join("");
-}
-
-// ── Stats ─────────────────────────────────────────────────────────────────────
-function renderStats(){
-  document.getElementById("stTotal").textContent =S.sessions.length;
-  document.getElementById("stStreak").textContent=calcStreak();
-  document.getElementById("stSwim").textContent  =S.sessions.filter(s=>s.discipline==="Swim").length;
-  document.getElementById("stBike").textContent  =S.sessions.filter(s=>s.discipline==="Bike"||s.discipline==="AirBike").length;
-  document.getElementById("stRun").textContent   =S.sessions.filter(s=>s.discipline==="Run").length;
-  document.getElementById("stDays").textContent  =dayNum();
-
+// ── Progressie ────────────────────────────────────────────────────────────────
+function renderProgressie(){
   const wn=weekNum();
+  document.getElementById("pDay").textContent   = dayNum();
+  document.getElementById("pWeeks").textContent = wn;
+  document.getElementById("pTotal").textContent = S.sessions.length;
+  document.getElementById("pStreak").textContent= calcStreak();
+
+  // Weekly bars
   const bars=[];
   for(let w=7;w>=0;w--){
     const wStart=new Date(LARS.startDate);wStart.setDate(wStart.getDate()+(wn-1-w)*7);
@@ -1417,20 +1057,39 @@ function renderStats(){
   }
   const maxB=Math.max(...bars.map(b=>b.count),1);
   document.getElementById("weekBars").innerHTML=`
-    <div class="wbars">${bars.map(b=>`<div style="flex:1"><div class="wbar" style="height:${Math.max(b.count/maxB*60,3)}px;background:${b.cur?"var(--accent)":"var(--border2)"}"></div><div class="wlbl">${b.count||""}</div></div>`).join("")}</div>
-    <div style="display:flex;margin-top:5px">${bars.map(b=>`<div style="flex:1;text-align:center;font-size:9px;color:var(--dim);font-weight:600">${b.lbl}</div>`).join("")}</div>`;
+    <div class="wbars">${bars.map(b=>`<div style="flex:1">
+      <div class="wbar" style="height:${Math.max(b.count/maxB*60,3)}px;background:${b.cur?"var(--accent)":"var(--dim)"}"></div>
+      <div class="wlbl">${b.count||""}</div>
+    </div>`).join("")}</div>
+    <div style="display:flex;margin-top:5px">${bars.map(b=>`<div style="flex:1;text-align:center;font-size:9px;color:var(--muted);font-weight:600">${b.lbl}</div>`).join("")}</div>`;
 
-  const withRec=S.sessions.filter(s=>s.recovery).slice(0,7).reverse();
-  if(withRec.length>1){
-    document.getElementById("recTrendCard").style.display="block";
-    const maxR=Math.max(...withRec.map(r=>r.recovery));
-    document.getElementById("recTrend").innerHTML=`
-      <div class="wbars">${withRec.map(s=>`<div style="flex:1"><div class="wbar" style="height:${s.recovery/maxR*60}px;background:${recClr(s.recovery)}"></div><div class="wlbl">${s.recovery}%</div></div>`).join("")}</div>`;
-  }
+  // Discipline balance
+  const discs=["Swim","Bike","AirBike","Run","Strength","Recovery"];
+  const counts=discs.map(d=>S.sessions.filter(s=>s.discipline===d).length);
+  const maxD=Math.max(...counts,1);
+  document.getElementById("discBars").innerHTML=counts.map((c,i)=>c>0?`
+    <div style="display:flex;align-items:center;gap:10px;margin-bottom:8px">
+      <div style="font-size:12px;font-weight:600;width:64px;color:${DISC_CLR[discs[i]]||"var(--muted)"}">${discs[i]}</div>
+      <div style="flex:1;height:6px;border-radius:3px;background:var(--dim);overflow:hidden">
+        <div style="height:100%;border-radius:3px;background:${DISC_CLR[discs[i]]||"var(--muted)"};width:${Math.round(c/maxD*100)}%;transition:width .5s"></div>
+      </div>
+      <div style="font-size:12px;font-weight:700;color:var(--muted);min-width:20px;text-align:right">${c}</div>
+    </div>`:"").join("")||`<div style="font-size:13px;color:var(--muted)">Nog geen sessies gelogd.</div>`;
 
-  const el=document.getElementById("statsSessions");
+  // Recent sessions (simple list)
+  const el=document.getElementById("recentSessions");
   if(!S.sessions.length){el.innerHTML="";return;}
-  el.innerHTML=`<span class="lbl">Recente sessies</span>`+S.sessions.slice(0,5).map(s=>seshHTML(s)).join("");
+  el.innerHTML=`<div style="font-size:11px;font-weight:700;color:var(--muted);letter-spacing:.08em;text-transform:uppercase;margin-bottom:10px;margin-top:4px">Recente sessies</div>`+
+    S.sessions.slice(0,8).map(s=>{
+      const dc=DISC_CLR[s.discipline]||"var(--muted)";
+      return `<div style="background:#fff;box-shadow:var(--shadow);border-radius:12px;padding:12px 14px;margin-bottom:8px;display:flex;align-items:center;gap:10px;border-left:3px solid ${dc}">
+        <span class="pill" style="background:${dc}18;color:${dc}">${s.discipline}</span>
+        ${s.duration?`<span style="font-size:13px;font-weight:600">${s.duration}min</span>`:""}
+        ${s.avgHR?`<span style="font-size:12px;color:var(--muted)">${s.avgHR}bpm</span>`:""}
+        ${s.zones?`<div style="flex:1">${zoneBarHTML(s.zones)}</div>`:`<div style="flex:1"></div>`}
+        <span style="font-size:11px;color:var(--muted);font-weight:500">${fmtDate(s.date)}</span>
+      </div>`;
+    }).join("");
 }
 </script>
 </body>
