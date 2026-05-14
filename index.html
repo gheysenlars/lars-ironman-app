@@ -226,6 +226,7 @@ nav button.on{color:var(--accent);border-top-color:var(--accent)}
     </div>
     <button onclick="saveSettings()" style="width:100%;padding:16px;background:var(--accent);color:#fff;border:none;border-radius:14px;font-weight:800;font-size:15px;margin-bottom:10px">Opslaan & verbinden →</button>
     <button onclick="reconnectWhoop()" style="width:100%;padding:13px;background:none;border:1px solid var(--border2);color:var(--muted);border-radius:12px;font-size:13px;font-weight:600;margin-bottom:10px">↻ Whoop opnieuw verbinden</button>
+    <button onclick="resetChoices()" style="width:100%;padding:12px;background:none;border:1px solid var(--border2);color:var(--muted);border-radius:12px;font-size:13px;font-weight:600;margin-bottom:10px">Reset schema-keuzes</button>
     <button onclick="resetData()" style="width:100%;padding:12px;background:none;border:1px solid rgba(255,56,96,.25);color:rgba(255,56,96,.7);border-radius:12px;font-size:13px;font-weight:600">Reset trainingsdata</button>
   </div>
 </div>
@@ -642,47 +643,61 @@ function saveChoices(c){ localStorage.setItem("lars_choices",JSON.stringify(c));
 function getOverrides(){ return JSON.parse(localStorage.getItem("lars_overrides")||"{}"); }
 function saveOverrides(o){ localStorage.setItem("lars_overrides",JSON.stringify(o)); }
 
+// Get the Monday of the current week (correct week anchor)
+function getWeekMonday(){
+  const d=new Date(); d.setHours(0,0,0,0);
+  const day=d.getDay();
+  const diff=day===0?-6:1-day;
+  d.setDate(d.getDate()+diff);
+  return d;
+}
+
+// Get date string for a plan day index (0=Mon ... 6=Sun) in the current week
+function planDayToDate(dayIdx){
+  const monday=getWeekMonday();
+  const d=new Date(monday); d.setDate(monday.getDate()+dayIdx);
+  return d.toISOString().split("T")[0];
+}
+
 function logRestDayChoice(optType){
   const date=todayStr();
   const choices=getChoices();
-  // Don't double-log same day
-  if(choices.find(c=>c.date===date)) return;
+  if(choices.find(c=>c.date===date)){ showToast("Al gelogd vandaag"); return; }
 
   const rec=S.whoop?.recovery??null;
-  const choice={
-    date, optType,
-    disc:DISC_TO_PLANTYPE[optType]||"Recovery",
-    label:DISC_NAMES[optType]||optType,
-    rec, ts:new Date().toISOString()
-  };
-  choices.push(choice);
+  choices.push({date,optType,disc:DISC_TO_PLANTYPE[optType]||"Recovery",label:DISC_NAMES[optType]||optType,rec,ts:new Date().toISOString()});
   saveChoices(choices);
 
-  // Compute compensation: find next same-discipline planned day in coming 7 days
+  // Find ALL remaining same-discipline sessions this week and adapt them
   const compDisc=COMP_MAP[optType];
   if(compDisc){
     const overrides=getOverrides();
-    const today=new Date(date);
-    for(let i=1;i<=7;i++){
-      const futureDate=new Date(today);
-      futureDate.setDate(today.getDate()+i);
-      const futureDateStr=futureDate.toISOString().split("T")[0];
-      const futureDayIdx=futureDate.getDay()===0?6:futureDate.getDay()-1;
-      const futureWn=Math.ceil((Math.floor((futureDate-new Date(LARS.startDate))/86400000)+1)/7);
-      const futureWData=PLAN_WEEKS[Math.min(futureWn-1,PLAN_WEEKS.length-1)];
-      const futureDay=futureWData?.days[futureDayIdx];
-      if(futureDay?.disc===compDisc&&!overrides[futureDateStr]){
-        overrides[futureDateStr]={
-          note:`${DISC_NAMES[optType]} op ${date} → aangeraden: kortere versie of mobiliteit`,
-          suggestion:"shorter",
-          originalDisc:compDisc,
-          fromChoice:date
-        };
-        saveOverrides(overrides);
-        showToast(`Schema aangepast — ${new Date(futureDateStr).toLocaleDateString("nl-BE",{weekday:"long"})} aangepast`);
-        break;
-      }
-    }
+    const todayIdx=getTodayIdx();
+    const wData=PLAN_WEEKS[Math.min(weekNum()-1,PLAN_WEEKS.length-1)];
+    let adapted=0;
+
+    wData.days.forEach(day=>{
+      if(day.i<=todayIdx) return; // skip past days including today
+      if(day.disc!==compDisc) return;
+      const futureDateStr=planDayToDate(day.i);
+      if(overrides[futureDateStr]) return;
+
+      // First same-disc session → suggest cross-training (swim or bike)
+      // Subsequent ones (like long run) → suggest shorter version
+      const isLong=day.type.toLowerCase().includes("long")||day.dur.includes("90")||day.dur.includes("95");
+      const altDisc=compDisc==="Run"?"Zwem of AirBike":"Run of Rust";
+      const note=adapted===0
+        ?`Je ${DISC_NAMES[optType]} vandaag → ${new Date(futureDateStr).toLocaleDateString("nl-BE",{weekday:"long"})}: vervang door ${altDisc} voor betere herstelbalans`
+        :isLong
+          ?`Long run blijft staan maar ${new Date(futureDateStr).toLocaleDateString("nl-BE",{weekday:"long"})}: overweeg 15–20 min korter dan gepland`
+          :`Pas aan naar lichtere sessie of mobiliteit`;
+
+      overrides[futureDateStr]={note,originalDisc:compDisc,fromChoice:date,adapted:adapted};
+      adapted++;
+    });
+
+    saveOverrides(overrides);
+    if(adapted>0) showToast(`✓ ${adapted} dag${adapted>1?"en":""} in schema aangepast`);
   }
 
   renderToday();
@@ -775,9 +790,16 @@ function reconnectWhoop(){
   showToast("Whoop-pagina geopend — log in en kom terug");
 }
 
+function resetChoices(){
+  localStorage.removeItem("lars_choices");
+  localStorage.removeItem("lars_overrides");
+  renderToday(); renderPlan();
+  showToast("Keuzes & aanpassingen gereset");
+}
+
 function resetData(){
   if(!confirm("Reset alle trainingsdata? Dit kan niet ongedaan worden."))return;
-  [K.sessions].forEach(k=>localStorage.removeItem(k));
+  [K.sessions,"lars_choices","lars_overrides"].forEach(k=>localStorage.removeItem(k));
   S.sessions=[];
   renderToday(); renderProgressie(); renderPlan();
   hideSettings();
@@ -1267,10 +1289,8 @@ function renderPlan(){
     const done=isDone(day);
     const adaptNote=getAdaptNote(day,rec);
 
-    // Calculate date for this day
-    const dayDate=new Date(LARS.startDate);
-    dayDate.setDate(dayDate.getDate()+(wn-1)*7+day.i);
-    const dayDateStr=dayDate.toISOString().split("T")[0];
+    // Calculate date for this day based on current week's Monday
+    const dayDateStr=planDayToDate(day.i);
     const override=overrides[dayDateStr];
     const choice=choices.find(c=>c.date===dayDateStr);
 
@@ -1317,15 +1337,12 @@ function getAdaptNote(day,rec){
 }
 
 function isDone(day){
-  const wn=weekNum();
-  const weekStart=new Date(LARS.startDate);weekStart.setDate(weekStart.getDate()+(wn-1)*7+day.i);
-  const dateStr=weekStart.toISOString().split("T")[0];
+  const dateStr=planDayToDate(day.i);
   return S.sessions.some(s=>s.date===dateStr&&(s.discipline===day.disc||(s.discipline==="AirBike"&&day.disc==="Bike")));
 }
 
 function renderDoneDetail(day){
-  const wn=weekNum();
-  const weekStart=new Date(LARS.startDate);weekStart.setDate(weekStart.getDate()+(wn-1)*7+day.i);
+  const weekStart=new Date(planDayToDate(day.i));
   const dateStr=weekStart.toISOString().split("T")[0];
   const s=S.sessions.find(s=>s.date===dateStr);
   if(!s)return"";
