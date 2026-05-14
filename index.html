@@ -666,12 +666,14 @@ function planDayToDate(dayIdx){
 
 function logRestDayChoice(optType){
   const date=todayStr();
+  console.log("logRestDayChoice: date=",date,"planDayToDate(3)=",planDayToDate(3),"planDayToDate(4)=",planDayToDate(4));
   const choices=getChoices();
   if(choices.find(c=>c.date===date)){ showToast("Al gelogd vandaag"); return; }
 
   const rec=S.whoop?.recovery??null;
   choices.push({date,optType,disc:DISC_TO_PLANTYPE[optType]||"Recovery",label:DISC_NAMES[optType]||optType,rec,ts:new Date().toISOString()});
   saveChoices(choices);
+  showToast(`Gelogd voor ${date} · Do=${planDayToDate(3)} · Vr=${planDayToDate(4)}`);
 
   // Find ALL remaining same-discipline sessions this week and adapt them
   const compDisc=COMP_MAP[optType];
@@ -1297,6 +1299,7 @@ function renderPlan(){
     // Calculate date for this day based on current week's Monday
     const dayDateStr=planDayToDate(day.i);
     const override=overrides[dayDateStr];
+    // Choice badge: show on the exact plan day that matches the choice date
     const choice=choices.find(c=>c.date===dayDateStr);
 
     const overrideNote=override?`<div class="adapt-badge" style="background:rgba(78,168,222,.08);border:1px solid rgba(78,168,222,.2);color:var(--blue)">↻ ${override.note}</div>`:"";
