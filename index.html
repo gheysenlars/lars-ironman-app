@@ -643,20 +643,25 @@ function saveChoices(c){ localStorage.setItem("lars_choices",JSON.stringify(c));
 function getOverrides(){ return JSON.parse(localStorage.getItem("lars_overrides")||"{}"); }
 function saveOverrides(o){ localStorage.setItem("lars_overrides",JSON.stringify(o)); }
 
-// Get the Monday of the current week (correct week anchor)
+// Local date string — avoids UTC timezone shift from toISOString()
+function localDateStr(d){
+  return `${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,"0")}-${String(d.getDate()).padStart(2,"0")}`;
+}
+
+// Get the Monday of the current week
 function getWeekMonday(){
-  const d=new Date(); d.setHours(0,0,0,0);
+  const d=new Date();
   const day=d.getDay();
   const diff=day===0?-6:1-day;
   d.setDate(d.getDate()+diff);
   return d;
 }
 
-// Get date string for a plan day index (0=Mon ... 6=Sun) in the current week
+// Get LOCAL date string for a plan day index (0=Mon ... 6=Sun) in the current week
 function planDayToDate(dayIdx){
-  const monday=getWeekMonday();
-  const d=new Date(monday); d.setDate(monday.getDate()+dayIdx);
-  return d.toISOString().split("T")[0];
+  const d=getWeekMonday();
+  d.setDate(d.getDate()+dayIdx);
+  return localDateStr(d);
 }
 
 function logRestDayChoice(optType){
@@ -726,7 +731,7 @@ let S={
 let syncTimer=null;
 
 // ── Utils ─────────────────────────────────────────────────────────────────────
-const todayStr= ()=>new Date().toISOString().split("T")[0];
+const todayStr= ()=>localDateStr(new Date());
 const fmtDate = iso=>new Date(iso).toLocaleDateString("nl-BE",{day:"numeric",month:"short"});
 const fmtTime = iso=>new Date(iso).toLocaleTimeString("nl-BE",{hour:"2-digit",minute:"2-digit"});
 const fmtDur  = ms=>ms?Math.round(ms/60000)+"min":"";
